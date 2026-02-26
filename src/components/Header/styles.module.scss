@@ -1,10 +1,18 @@
 @import '@styles/mixin.module.scss';
 @import '@styles/variable.module.scss';
+.container {
+    @include flex_box_custom(center, center, 0px);
+    background-color: bisque;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
 .containerHeader {
+    width: 1250px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    background-color: bisque;
+    justify-content: space-between;
     height: 83px;
 }
 .containerBoxIcon {
@@ -14,21 +22,29 @@
     @include flex_box_custom(center, center, 20px);
 }
 .containerMenu {
-    @include flex_box_custom(center, center, 20px);
+    @include flex_box_custom(center, center, 40px);
 }
 .boxIcon {
     @include radius_common(50%);
     @include flex_box_custom(center, center, 0px);
-    background-color: gray;
+    background-color: none;
+    border: 1px solid gray;
     width: 26px;
     height: 26px;
     cursor: pointer;
+    transition: 0.3s linear;
+    &:hover {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        background-color: #fff;
+    }
 }
 .menu {
+    font-size: 15px;
+    color: $primary_color;
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: 0.25s ease;
     &:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
