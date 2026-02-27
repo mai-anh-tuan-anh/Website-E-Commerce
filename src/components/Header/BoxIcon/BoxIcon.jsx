@@ -15,9 +15,15 @@ function BoxIcon({ type, href }) {
         }
     };
     return (
-        <div className={boxIcon}>
+        <a
+            className={boxIcon}
+            href={href}
+            target='_blank'
+            rel='noreferrer noopener'
+            aria-label={type}
+        >
             <img src={handleRenderIcon(type)} alt={type} />
-        </div>
+        </a>
     );
 }
 

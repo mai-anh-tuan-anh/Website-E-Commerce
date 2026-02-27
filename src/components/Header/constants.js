@@ -1,7 +1,13 @@
 const dataBoxIcon = [
-    { type: 'fb', href: '#' },
-    { type: 'tiktok', href: '#' },
-    { type: 'youtube', href: '#' }
+    { type: 'fb', href: 'https://www.facebook.com/matachan0408' },
+    {
+        type: 'tiktok',
+        href: 'https://www.tiktok.com/@thtski/video/7610417156739697941'
+    },
+    {
+        type: 'youtube',
+        href: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1'
+    }
 ];
 const dataMenu = [
     { content: 'Elements', href: '#' },

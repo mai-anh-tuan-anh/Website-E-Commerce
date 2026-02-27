@@ -21,7 +21,7 @@ function MyHeader() {
                     <div className={containerBoxIcon}>
                         {dataBoxIcon.map((item) => {
                             return (
-                                <BoxIcon type={item.type} href={item.href} />
+                                <BoxIcon key={item.type} type={item.type} href={item.href} />
                             );
                         })}
                     </div>
