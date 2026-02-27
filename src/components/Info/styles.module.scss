@@ -1,0 +1,40 @@
+@import '@styles/variable.module.scss';
+@import '@styles/mixin.module.scss';
+.container {
+    background-color: $primary_color;
+    margin-top: -75px;
+    padding: 20px 55px;
+    @include flex_box_custom(space-between, flex-start, 0px);
+    border-radius: 3px;
+    position: relative;
+    z-index: 10;
+}
+.containerCard {
+    width: 280px;
+    min-height: 104px;
+    height: auto;
+    @include flex_box_custom(flex-start, flex-start, 18px);
+    img {
+        align-self: center;
+    }
+}
+.containerContent {
+    @include flex_box_custom(flex-start, flex-start, 10px);
+    flex-direction: column;
+    font-weight: 300;
+    .tit {
+        font-size: 17px;
+        line-height: 3;
+        min-height: 2.4em;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        color: hsl(41, 100%, 51%);
+    }
+    .des {
+        font-size: 16px;
+        color: #ffffffc7;
+    }
+}
