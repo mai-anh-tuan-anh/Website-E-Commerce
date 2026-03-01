@@ -1,0 +1,25 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variable.module.scss';
+.container {
+    background-image: url('../../assets/images/pic1.jpg');
+    height: 409px;
+    width: calc(100% / 2.05);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.containerTimer {
+    @include flex_box_custom(center, center, 5px);
+}
+.title {
+    color: $white_color;
+    font-size: 28px;
+    margin-bottom: 5px;
+    text-align: center;
+    margin-top: 135px;
+}
+.boxBtn {
+    text-align: center;
+    margin-top: 20px;
+}
