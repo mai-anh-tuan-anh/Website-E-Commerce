@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import CountdownBanner from '@components/CountdownBanner/CountdownBanner';
 import ProductItem from '@components/ProductItem/ProductItem';
 function HeadingListProduct() {
-    const { container, containerItem } = styles;
+    const { container, containerItem, left, right } = styles;
     return (
         <MainLayout>
             <div className={container}>
@@ -13,13 +13,13 @@ function HeadingListProduct() {
                     <ProductItem />
                 </div>
             </div>
-            <div className={containerItem}>
+            <div className={container}>
                 <ProductItem />
                 <ProductItem />
                 <ProductItem />
                 <ProductItem />
             </div>
-            <div className={containerItem}>
+            <div className={container}>
                 <ProductItem />
                 <ProductItem />
                 <ProductItem />
