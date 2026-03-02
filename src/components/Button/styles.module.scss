@@ -14,3 +14,14 @@
         border: 1px solid $primary_color;
     }
 }
+.otherBtn {
+    background-color: $white_color;
+    color: $primary_color;
+    border: 1px solid $primary_color;
+    transition: 0.3s ease;
+    &:hover {
+        transform: scale(1.05);
+        background-color: $primary_color;
+        color: $white_color;
+    }
+}
