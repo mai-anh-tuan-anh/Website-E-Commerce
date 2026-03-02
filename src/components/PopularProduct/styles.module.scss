@@ -1,0 +1,7 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variable.module.scss';
+.container {
+    @include flex_box_custom(center, flex-start, 10px);
+    flex-wrap: wrap;
+    margin-top: 10px;
+}

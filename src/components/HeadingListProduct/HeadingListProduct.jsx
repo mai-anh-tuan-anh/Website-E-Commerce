@@ -2,28 +2,24 @@ import MainLayout from '@components/Layout/Layout';
 import styles from './styles.module.scss';
 import CountdownBanner from '@components/CountdownBanner/CountdownBanner';
 import ProductItem from '@components/ProductItem/ProductItem';
-function HeadingListProduct() {
-    const { container, containerItem, left, right } = styles;
+function HeadingListProduct({ data }) {
+    const { container, containerItem } = styles;
+    console.log(data);
     return (
         <MainLayout>
             <div className={container}>
                 <CountdownBanner />
                 <div className={containerItem}>
-                    <ProductItem />
-                    <ProductItem />
+                    {data.map((item) => (
+                        <ProductItem
+                            key={item.id}
+                            src={item.images[0]}
+                            prevSrc={item.images[1]}
+                            name={item.name}
+                            price={item.price}
+                        />
+                    ))}
                 </div>
-            </div>
-            <div className={container}>
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-            </div>
-            <div className={container}>
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
-                <ProductItem />
             </div>
         </MainLayout>
     );
