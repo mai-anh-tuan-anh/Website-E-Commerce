@@ -9,10 +9,27 @@ import { getProducts } from '@/apis/productsService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomepage from '@components/SaleHomepage/SaleHomepage';
 import MyFooter from '@components/Footer/Footer';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 function HomePage() {
     const [listProducts, setListProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     useEffect(() => {
-        getProducts().then((res) => setListProducts(res.contents));
+        const fetchProducts = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+                const res = await getProducts();
+                setListProducts(res.contents);
+            } catch (err) {
+                setError('Failed to load products. Please try again later.');
+                console.error('Error fetching products:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchProducts();
     }, []);
     const { container } = styles;
     return (
@@ -22,8 +39,20 @@ function HomePage() {
                 <Banner />
                 <Info></Info>
                 <AdvanceHeading />
-                <HeadingListProduct data={listProducts.slice(0, 2)} />
-                <PopularProduct data={listProducts.slice(2, 10)} />
+
+                {/* Loading State */}
+                {isLoading && <LoadingSpinner />}
+
+                {/* Error State */}
+                {error && <div className={styles.errorMessage}>{error}</div>}
+
+                {/* Content - only show when not loading and no error */}
+                {!isLoading && !error && (
+                    <>
+                        <HeadingListProduct data={listProducts.slice(0, 2)} />
+                        <PopularProduct data={listProducts.slice(2, 10)} />
+                    </>
+                )}
                 <SaleHomepage />
                 <MyFooter />
             </div>
