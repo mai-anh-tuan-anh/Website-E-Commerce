@@ -19,7 +19,7 @@
     }
     .boxBtn {
         @include flex_box_custom(center, center, 0);
-        margin-top: 30px;
+        margin-top: 35px;
     }
     .boxImage {
         @include flex_box_custom(center, center, 0);

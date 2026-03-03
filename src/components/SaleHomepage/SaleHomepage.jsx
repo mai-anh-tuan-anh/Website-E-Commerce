@@ -12,7 +12,6 @@ function SaleHomepage() {
         AOS.init({
             duration: 1000,
             once: false,
-            offset: 800,
             mirror: true
         });
     }, []);
@@ -30,11 +29,7 @@ function SaleHomepage() {
                     Getting a discount up to 50% off
                 </p>
                 <div className={boxBtn}>
-                    <Button
-                        content={'Read More'}
-                        data-aos='fade-up'
-                        data-aos-delay='400'
-                    />
+                    <Button content={'Read More'} />
                 </div>
             </div>
             <div className={boxImage}>
