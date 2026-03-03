@@ -66,9 +66,9 @@ GitHub Repository
 
 ## 3. Kế hoạch thực hiện 08 tuần
 
-- Tuần 1 – Khởi động
+#### Tuần 1 – Khởi động
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Khởi tạo project React (Vite hoặc CRA)
 
@@ -81,10 +81,11 @@ Xây dựng cấu trúc thư mục
 Project React chạy được trên local
 
 Repo GitHub có cấu trúc src rõ ràng
+![Review 1](./src/assets/reviewImages/1.png)
 
-- Tuần 2 – Triển khai cơ bản (Buổi trao đổi 1)
+#### Tuần 2 – Triển khai cơ bản (Buổi trao đổi 1)
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Học useState
 
@@ -99,10 +100,14 @@ Hiển thị danh sách sản phẩm bằng dữ liệu tĩnh (JSON)
 Giao diện trang chủ gồm Header, Footer, ProductList
 
 UI đúng bố cục, không vỡ layout
+![Review 2](./src/assets/reviewImages/3.png)
+![Review 3](./src/assets/reviewImages/3.png)
+![Review 4](./src/assets/reviewImages/4.png)
+![Review 5](./src/assets/reviewImages/5.png)
 
-- Tuần 3 – Mở rộng
+#### Tuần 3 – Mở rộng
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Học useEffect
 
@@ -117,10 +122,11 @@ Load dữ liệu sản phẩm từ API
 Hiển thị loading khi gọi API
 
 Hiển thị thông báo lỗi khi API thất bại
+![Review 6](./src/assets/reviewImages/6.png)
 
-- Tuần 4 – Hoàn thiện giữa kỳ (Buổi trao đổi 2)
+#### Tuần 4 – Hoàn thiện giữa kỳ (Buổi trao đổi 2)
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Học React Router
 
@@ -136,9 +142,9 @@ Click từ danh sách → trang chi tiết sản phẩm
 
 Trang chi tiết hiển thị đúng theo ID trên URL
 
-- Tuần 5 – Nâng cao / Tối ưu
+#### Tuần 5 – Nâng cao / Tối ưu
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Xây dựng chức năng giỏ hàng
 
@@ -152,9 +158,9 @@ Cart hoạt động (thêm, xóa sản phẩm)
 
 Website hiển thị tốt trên mobile
 
-- Tuần 6 – Kiểm thử / Đánh giá (Buổi trao đổi 3)
+#### Tuần 6 – Kiểm thử / Đánh giá (Buổi trao đổi 3)
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Tối ưu UI/UX (hiển thị số lượng, tổng tiền)
 
@@ -170,9 +176,9 @@ Code được refactor gọn gàng
 
 Component tách hợp lý, giảm trùng lặp
 
-- Tuần 7 – Hoàn thiện cuối
+#### Tuần 7 – Hoàn thiện cuối
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Tính năng Search sản phẩm
 
@@ -190,9 +196,9 @@ Filter hoạt động chính xác (có thể kết hợp nhiều điều kiện)
 
 QR Scan chuyển đúng ngân hàng thanh toán
 
-- Tuần 8 – Tổng kết (Buổi trao đổi 4)
+#### Tuần 8 – Tổng kết (Buổi trao đổi 4)
 
-* Nhiệm vụ
+- Nhiệm vụ
 
 Báo cáo kết quả
 
