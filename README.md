@@ -1,4 +1,4 @@
-[Link BackEnd => Turn it on to use](https://be-project-reactjs.onrender.com/api-docs/#/Products/get_product)
+[Link BackEnd => Turn it on for api, then run "npm run dev" on terminal to open website](https://be-project-reactjs.onrender.com/api-docs/#/Products/get_product)
 
 # Thực tập Cơ sở – Kế hoạch & Tiến độ 08 Tuần
 
@@ -24,17 +24,17 @@
 
 ☐ Nghiên cứu / đề tài / dự án
 
-- Kỹ năng chính (theo thứ tự)
+### Kỹ năng chính (theo thứ tự)
 
-* React
+- React
 
-* REST API + Fetch / Axios
+- REST API + Fetch / Axios
 
-* UI/UX cơ bản cho web bán hàng
+- UI/UX cơ bản cho web bán hàng
 
-- Đề tài thực tập
+### Đề tài thực tập
 
-### Website bán hàng React hoàn chỉnh gồm:
+#### Website bán hàng React hoàn chỉnh gồm:
 
 - Danh sách sản phẩm
 
@@ -100,7 +100,7 @@ Hiển thị danh sách sản phẩm bằng dữ liệu tĩnh (JSON)
 Giao diện trang chủ gồm Header, Footer, ProductList
 
 UI đúng bố cục, không vỡ layout
-![Review 2](./src/assets/reviewImages/3.png)
+![Review 2](./src/assets/reviewImages/2.png)
 ![Review 3](./src/assets/reviewImages/3.png)
 ![Review 4](./src/assets/reviewImages/4.png)
 ![Review 5](./src/assets/reviewImages/5.png)
