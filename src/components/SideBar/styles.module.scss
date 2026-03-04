@@ -1,0 +1,43 @@
+@import '@styles/mixin.module.scss';
+.container {
+    position: relative;
+    .overLay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #0000004d;
+        z-index: 1001;
+        transition: all 0.3s ease-in-out;
+    }
+    .sideBar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: whitesmoke;
+        width: 370px;
+        height: 100vh;
+        z-index: 1002;
+        transform: translateX(370px);
+        transition: transform 0.3s ease-in-out;
+    }
+    .slideSideBar {
+        transform: translateX(0);
+    }
+    .boxIcon {
+        position: absolute;
+        top: 25px;
+        left: -60px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: whitesmoke;
+        cursor: pointer;
+        transition: all 0.2s linear;
+        @include flex_box_custom(center, center, 0);
+        &:hover {
+            background-color: #ccc;
+        }
+    }
+}
