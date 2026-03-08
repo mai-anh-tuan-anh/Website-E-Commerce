@@ -1,17 +1,169 @@
 .container {
-    padding: 30px 20px 0px 20px;
+    padding: 30px 20px 0px 0px;
+
     .title {
+        color: white;
         font-size: 18px;
         text-align: center;
         margin-bottom: 30px;
+        font-weight: 600;
+        background-color: rgba(0, 183, 255, 0.664);
+        width: 100%;
+        padding: 10px;
+        margin-left: 0px;
+        margin-right: -20px;
+        margin-top: -30px;
     }
-    .rememberMe {
-        margin-bottom: 30px;
-        input {
-            margin-right: 10px;
+
+    .formGroup {
+        margin-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        .container {
+            text-align: center;
+
+            .labelInput {
+                text-align: center;
+                margin-bottom: 8px;
+            }
+
+            .boxInput {
+                padding: 0 20px;
+
+                input {
+                    width: 100%;
+                    text-align: center;
+                    margin: 0 auto;
+                    display: block;
+                }
+            }
         }
+    }
+
+    .signInButton {
+        margin: 25px 0;
+        text-align: center;
+
+        .btn {
+            width: 100%;
+            max-width: 280px;
+        }
+    }
+
+    .divider {
+        text-align: center;
+        margin: 20px 0;
+        font-size: 14px;
+        color: #666;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+
         span {
+            background-color: whitesmoke;
+            padding: 0 15px;
+            position: relative;
+            z-index: 2;
+        }
+    }
+
+    .socialLogin {
+        margin: 25px 0;
+
+        .socialButtons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .socialButton {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 1px solid #e0e0e0;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            svg {
+                font-size: 18px;
+            }
+        }
+
+        .facebookButton {
+            color: #1877f2;
+            border-color: #1877f2;
+
+            &:hover {
+                background-color: #1877f2;
+                color: white;
+            }
+        }
+
+        .twitterButton {
+            color: #1da1f2;
+            border-color: #1da1f2;
+
+            &:hover {
+                background-color: #1da1f2;
+                color: white;
+            }
+        }
+
+        .googleButton {
+            color: #ea4335;
+            border-color: #ea4335;
+
+            &:hover {
+                background-color: #ea4335;
+                color: white;
+            }
+        }
+    }
+
+    .footerLinks {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 30px;
+        padding: 0 10px;
+
+        .signupLink,
+        .forgotPasswordLink {
             font-size: 14px;
+            cursor: pointer;
+            color: #333;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: #007bff;
+                text-decoration: underline;
+            }
+        }
+
+        .signupLink {
+            font-weight: 500;
+        }
+
+        .forgotPasswordLink {
+            text-align: right;
         }
     }
 }
