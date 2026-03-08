@@ -1,0 +1,59 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variable.module.scss';
+.container {
+    padding: 30px 20px 0 20px;
+    height: 95vh;
+    @include flex_box_custom(space-between, space-between, 0px);
+    flex-direction: column;
+    .boxContent {
+        flex: 1;
+    }
+    .subtotalSection {
+        width: 100%;
+        padding: 15px 0;
+        @include flex_box_custom(space-between, center, 0px);
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 10px;
+
+        .subtotalLabel {
+            font-size: 16px;
+            color: $third_color;
+            font-weight: 500;
+        }
+
+        .subtotalPrice {
+            font-size: 18px;
+            color: $fifth_color;
+            font-weight: 600;
+        }
+    }
+    .buttonWrapper {
+        width: 100%;
+        padding: 20px 0;
+        text-align: center;
+        @include flex_box_custom(space-between, center, 10px);
+        flex-direction: row;
+
+        .btn {
+            width: 48%;
+            max-width: none;
+        }
+
+        .btn:first-child {
+            // VIEW CART button - mặc định
+        }
+
+        .btn:nth-child(2) {
+            // CHECKOUT button - trắng/đen
+            background-color: $white_color !important;
+            color: black !important;
+            border: 1px solid black !important;
+
+            &:hover {
+                background-color: black !important;
+                color: $white_color !important;
+            }
+        }
+    }
+}

@@ -1,5 +1,3 @@
-import { TfiHeart } from 'react-icons/tfi';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import styles from './styles.module.scss';
 function HeaderSideBar({ icon, title }) {
     const { container, titleClass } = styles;

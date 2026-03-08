@@ -15,7 +15,7 @@
         cursor: pointer;
     }
     .boxContent {
-        @include flex_box_custom(center, flex-start, 15px);
+        @include flex_box_custom(center, flex-start, 5px);
         flex-direction: column;
         .title {
             font-size: 16px;
@@ -28,8 +28,17 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .size {
+            font-size: 16px;
+            color: $fourth_color;
+        }
+        .sku {
+            margin-top: 6px;
+            font-size: 16px;
+            color: $fourth_color;
+        }
         .price {
-            font-size: 14px;
+            font-size: 15px;
             color: $fifth_color;
             margin: 0;
             font-weight: 400;

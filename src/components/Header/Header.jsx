@@ -92,7 +92,7 @@ function MyHeader() {
                             onClick={() => handleOpenSideBar('wishlist')}
                         />
                         <AiOutlineShoppingCart
-                            style={{ fontSize: '20px' }}
+                            style={{ fontSize: '25px' }}
                             onClick={() => handleOpenSideBar('cart')}
                         />
                     </div>
