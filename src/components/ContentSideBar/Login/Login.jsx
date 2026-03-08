@@ -4,7 +4,9 @@ import Button from '@components/Button/Button';
 import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ToastContext } from '@/contexts/ToastProvider';
+import { register } from '@/apis/authService';
 function Login() {
     const {
         container,
@@ -25,6 +27,8 @@ function Login() {
         boxRememberMe
     } = styles;
     const [isRegister, setIsRegister] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const { toast } = useContext(ToastContext);
     const formik = useFormik({
         initialValues: { email: '', password: '', cfmpassword: '' },
         validationSchema: Yup.object({
@@ -38,8 +42,22 @@ function Login() {
                 .oneOf([Yup.ref('password'), null], 'Passwords must match')
                 .required('Confirm Password is required')
         }),
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: async (values) => {
+            if (isLoading) return;
+            if (isRegister) {
+                const { email: username, password } = values;
+                setIsLoading(true);
+                await register({ username, password })
+                    .then((res) => {
+                        toast.success(res.data.message);
+                    })
+                    .catch((err) => {
+                        toast.error(err.response.data.message);
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            }
         }
     });
     return (
@@ -82,6 +100,9 @@ function Login() {
                     <Button
                         content={isRegister ? 'REGISTER' : 'LOGIN'}
                         type='submit'
+                        // onClick={() => {
+                        //     toast.success('Login successful!');
+                        // }}
                     />
                 </div>
             </form>

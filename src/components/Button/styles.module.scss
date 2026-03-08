@@ -1,17 +1,18 @@
 @import '@styles/mixin.module.scss';
 @import '@styles/variable.module.scss';
 .btn {
-    @include btn(176px, 42px, 3px, $primary_color);
-    color: $white_color;
+    @include btn(176px, 42px, 5px, rgba(0, 183, 255, 0.664));
+    color: black;
+    border: 1px solid black;
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;
     transition: 0.3s ease;
     &:hover {
         transform: scale(1.05);
-        background-color: $white_color;
-        color: $primary_color;
-        border: 1px solid $primary_color;
+        background-color: rgba(255, 255, 255, 0.9);
+        color: rgb(0, 183, 255);
+        border: 1px solid rgb(0, 183, 255);
     }
 }
 .otherBtn {

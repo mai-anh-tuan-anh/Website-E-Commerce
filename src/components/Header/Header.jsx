@@ -84,14 +84,17 @@ function MyHeader() {
                     </div>
                     <div className={containerBoxIcon}>
                         <TfiReload
+                            className={styles.iconHover}
                             style={{ fontSize: '20px' }}
                             onClick={() => handleOpenSideBar('compare')}
                         />
                         <TfiHeart
+                            className={styles.iconHover}
                             style={{ fontSize: '20px' }}
                             onClick={() => handleOpenSideBar('wishlist')}
                         />
                         <AiOutlineShoppingCart
+                            className={styles.iconHover}
                             style={{ fontSize: '25px' }}
                             onClick={() => handleOpenSideBar('cart')}
                         />
