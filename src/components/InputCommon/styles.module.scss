@@ -6,27 +6,52 @@
         font-size: 14px;
         color: $fourth-color;
         margin-bottom: 5px;
+        padding-top: 10px;
     }
     .boxInput {
-        width: 90%;
+        width: 100%;
         position: relative;
         margin-bottom: 10px;
-
+        padding-bottom: 5px;
         input {
             width: 100%;
             border: 1px solid #e1e1e1;
-            padding: 10px 40px 10px 10px;
+            padding: 10px 0px 10px 10px;
             border-radius: 5px;
+            box-sizing: border-box;
+
+            // ẩn con mắt mặc định của trình duyệt
+            &::-webkit-credentials-auto-fill-button,
+            &::-webkit-caps-lock-indicator,
+            &::-webkit-reveal-password-button {
+                display: none;
+            }
         }
         .boxIcon {
+            z-index: 1;
+            background-color: rgba(9, 228, 235, 0.753);
             position: absolute;
-            right: -50px;
-            top: 50%;
-            transform: translateY(-50%);
+            right: 0px;
+            top: 0;
+            height: 90%;
+            transform: none;
             cursor: pointer;
-            padding: 5px;
-            background-color: white;
-            border-radius: 4px;
+            padding: 0 15px;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            box-shadow: -2px 0 5px rgba(255, 255, 255, 0.8);
+        }
+        .errMes {
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            font-size: 12px;
+            color: red;
+            white-space: nowrap;
         }
     }
 }
