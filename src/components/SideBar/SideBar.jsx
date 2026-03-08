@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { SideBarContext } from '@contexts/SideBarProvider';
 import classNames from 'classnames';
 import { IoCloseSharp } from 'react-icons/io5';
+import Login from '@components/ContentSideBar/Login/Login';
 function SideBar() {
     const { container, overLay, sideBar, slideSideBar, boxIcon } = styles;
     const { isOpen, setIsOpen } = useContext(SideBarContext);
@@ -11,10 +12,7 @@ function SideBar() {
     };
     return (
         <div className={container}>
-            <div
-                className={classNames({ [overLay]: isOpen })}
-                onClick={handleToggle}
-            />
+            {isOpen && <div className={overLay} onClick={handleToggle} />}
             <div
                 className={classNames(sideBar, {
                     [slideSideBar]: isOpen
@@ -25,7 +23,7 @@ function SideBar() {
                         <IoCloseSharp />
                     </div>
                 )}
-                sideBar
+                <Login />
             </div>
         </div>
     );
