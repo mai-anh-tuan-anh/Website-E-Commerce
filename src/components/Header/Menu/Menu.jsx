@@ -1,8 +1,12 @@
 import styles from '../styles.module.scss';
-function Menu({ content, href, setIsOpen }) {
+import { useContext } from 'react';
+import { SideBarContext } from '@contexts/SideBarProvider';
+function Menu({ content, href }) {
     const { menu } = styles;
-    const handleClick = (e) => {
-        if (setIsOpen) {
+    const { setIsOpen, setType } = useContext(SideBarContext);
+    const handleClick = () => {
+        if (content === 'Sign In') {
+            setType('login');
             setIsOpen(true);
         }
     };

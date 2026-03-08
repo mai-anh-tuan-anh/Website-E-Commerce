@@ -3,9 +3,9 @@ import Menu from './Menu/Menu';
 import { dataBoxIcon, dataMenu } from './constants';
 import styles from './styles.module.scss';
 import Logo from '@icons/images/logo.png';
-import ReloadIcon from '@icons/svgs/reloadicon.svg';
-import HeartIcon from '@icons/svgs/hearticon.svg';
-import CartIcon from '@icons/svgs/carticon.svg';
+import { TfiReload } from 'react-icons/tfi';
+import { TfiHeart } from 'react-icons/tfi';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState, useEffect, useContext } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 function MyHeader() {
@@ -21,9 +21,12 @@ function MyHeader() {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
-    const { isOpen, setIsOpen } = useContext(SideBarContext);
+    const { isOpen, setIsOpen, type, setType } = useContext(SideBarContext);
     console.log(isOpen);
-
+    const handleOpenSideBar = (type) => {
+        setIsOpen(true);
+        setType(type);
+    };
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
@@ -75,32 +78,22 @@ function MyHeader() {
                     <div className={containerMenu}>
                         {dataMenu.slice(3, dataMenu.length).map((item) => {
                             return (
-                                <Menu
-                                    content={item.content}
-                                    href={item.href}
-                                    setIsOpen={setIsOpen}
-                                />
+                                <Menu content={item.content} href={item.href} />
                             );
                         })}
                     </div>
                     <div className={containerBoxIcon}>
-                        <img
-                            width={26}
-                            height={26}
-                            src={ReloadIcon}
-                            alt='ReloadIcon'
+                        <TfiReload
+                            style={{ fontSize: '20px' }}
+                            onClick={() => handleOpenSideBar('compare')}
                         />
-                        <img
-                            width={26}
-                            height={26}
-                            src={HeartIcon}
-                            alt='HeartIcon'
+                        <TfiHeart
+                            style={{ fontSize: '20px' }}
+                            onClick={() => handleOpenSideBar('wishlist')}
                         />
-                        <img
-                            width={26}
-                            height={26}
-                            src={CartIcon}
-                            alt='CartIcon'
+                        <AiOutlineShoppingCart
+                            style={{ fontSize: '20px' }}
+                            onClick={() => handleOpenSideBar('cart')}
                         />
                     </div>
                 </div>
