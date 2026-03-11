@@ -1,12 +1,14 @@
 import InputCommon from '@components/InputCommon/InputCommon';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { ToastContext } from '@/contexts/ToastProvider';
-import { register } from '@/apis/authService';
+import { register, signIn, getInfo } from '@/apis/authService';
+import Cookies from 'js-cookie';
 function Login() {
     const {
         container,
@@ -38,14 +40,18 @@ function Login() {
             password: Yup.string()
                 .min(6, 'Password must be at least 6 characters')
                 .required('Password is required'),
-            cfmpassword: Yup.string()
-                .oneOf([Yup.ref('password'), null], 'Passwords must match')
-                .required('Confirm Password is required')
+            cfmpassword: Yup.string().oneOf(
+                [Yup.ref('password'), null],
+                'Passwords must match'
+            )
         }),
         onSubmit: async (values) => {
-            if (isLoading) return;
+            if (isLoading) {
+                return;
+            }
+
+            const { email: username, password } = values;
             if (isRegister) {
-                const { email: username, password } = values;
                 setIsLoading(true);
                 await register({ username, password })
                     .then((res) => {
@@ -57,11 +63,32 @@ function Login() {
                     .finally(() => {
                         setIsLoading(false);
                     });
+            } else {
+                setIsLoading(true);
+                await signIn({ username, password })
+                    .then((res) => {
+                        const { id, token, refreshToken } = res.data;
+                        Cookies.set('token', token);
+                        Cookies.set('refreshToken', refreshToken);
+                        toast.success('Login successful!');
+                    })
+                    .catch((err) => {
+                        toast.error(
+                            err.response?.data?.message || 'Login failed'
+                        );
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
             }
         }
     });
+    useEffect(() => {
+        getInfo;
+    }, []);
     return (
         <div className={container}>
+            {isLoading && <LoadingSpinner />}
             <div className={title}>{isRegister ? 'SIGN UP' : 'SIGN IN'}</div>
             <form onSubmit={formik.handleSubmit}>
                 <div className={formGroup}>
