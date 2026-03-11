@@ -32,6 +32,7 @@ function Login() {
     } = styles;
     const [isRegister, setIsRegister] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false);
     const { toast } = useContext(ToastContext);
     const { isOpen, setIsOpen } = useContext(SideBarContext);
     const { setUserId } = useContext(StoreContext);
@@ -73,9 +74,19 @@ function Login() {
                     .then((res) => {
                         const { id, token, refreshToken } = res.data;
                         setUserId(id);
-                        Cookies.set('token', token);
-                        Cookies.set('userId', id);
-                        Cookies.set('refreshToken', refreshToken);
+
+                        // Set cookies with different expiration based on remember me
+                        const cookieOptions = rememberMe
+                            ? { expires: 30 } // 30 days
+                            : { expires: 1 }; // 1 day
+
+                        Cookies.set('token', token, cookieOptions);
+                        Cookies.set('userId', id, cookieOptions);
+                        Cookies.set(
+                            'refreshToken',
+                            refreshToken,
+                            cookieOptions
+                        );
                         setIsOpen(false);
                         toast.success('Login successful!');
                     })
@@ -123,7 +134,12 @@ function Login() {
                 </div>
                 {!isRegister && (
                     <div className={boxRememberMe}>
-                        <input type='checkbox' id='rememberMe' />
+                        <input
+                            type='checkbox'
+                            id='rememberMe'
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                        />
                         <label htmlFor='rememberMe'>Remember me</label>
                     </div>
                 )}

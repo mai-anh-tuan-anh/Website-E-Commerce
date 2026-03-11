@@ -1,0 +1,92 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variable.module.scss';
+.container {
+    padding-top: 93px;
+    padding-bottom: 20px;
+    .functionBox {
+        @include flex_box_custom(space-between, center, 0px);
+        color: $secondary_color;
+        font-size: 14px;
+        font-weight: 300;
+        margin-top: 10px;
+    }
+    .btnBack {
+        cursor: pointer;
+        background-color: rgba(33, 206, 236, 0.945);
+        border: none;
+        color: black;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background-color: rgb(28, 184, 211);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .breadcrumbBtn {
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: $secondary_color;
+        font-size: 14px;
+        font-weight: 300;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: rgba(33, 206, 236, 0.1);
+            color: $primary_color;
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    span {
+        color: $secondary_color;
+        margin: 0 4px;
+    }
+}
+.containerBanner {
+    background-image: url(https://static.vecteezy.com/system/resources/previews/050/809/377/non_2x/beautiful-stylish-models-showcasing-the-latest-fashion-trends-photo.jpeg);
+    height: 300px;
+    width: 100%;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    .contentBox {
+        @include flex_box_custom(space-between, center, 30px);
+        flex-direction: column;
+        padding: 60px 0;
+        .title {
+            font-size: 30px;
+            color: hsl(108, 100%, 50%);
+            text-shadow: 2px 2px 8px rgb(224, 122, 5);
+            font-weight: 600;
+        }
+        .boxBtn {
+            width: 160px;
+        }
+        .countdown {
+            @include flex_box_custom(center, center, 30px);
+        }
+    }
+}

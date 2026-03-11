@@ -13,7 +13,7 @@ const dataMenu = [
     { content: 'Elements', href: '#' },
     { content: 'Our shop', href: '#' },
     { content: 'About us', href: '#' },
-    { content: 'Contact', href: '#' },
+    { content: 'Contact us', href: '#' },
     { content: 'Search', href: '#' },
     { content: 'Sign In', href: '#' }
 ];

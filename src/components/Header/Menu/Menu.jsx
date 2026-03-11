@@ -3,15 +3,22 @@ import { useContext, useState } from 'react';
 import { SideBarContext } from '@contexts/SideBarProvider';
 import { StoreContext } from '@contexts/storeProvider';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 function Menu({ content, href }) {
     const { menu, subMenu } = styles;
     const { setIsOpen, setType } = useContext(SideBarContext);
     const { userInfo, setUserInfo } = useContext(StoreContext);
     const [isShowSubMenu, setIsShowSubMenu] = useState(false);
+    const navigate = useNavigate();
     const handleClick = () => {
         if (content === 'Sign In' && !userInfo) {
             setType('login');
             setIsOpen(true);
+        } else if (content === 'Sign In' && userInfo) {
+            setIsShowSubMenu(!isShowSubMenu);
+        }
+        if (content === 'Our shop') {
+            navigate('/shop');
         }
     };
     const handleRenderText = (content) => {
@@ -19,11 +26,6 @@ function Menu({ content, href }) {
             return userInfo.username;
         }
         return content;
-    };
-    const handleHover = () => {
-        if (content === 'Sign In' && userInfo) {
-            setIsShowSubMenu(true);
-        }
     };
     const handleLogOut = () => {
         Cookies.remove('token');
@@ -34,19 +36,10 @@ function Menu({ content, href }) {
         window.location.reload();
     };
     return (
-        <a
-            className={menu}
-            href={href}
-            onClick={handleClick}
-            onMouseEnter={handleHover}
-        >
+        <a className={menu} href={href} onClick={handleClick}>
             {handleRenderText(content)}
             {isShowSubMenu && (
-                <div
-                    onMouseLeave={() => setIsShowSubMenu(false)}
-                    onClick={handleLogOut}
-                    className={subMenu}
-                >
+                <div onClick={handleLogOut} className={subMenu}>
                     LOG OUT
                 </div>
             )}
