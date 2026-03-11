@@ -9,6 +9,8 @@ import { useContext, useEffect, useState } from 'react';
 import { ToastContext } from '@/contexts/ToastProvider';
 import { register, signIn, getInfo } from '@/apis/authService';
 import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { StoreContext } from '@/contexts/storeProvider';
 function Login() {
     const {
         container,
@@ -31,6 +33,8 @@ function Login() {
     const [isRegister, setIsRegister] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { toast } = useContext(ToastContext);
+    const { isOpen, setIsOpen } = useContext(SideBarContext);
+    const { setUserId } = useContext(StoreContext);
     const formik = useFormik({
         initialValues: { email: '', password: '', cfmpassword: '' },
         validationSchema: Yup.object({
@@ -68,8 +72,11 @@ function Login() {
                 await signIn({ username, password })
                     .then((res) => {
                         const { id, token, refreshToken } = res.data;
+                        setUserId(id);
                         Cookies.set('token', token);
+                        Cookies.set('userId', id);
                         Cookies.set('refreshToken', refreshToken);
+                        setIsOpen(false);
                         toast.success('Login successful!');
                     })
                     .catch((err) => {
@@ -83,9 +90,6 @@ function Login() {
             }
         }
     });
-    useEffect(() => {
-        getInfo;
-    }, []);
     return (
         <div className={container}>
             {isLoading && <LoadingSpinner />}

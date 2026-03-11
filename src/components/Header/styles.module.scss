@@ -49,6 +49,7 @@
     }
 }
 .menu {
+    position: relative;
     font-size: 15px;
     color: $primary_color;
     padding: 8px 12px;
@@ -60,6 +61,26 @@
         transform: scale(1.05);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         background-color: #fff;
+    }
+    .subMenu {
+        position: absolute;
+        background-color: $white_color;
+        width: 100%;
+        padding: 12px 0;
+        top: 45px;
+        left: 0;
+        border-radius: 4px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        font-size: 14px;
+        color: $primary_color;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.25s ease;
+
+        &:hover {
+            background-color: $fifth_color;
+            color: $white_color;
+        }
     }
 }
 .logoWrapper {
