@@ -9,8 +9,51 @@
     </head>
     <body>
         <div id="root"></div>
+
         <script type="module" src="/src/main.jsx"></script>
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+        <!-- Webot Chatbot Configuration -->
+        <script src="https://webotchatbot.com/widget.js"></script>
+        <script>
+            // Webot Configuration
+            window.webotConfig = {
+                botId: 'YOUR_WEBOT_ID',
+                position: 'bottom-right',
+                theme: 'purple'
+            };
+        </script>
+
+        <!-- BotLibre Configuration -->
+        <script src="https://www.botlibre.com/scripts/sdk.js"></script>
+        <script>
+            // BotLibre Configuration
+            window.addEventListener('load', function () {
+                if (window.Botlibre) {
+                    var chatbot = new Botlibre.Chatbot({
+                        id: '6',
+                        domain: 'https://www.botlibre.com',
+                        floating: true,
+                        title: 'Hỗ trợ khách hàng',
+                        send: 'Gửi',
+                        placeholder: 'Nhập tin nhắn...'
+                    });
+                }
+            });
+        </script>
+
+        <!-- Tawk.to Configuration -->
+        <script
+            src="https://embed.tawk.to/6715b9d24304e3196ed1f4f5/1ia7g6g2e"
+            charset="UTF-8"
+            crossorigin="*"
+        ></script>
+        <script>
+            // Tawk.to Configuration
+            var Tawk_API = Tawk_API || {},
+                Tawk_LoadStart = new Date();
+        </script>
+
         <script>
             AOS.init();
         </script>

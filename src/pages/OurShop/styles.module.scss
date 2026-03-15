@@ -1,5 +1,5 @@
-@import '@styles/mixin.module.scss';
-@import '@styles/variable.module.scss';
+@import '../../assets/styles/_mixin.module.scss';
+@import '../../assets/styles/_variable.module.scss';
 .container {
     padding-top: 93px;
     padding-bottom: 20px;
@@ -87,6 +87,31 @@
         }
         .countdown {
             @include flex_box_custom(center, center, 30px);
+        }
+    }
+}
+.containerFilter {
+    @include flex_box_custom(space-between, center, 20px);
+    margin-top: 15px;
+    .boxLeft {
+        @include flex_box_custom(center, center, 10px);
+    }
+    .boxRight {
+        @include flex_box_custom(center, center, 10px);
+    }
+    .selectBox {
+        border: 1px solid #5c5c5c;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #333;
+        background-color: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            border-color: #21ceec;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
     }
 }
