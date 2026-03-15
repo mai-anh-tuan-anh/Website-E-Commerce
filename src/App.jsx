@@ -7,7 +7,6 @@ import SideBar from '@components/SideBar/SideBar';
 import { ToastProvider } from '@/contexts/ToastProvider';
 import { StoreProvider } from '@/contexts/storeProvider';
 import ChatbotManager from '@components/Chatbot/ChatbotManager';
-import BotLibreChatbot from '@components/Chatbot/BotLibreChatbot';
 function App() {
     return (
         <StoreProvider>
@@ -29,7 +28,6 @@ function App() {
                             </Routes>
                         </Suspense>
                     </BrowserRouter>
-                    <BotLibreChatbot />
                     <ChatbotManager />
                 </SideBarProvider>
             </ToastProvider>

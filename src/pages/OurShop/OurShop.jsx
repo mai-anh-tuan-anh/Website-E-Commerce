@@ -8,6 +8,7 @@ import { OurShopProvider } from '@contexts/OurShopProvider';
 import Filter from './components/Filter';
 import { useContext } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
+import ListProducts from './components/ListProducts';
 
 function OurShopContent() {
     const { container, functionBox, btnBack } = styles;
@@ -38,20 +39,7 @@ function OurShopContent() {
             <Banner />
             <div>
                 <Filter />
-            </div>
-            <div
-                className='products-container'
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns:
-                        'repeat(auto-fill, minmax(280px, 1fr))',
-                    gap: '20px',
-                    padding: '20px 0'
-                }}
-            >
-                <p style={{ textAlign: 'center', gridColumn: '1/-1' }}>
-                    Chưa có sản phẩm nào
-                </p>
+                <ListProducts />
             </div>
         </MainLayout>
     );

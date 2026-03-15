@@ -1,4 +1,5 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
+import { getProducts } from '@/apis/productsService';
 export const OurShopContext = createContext();
 export const OurShopProvider = ({ children }) => {
     const sortOptions = [
@@ -16,6 +17,85 @@ export const OurShopProvider = ({ children }) => {
     ];
     const [sortId, setSortId] = useState('0');
     const [showId, setShowId] = useState('8');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [products, setProducts] = useState([]);
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+
+    const handleSearch = (term) => {
+        setSearchTerm(term);
+        setPage(1); // Reset to first page when searching
+        const query = {
+            sortType: sortId,
+            page: 1,
+            limit: showId,
+            search: term
+        };
+        getProducts(query)
+            .then((res) => {
+                setProducts(res.contents);
+                setTotal(res.total);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const handleNext = () => {
+        const nextPage = page + 1;
+        const query = {
+            sortType: sortId,
+            page: nextPage,
+            limit: showId,
+            search: searchTerm
+        };
+        getProducts(query)
+            .then((res) => {
+                setProducts(res.contents);
+                setPage(nextPage);
+                setTotal(res.total);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const handleBack = () => {
+        if (page > 1) {
+            const prevPage = page - 1;
+            const query = {
+                sortType: sortId,
+                page: prevPage,
+                limit: showId,
+                search: searchTerm
+            };
+            getProducts(query)
+                .then((res) => {
+                    setProducts(res.contents);
+                    setPage(prevPage);
+                    setTotal(res.total);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    };
+    useEffect(() => {
+        const query = {
+            sortType: sortId,
+            page,
+            limit: showId,
+            search: searchTerm
+        };
+        getProducts(query)
+            .then((res) => {
+                setProducts(res.contents);
+                setTotal(res.total);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, [sortId, showId, searchTerm]);
     return (
         <OurShopContext.Provider
             value={{
@@ -24,7 +104,14 @@ export const OurShopProvider = ({ children }) => {
                 sortId,
                 showId,
                 setSortId,
-                setShowId
+                setShowId,
+                searchTerm,
+                handleSearch,
+                products,
+                page,
+                total,
+                handleBack,
+                handleNext
             }}
         >
             {children}

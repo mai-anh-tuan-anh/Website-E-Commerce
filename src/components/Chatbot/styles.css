@@ -41,6 +41,49 @@
     flex-direction: column;
 }
 
+/* Tawk specific positioning - move to left of close button */
+.tawk-chatbot .chat-window {
+    right: auto;
+    left: -370px; /* Position to the left of the chat button */
+    bottom: 10px; /* Very close to bottom */
+}
+
+/* Webot specific positioning */
+.webot-chatbot .chat-window {
+    right: auto;
+    left: -370px; /* Position to the left of the chat button */
+    bottom: 10px; /* Very close to bottom */
+}
+
+/* BotLibre and Custom AI Chatbot positioning */
+.botlibre-chatbot .chat-window {
+    right: auto;
+    left: -370px; /* Position to the left of the chat button */
+    bottom: 10px; /* Very close to bottom */
+}
+
+/* BotLibre specific styles */
+.botlibre-style {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.botlibre-theme .chat-header {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.botlibre-theme .user-message {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.botlibre-theme .typing-indicator span {
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+}
+
+.botlibre-bot {
+    background: #e8f8f5;
+    color: #27ae60;
+}
+
 @keyframes slideUp {
     from {
         opacity: 0;
@@ -229,9 +272,107 @@
         right: -10px;
     }
 
+    .tawk-chatbot .chat-window {
+        right: auto;
+        left: -320px; /* Adjust for mobile */
+        bottom: 10px; /* Very close to bottom for mobile */
+    }
+
+    .webot-chatbot .chat-window {
+        right: auto;
+        left: -320px; /* Adjust for mobile */
+        bottom: 10px; /* Very close to bottom for mobile */
+    }
+
+    .botlibre-chatbot .chat-window {
+        right: auto;
+        left: -320px; /* Adjust for mobile */
+        bottom: 10px; /* Very close to bottom for mobile */
+    }
+
     .chat-button {
         width: 50px;
         height: 50px;
         font-size: 20px;
     }
+}
+
+/* Tawk.to Chatbot Styles */
+.tawk-chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Webot Chatbot Styles */
+.webot-chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+/* Custom styles for different chatbot themes */
+.tech-style {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+}
+
+.tech-theme .chat-header {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+}
+
+.tech-theme .user-message {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+}
+
+.tech-theme .typing-indicator span {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+}
+
+.tech-send-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+}
+
+.friendly-style {
+    background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
+}
+
+.friendly-theme .chat-header {
+    background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
+}
+
+.friendly-theme .user-message {
+    background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
+}
+
+.friendly-theme .typing-indicator span {
+    background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
+}
+
+.friendly-send-btn {
+    background: linear-gradient(135deg, #ff9ff3 0%, #feca57 100%);
+}
+
+.tech-bot {
+    background: #e8f4f8;
+    color: #2c3e50;
+}
+
+.friendly-bot {
+    background: #fff5f5;
+    color: #e91e63;
+}
+
+/* Override Tawk.to default positioning */
+iframe[title*='chat widget'] {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 9998 !important;
+}
+
+/* Hide Tawk.to when other bots are active */
+.tawk-chatbot[style*='display: none'] ~ iframe[title*='chat widget'] {
+    display: none !important;
 }

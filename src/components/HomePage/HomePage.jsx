@@ -10,6 +10,7 @@ import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomepage from '@components/SaleHomepage/SaleHomepage';
 import MyFooter from '@components/Footer/Footer';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
+
 function HomePage() {
     const [listProducts, setListProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +21,15 @@ function HomePage() {
             try {
                 setIsLoading(true);
                 setError(null);
-                const res = await getProducts();
+
+                // Query parameters for HomePage
+                const query = {
+                    sortType: '0', // Default sort (newest)
+                    page: 1,
+                    limit: '12' // Get 12 products for homepage
+                };
+
+                const res = await getProducts(query);
                 setListProducts(res.contents);
             } catch (err) {
                 setError('Failed to load products. Please try again later.');
