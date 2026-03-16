@@ -1,7 +1,7 @@
 .botlibre-chatbot {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     z-index: 9999;
 }
 
@@ -29,7 +29,7 @@
 .chat-window {
     position: absolute;
     bottom: 80px;
-    right: 0;
+    left: 0;
     width: 350px;
     height: 500px;
     background: white;
@@ -43,22 +43,19 @@
 
 /* Tawk specific positioning - move to left of close button */
 .tawk-chatbot .chat-window {
-    right: auto;
-    left: -370px; /* Position to the left of the chat button */
+    right: -170px; /* Position to the left of the chat button */
     bottom: 10px; /* Very close to bottom */
 }
 
 /* Webot specific positioning */
 .webot-chatbot .chat-window {
-    right: auto;
-    left: -370px; /* Position to the left of the chat button */
+    right: -170px; /* Position to the left of the chat button */
     bottom: 10px; /* Very close to bottom */
 }
 
 /* BotLibre and Custom AI Chatbot positioning */
 .botlibre-chatbot .chat-window {
-    right: auto;
-    left: -370px; /* Position to the left of the chat button */
+    right: -0px; /* Position to the left of the chat button */
     bottom: 10px; /* Very close to bottom */
 }
 
@@ -301,7 +298,7 @@
 .tawk-chatbot {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     z-index: 9999;
 }
 
@@ -309,7 +306,7 @@
 .webot-chatbot {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     z-index: 9999;
 }
 

@@ -97,7 +97,7 @@
         @include flex_box_custom(center, center, 10px);
     }
     .boxRight {
-        @include flex_box_custom(center, center, 10px);
+        @include flex_box_custom(center, center, 0px);
     }
     .selectBox {
         border: 1px solid #5c5c5c;
@@ -117,7 +117,7 @@
     .searchBar {
         border: 1px solid #5c5c5c;
         padding: 8px 16px;
-        border-radius: 6px;
+        border-radius: 6px 0 0 6px;
         font-size: 14px;
         color: #333;
         background-color: #fff;
@@ -137,14 +137,14 @@
     .searchBtn {
         border: 1px solid #5c5c5c;
         padding: 8px 12px;
-        border-radius: 6px;
+        border-radius: 0 6px 6px 0;
         background-color: #fff;
         cursor: pointer;
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-left: 8px;
+        border-left: none;
 
         &:hover {
             border-color: #21ceec;

@@ -8,6 +8,7 @@ import { TfiHeart } from 'react-icons/tfi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useState, useEffect, useContext } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
+import Cookies from 'js-cookie';
 function MyHeader() {
     const {
         containerBoxIcon,
@@ -15,17 +16,34 @@ function MyHeader() {
         containerHeader,
         containerBox,
         container,
-        hidden
+        hidden,
+        boxCart,
+        quantity
     } = styles;
 
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
-    const { isOpen, setIsOpen, type, setType } = useContext(SideBarContext);
-    console.log(isOpen);
+    const {
+        isOpen,
+        setIsOpen,
+        type,
+        setType,
+        listProductCart,
+        handleGetListProductsCart
+    } = useContext(SideBarContext);
+    const userId = Cookies.get('userId');
+
+    console.log('Header - listProductCart:', listProductCart);
+    console.log('Header - listProductCart.length:', listProductCart?.length);
     const handleOpenSideBar = (type) => {
         setIsOpen(true);
         setType(type);
+
+        // Load cart data when opening cart sidebar
+        if (type === 'cart' && userId) {
+            handleGetListProductsCart(userId, 'cart');
+        }
     };
     useEffect(() => {
         const handleScroll = () => {
@@ -93,11 +111,16 @@ function MyHeader() {
                             style={{ fontSize: '20px' }}
                             onClick={() => handleOpenSideBar('wishlist')}
                         />
-                        <AiOutlineShoppingCart
-                            className={styles.iconHover}
-                            style={{ fontSize: '25px' }}
-                            onClick={() => handleOpenSideBar('cart')}
-                        />
+                        <div className={boxCart}>
+                            <AiOutlineShoppingCart
+                                className={styles.iconHover}
+                                style={{ fontSize: '25px' }}
+                                onClick={() => handleOpenSideBar('cart')}
+                            />
+                            <div className={quantity}>
+                                {listProductCart?.length || 0}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

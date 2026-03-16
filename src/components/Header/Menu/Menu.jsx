@@ -4,6 +4,7 @@ import { SideBarContext } from '@contexts/SideBarProvider';
 import { StoreContext } from '@contexts/storeProvider';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import { FiLogOut } from 'react-icons/fi';
 function Menu({ content, href }) {
     const { menu, subMenu } = styles;
     const { setIsOpen, setType } = useContext(SideBarContext);
@@ -40,6 +41,7 @@ function Menu({ content, href }) {
             {handleRenderText(content)}
             {isShowSubMenu && (
                 <div onClick={handleLogOut} className={subMenu}>
+                    <FiLogOut style={{ marginRight: '6px' }} />
                     LOG OUT
                 </div>
             )}

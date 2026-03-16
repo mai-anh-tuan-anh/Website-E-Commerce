@@ -1,7 +1,7 @@
 .chatbot-manager {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 20px;
     z-index: 10000;
 }
 
@@ -29,7 +29,7 @@
 .bot-selector-panel {
     position: absolute;
     top: 60px;
-    right: 0;
+    left: 0;
     width: 280px;
     background: white;
     border-radius: 12px;

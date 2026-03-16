@@ -1,10 +1,15 @@
 import Button from '@components/Button/Button';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styles from './styles.module.scss';
 import bagIcon from '@icons/svgs/bagicon.svg';
 import eyeIcon from '@icons/svgs/eyeicon.svg';
 import rotateIcon from '@icons/svgs/rotateicon.svg';
 import wishIcon from '@icons/svgs/wishicon.svg';
+import Cookies from 'js-cookie';
+import { SideBarContext } from '@contexts/SideBarProvider';
+import { ToastContext } from '@contexts/ToastProvider';
+import { addProductToCart } from '@/apis/cartService';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 function ProductItem({
     src,
     prevSrc,
@@ -28,8 +33,47 @@ function ProductItem({
         active
     } = styles;
     const [sizeChoose, setSizeChoose] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const { setIsOpen, setType, handleGetListProductsCart } =
+        useContext(SideBarContext);
+    const { toast } = useContext(ToastContext);
+    const userId = Cookies.get('userId');
     const handleChooseSize = (size) => {
         setSizeChoose((prevSize) => (prevSize === size ? '' : size));
+    };
+    const handleAddToCart = () => {
+        if (!userId) {
+            setIsOpen(true);
+            setType('login');
+            toast.warning('Please login to add products to cart');
+            return;
+        }
+        if (!sizeChoose) {
+            toast.warning('Please choose a size');
+            return;
+        }
+        setIsLoading(true);
+        const data = {
+            userId: userId,
+            productId: details._id,
+            quantity: 1,
+            size: sizeChoose
+        };
+        console.log('Adding to cart with data:', data);
+        addProductToCart(data)
+            .then((res) => {
+                console.log('Add to cart response:', res);
+                setIsOpen(true);
+                setType('cart');
+                handleGetListProductsCart(userId, 'cart');
+                toast.success('Product added to cart');
+            })
+            .catch((err) => {
+                toast.error(err.message);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
     return (
         <div className={container}>
@@ -74,7 +118,43 @@ function ProductItem({
             </div>
             {!isHomepage && (
                 <div className={boxBtn}>
-                    <Button content={'ADD TO CART'} />
+                    <Button
+                        content={
+                            <>
+                                <img
+                                    src={bagIcon}
+                                    alt=''
+                                    style={{
+                                        width: '16px',
+                                        height: '16px',
+                                        marginRight: '8px',
+                                        filter: 'brightness(3) saturate(100%)'
+                                    }}
+                                />
+                                ADD TO CART
+                            </>
+                        }
+                        onClick={handleAddToCart}
+                        disabled={isLoading}
+                    />
+                </div>
+            )}
+            {isLoading && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 9999
+                    }}
+                >
+                    <LoadingSpinner />
                 </div>
             )}
         </div>
