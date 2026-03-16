@@ -37,7 +37,7 @@ export const OurShopProvider = ({ children }) => {
                 setTotal(res.total);
             })
             .catch((err) => {
-                console.log(err);
+                console.error('Error fetching products:', err);
             });
     };
 
@@ -56,7 +56,7 @@ export const OurShopProvider = ({ children }) => {
                 setTotal(res.total);
             })
             .catch((err) => {
-                console.log(err);
+                console.error('Error fetching products:', err);
             });
     };
 
@@ -93,7 +93,7 @@ export const OurShopProvider = ({ children }) => {
                 setTotal(res.total);
             })
             .catch((err) => {
-                console.log(err);
+                console.error('Error fetching products:', err);
             });
     }, [sortId, showId, searchTerm]);
     return (

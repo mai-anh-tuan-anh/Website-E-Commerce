@@ -83,7 +83,14 @@ const ChatbotManager = () => {
             custom: 'AI Chatbot Tùy chỉnh'
         };
 
-        console.log(`Đã chuyển sang: ${botNames[botType]}`);
+        const handleBotChange = (botType) => {
+            const selectedBot = botType;
+            const botNames = {
+                ai: 'AI Chatbot Tùy chỉnh',
+                simple: 'Simple Chatbot',
+                advanced: 'Advanced Chatbot'
+            };
+        };
     };
 
     return (

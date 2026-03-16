@@ -1,0 +1,248 @@
+.confirmationContainer {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family:
+        'Inter',
+        -apple-system,
+        BlinkMacSystemFont,
+        'Segoe UI',
+        sans-serif;
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+.backBtn {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #f3f4f6;
+        color: #2563eb;
+    }
+
+    svg {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        position: static;
+        margin-bottom: 2rem;
+        align-self: flex-start;
+    }
+}
+
+.confirmationCard {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid #f0f0f0;
+
+    @media (max-width: 768px) {
+        padding: 2rem;
+    }
+}
+
+.successIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: #f0fdf4;
+    border-radius: 50%;
+    margin-bottom: 2rem;
+
+    svg {
+        font-size: 3rem;
+        color: #22c55e;
+    }
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 0.5rem 0;
+
+    @media (max-width: 768px) {
+        font-size: 1.5rem;
+    }
+}
+
+.thankYou {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin: 0 0 2rem 0;
+}
+
+.orderInfo {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 8px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+.orderNumber,
+.orderDate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.nextSteps {
+    text-align: left;
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0 0 1.5rem 0;
+        text-align: center;
+    }
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+}
+
+.stepIcon {
+    font-size: 1.5rem;
+    color: #2563eb;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+}
+
+.stepContent {
+    flex: 1;
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1f2937;
+        margin: 0 0 0.25rem 0;
+    }
+
+    p {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin: 0;
+        line-height: 1.4;
+    }
+}
+
+.emailNotice {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #92400e;
+
+    p {
+        margin: 0;
+    }
+}
+
+.actionButtons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
+
+    button {
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+        min-width: 200px;
+
+        @media (max-width: 768px) {
+            width: 100%;
+        }
+    }
+}
+
+.shopBtn {
+    background: #2563eb;
+    color: white;
+
+    &:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+}
+
+.historyBtn {
+    background: #f3f4f6;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+
+    &:hover {
+        background: #e5e7eb;
+    }
+}

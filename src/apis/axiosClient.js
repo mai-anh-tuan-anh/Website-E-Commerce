@@ -44,6 +44,9 @@ axiosClient.interceptors.response.use(
             } catch (error) {
                 Cookies.remove('token');
                 Cookies.remove('refreshToken');
+                Cookies.remove('userId');
+                // Redirect về trang login khi token hết hạn
+                window.location.href = '/login';
                 return Promise.reject(error);
             }
         }

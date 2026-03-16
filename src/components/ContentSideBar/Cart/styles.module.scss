@@ -8,6 +8,34 @@
     .boxContent {
         flex: 1;
     }
+
+    .emptyCart {
+        @include flex_box_custom(center, center, 20px);
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+        height: 100%;
+        min-height: 200px;
+
+        .emptyCartIcon {
+            font-size: 48px;
+            color: #ccc;
+            margin-bottom: 16px;
+
+            svg {
+                width: 48px;
+                height: 48px;
+            }
+        }
+
+        .emptyCartTitle {
+            font-size: 18px;
+            font-weight: 600;
+            color: #666;
+            margin: 0;
+        }
+    }
+
     .subtotalSection {
         width: 100%;
         padding: 15px 0;

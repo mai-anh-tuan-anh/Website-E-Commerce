@@ -34,7 +34,8 @@ function Login() {
     const [isLoading, setIsLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const { toast } = useContext(ToastContext);
-    const { isOpen, setIsOpen } = useContext(SideBarContext);
+    const { isOpen, setIsOpen, handleGetListProductsCart } =
+        useContext(SideBarContext);
     const { setUserId } = useContext(StoreContext);
     const formik = useFormik({
         initialValues: { email: '', password: '', cfmpassword: '' },
@@ -89,6 +90,7 @@ function Login() {
                         );
                         setIsOpen(false);
                         toast.success('Login successful!');
+                        handleGetListProductsCart(id, 'cart');
                     })
                     .catch((err) => {
                         toast.error(

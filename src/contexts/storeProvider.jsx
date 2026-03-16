@@ -12,7 +12,7 @@ export const StoreProvider = ({ children }) => {
                     setUserInfo(res.data.data);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error('Error fetching user info:', err);
                 });
         }
     }, [userId]);

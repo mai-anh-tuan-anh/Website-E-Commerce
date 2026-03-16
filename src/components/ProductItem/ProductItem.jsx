@@ -59,10 +59,9 @@ function ProductItem({
             quantity: 1,
             size: sizeChoose
         };
-        console.log('Adding to cart with data:', data);
+
         addProductToCart(data)
             .then((res) => {
-                console.log('Add to cart response:', res);
                 setIsOpen(true);
                 setType('cart');
                 handleGetListProductsCart(userId, 'cart');

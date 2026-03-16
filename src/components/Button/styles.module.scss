@@ -1,9 +1,8 @@
 @import '@styles/mixin.module.scss';
 @import '@styles/variable.module.scss';
 .btn {
-    @include btn(176px, 42px, 5px, rgba(0, 183, 255, 0.664));
-    color: black;
-    border: 1px solid black;
+    @include btn(176px, 42px, 5px, #2563eb);
+    color: white;
     font-size: 14px;
     font-weight: 400;
     cursor: pointer;

@@ -34,8 +34,6 @@ function MyHeader() {
     } = useContext(SideBarContext);
     const userId = Cookies.get('userId');
 
-    console.log('Header - listProductCart:', listProductCart);
-    console.log('Header - listProductCart.length:', listProductCart?.length);
     const handleOpenSideBar = (type) => {
         setIsOpen(true);
         setType(type);
@@ -45,6 +43,7 @@ function MyHeader() {
             handleGetListProductsCart(userId, 'cart');
         }
     };
+
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
