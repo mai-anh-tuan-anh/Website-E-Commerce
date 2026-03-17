@@ -1,7 +1,7 @@
 import MyHeader from '@components/Header/Header';
 import MyFooter from '@components/Footer/Footer';
 import styles from './styles.module.scss';
-import about from '@images/about.jpg';
+import about from '../../assets/images/about.jpg';
 import {
     FaHome,
     FaHeart,
