@@ -73,9 +73,9 @@ function Cart() {
                 <>
                     <div className={subtotalSection}>
                         <div className={subtotalLabel}>Subtotal:</div>
-                        <div className={subtotalPrice}>
-                            ${subtotal.toFixed(2)}
-                        </div>
+                        <span className={subtotalPrice}>
+                            {subtotal.toFixed(2)} $
+                        </span>
                     </div>
                     <div className={buttonWrapper}>
                         <Button

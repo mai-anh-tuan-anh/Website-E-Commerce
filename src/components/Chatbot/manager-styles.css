@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 60px;
 }
 
 .bot-selector-btn:hover {
@@ -28,7 +29,7 @@
 
 .bot-selector-panel {
     position: absolute;
-    top: 60px;
+    top: 120px;
     left: 0;
     width: 280px;
     background: white;
