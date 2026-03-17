@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { getProducts } from '../apis/productsService';
+import { getProducts } from '@/apis/productsService';
 export const OurShopContext = createContext();
 export const OurShopProvider = ({ children }) => {
     const sortOptions = [
