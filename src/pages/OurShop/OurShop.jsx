@@ -9,6 +9,7 @@ import Filter from './components/Filter';
 import { useContext } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
 import ListProducts from './components/ListProducts';
+import MyFooter from '@components/Footer/Footer';
 
 function OurShopContent() {
     const { container, functionBox, btnBack } = styles;
@@ -20,28 +21,34 @@ function OurShopContent() {
     };
 
     return (
-        <MainLayout>
-            <div className={container}>
-                <div className={functionBox}>
-                    <div>
+        <>
+            <MainLayout>
+                <div className={container}>
+                    <div className={functionBox}>
+                        <div>
+                            <button
+                                onClick={() => navigate('/')}
+                                className={btnBack}
+                            >
+                                <FaHome /> Home
+                            </button>
+                        </div>
                         <button
-                            onClick={() => navigate('/')}
+                            onClick={() => handleBack()}
                             className={btnBack}
                         >
-                            <FaHome /> Home
+                            ← Back
                         </button>
                     </div>
-                    <button onClick={() => handleBack()} className={btnBack}>
-                        ← Back
-                    </button>
                 </div>
-            </div>
-            <Banner />
-            <div>
-                <Filter />
-                <ListProducts />
-            </div>
-        </MainLayout>
+                <Banner />
+                <div>
+                    <Filter />
+                    <ListProducts />
+                </div>
+            </MainLayout>
+            <MyFooter />
+        </>
     );
 }
 

@@ -142,6 +142,48 @@
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    @media (max-width: 1024px) {
+        max-height: 400px;
+    }
+
+    @media (max-width: 768px) {
+        max-height: 500px;
+        padding: 1rem;
+    }
+
+    .productsList {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 0.5rem;
+
+        /* Custom scrollbar */
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+
+            &:hover {
+                background: #a8a8a8;
+            }
+        }
+
+        @media (max-width: 768px) {
+            padding-right: 0.25rem;
+        }
+    }
 }
 
 .productsHeader {
@@ -326,10 +368,128 @@
     border-radius: 8px;
     font-size: 0.875rem;
     color: #92400e;
+}
 
-    p {
-        margin: 0;
+.couponSection {
+    margin: 1.5rem 0;
+    padding-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+
+    .couponInputWrapper {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+
+        .couponInput {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+
+            &:focus {
+                outline: none;
+                border-color: #2563eb;
+                box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            }
+
+            &:disabled {
+                background: #f9fafb;
+                color: #6b7280;
+                cursor: not-allowed;
+            }
+        }
+
+        .applyCouponBtn {
+            padding: 0.75rem 1.25rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover:not(:disabled) {
+                background: #1d4ed8;
+                transform: translateY(-1px);
+            }
+
+            &:disabled {
+                background: #9ca3af;
+                cursor: not-allowed;
+                transform: none;
+            }
+        }
+
+        .removeCouponBtn {
+            padding: 0.75rem 1.25rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: #dc2626;
+                transform: translateY(-1px);
+            }
+        }
     }
+
+    .couponMessage {
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        margin-bottom: 0.75rem;
+
+        &.success {
+            background: #10b981;
+            color: white;
+            border: 1px solid #059669;
+        }
+
+        &.error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fca5a5;
+        }
+    }
+
+    .availableCoupons {
+        padding: 0.75rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.75rem;
+
+        p {
+            margin: 0 0 0.5rem 0;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        span {
+            display: inline-block;
+            margin: 0.25rem 0.5rem 0.25rem 0;
+            padding: 0.25rem 0.5rem;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            color: #6b7280;
+            font-family: 'Courier New', monospace;
+        }
+    }
+}
+
+.discount {
+    color: #10b981;
+    font-weight: 600;
 }
 
 .actionButtons {

@@ -18,6 +18,10 @@ function ViewCart() {
     const { listProductCart, updateCartItemQuantity, removeCartItem } =
         useContext(SideBarContext);
     const [quantities, setQuantities] = useState({});
+    const [couponCode, setCouponCode] = useState('');
+    const [discount, setDiscount] = useState(0);
+    const [couponMessage, setCouponMessage] = useState('');
+    const [couponApplied, setCouponApplied] = useState(false);
 
     const calculateSubtotal = () => {
         if (!listProductCart || listProductCart.length === 0) return 0;
@@ -33,7 +37,56 @@ function ViewCart() {
     };
 
     const calculateTotal = () => {
-        return calculateSubtotal() + calculateShipping();
+        const subtotal = calculateSubtotal();
+        const shipping = calculateShipping();
+        const tax = subtotal * 0.08;
+        return subtotal + shipping + tax - discount;
+    };
+
+    const applyCoupon = () => {
+        const subtotal = calculateSubtotal();
+        let discountAmount = 0;
+        let message = '';
+
+        // Mock coupon codes
+        switch (couponCode.toUpperCase()) {
+            case 'SAVE10':
+                discountAmount = subtotal * 0.1;
+                message = 'Coupon applied: 10% off!';
+                break;
+            case 'SAVE20':
+                discountAmount = subtotal * 0.2;
+                message = 'Coupon applied: 20% off!';
+                break;
+            case 'FREESHIP':
+                discountAmount = calculateShipping();
+                message = 'Coupon applied: Free shipping!';
+                break;
+            case 'NEWUSER':
+                discountAmount = 15;
+                message = 'Coupon applied: $15 off!';
+                break;
+            default:
+                message = 'Invalid coupon code';
+                discountAmount = 0;
+        }
+
+        if (discountAmount > 0) {
+            setDiscount(discountAmount);
+            setCouponMessage(message);
+            setCouponApplied(true);
+        } else {
+            setCouponMessage(message);
+            setDiscount(0);
+            setCouponApplied(false);
+        }
+    };
+
+    const removeCoupon = () => {
+        setCouponCode('');
+        setDiscount(0);
+        setCouponMessage('');
+        setCouponApplied(false);
     };
 
     const handleQuantityChange = (itemId, newQuantity) => {
@@ -99,80 +152,84 @@ function ViewCart() {
                             <span>Total</span>
                         </div>
 
-                        {listProductCart.map((item, index) => (
-                            <div key={index} className={styles.productItem}>
-                                <div className={styles.productInfo}>
-                                    <img
-                                        src={
-                                            item.images?.[0] ||
-                                            '/placeholder-image.jpg'
-                                        }
-                                        alt={item.name}
-                                        className={styles.productImage}
-                                    />
-                                    <div className={styles.productDetails}>
-                                        <h3>{item.name}</h3>
-                                        <p>SKU: {item.sku}</p>
-                                        {item.size && <p>Size: {item.size}</p>}
+                        <div className={styles.productsList}>
+                            {listProductCart.map((item, index) => (
+                                <div key={index} className={styles.productItem}>
+                                    <div className={styles.productInfo}>
+                                        <img
+                                            src={
+                                                item.images?.[0] ||
+                                                '/placeholder-image.jpg'
+                                            }
+                                            alt={item.name}
+                                            className={styles.productImage}
+                                        />
+                                        <div className={styles.productDetails}>
+                                            <h3>{item.name}</h3>
+                                            <p>SKU: {item.sku}</p>
+                                            {item.size && (
+                                                <p>Size: {item.size}</p>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className={styles.productPrice}>
-                                    ${item.price?.toFixed(2) || '0.00'}
-                                </div>
+                                    <div className={styles.productPrice}>
+                                        ${item.price?.toFixed(2) || '0.00'}
+                                    </div>
 
-                                <div className={styles.quantityControls}>
+                                    <div className={styles.quantityControls}>
+                                        <button
+                                            className={styles.quantityBtn}
+                                            onClick={() =>
+                                                handleQuantityChange(
+                                                    index,
+                                                    (quantities[index] ||
+                                                        item.quantity ||
+                                                        1) - 1
+                                                )
+                                            }
+                                        >
+                                            <AiOutlineMinus />
+                                        </button>
+                                        <span className={styles.quantity}>
+                                            {quantities[index] ||
+                                                item.quantity ||
+                                                1}
+                                        </span>
+                                        <button
+                                            className={styles.quantityBtn}
+                                            onClick={() =>
+                                                handleQuantityChange(
+                                                    index,
+                                                    (quantities[index] ||
+                                                        item.quantity ||
+                                                        1) + 1
+                                                )
+                                            }
+                                        >
+                                            <AiOutlinePlus />
+                                        </button>
+                                    </div>
+
+                                    <div className={styles.productTotal}>
+                                        $
+                                        {(
+                                            (item.price || 0) *
+                                            (quantities[index] ||
+                                                item.quantity ||
+                                                1)
+                                        ).toFixed(2)}
+                                    </div>
+
                                     <button
-                                        className={styles.quantityBtn}
-                                        onClick={() =>
-                                            handleQuantityChange(
-                                                index,
-                                                (quantities[index] ||
-                                                    item.quantity ||
-                                                    1) - 1
-                                            )
-                                        }
+                                        className={styles.removeBtn}
+                                        onClick={() => handleRemoveItem(index)}
                                     >
-                                        <AiOutlineMinus />
-                                    </button>
-                                    <span className={styles.quantity}>
-                                        {quantities[index] ||
-                                            item.quantity ||
-                                            1}
-                                    </span>
-                                    <button
-                                        className={styles.quantityBtn}
-                                        onClick={() =>
-                                            handleQuantityChange(
-                                                index,
-                                                (quantities[index] ||
-                                                    item.quantity ||
-                                                    1) + 1
-                                            )
-                                        }
-                                    >
-                                        <AiOutlinePlus />
+                                        <AiOutlineDelete />
                                     </button>
                                 </div>
-
-                                <div className={styles.productTotal}>
-                                    $
-                                    {(
-                                        (item.price || 0) *
-                                        (quantities[index] ||
-                                            item.quantity ||
-                                            1)
-                                    ).toFixed(2)}
-                                </div>
-
-                                <button
-                                    className={styles.removeBtn}
-                                    onClick={() => handleRemoveItem(index)}
-                                >
-                                    <AiOutlineDelete />
-                                </button>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
 
                     <div className={styles.orderSummary}>
@@ -197,11 +254,65 @@ function ViewCart() {
                             <span>${(subtotal * 0.08).toFixed(2)}</span>
                         </div>
 
+                        {discount > 0 && (
+                            <div className={styles.summaryRow}>
+                                <span>Discount</span>
+                                <span className={styles.discount}>
+                                    -${discount.toFixed(2)}
+                                </span>
+                            </div>
+                        )}
+
                         <div
                             className={`${styles.summaryRow} ${styles.totalRow}`}
                         >
                             <span>Total</span>
-                            <span>${(total + subtotal * 0.08).toFixed(2)}</span>
+                            <span>${calculateTotal().toFixed(2)}</span>
+                        </div>
+
+                        <div className={styles.couponSection}>
+                            <div className={styles.couponInputWrapper}>
+                                <input
+                                    type='text'
+                                    placeholder='Enter coupon code'
+                                    value={couponCode}
+                                    onChange={(e) =>
+                                        setCouponCode(e.target.value.trim())
+                                    }
+                                    className={styles.couponInput}
+                                    disabled={couponApplied}
+                                />
+                                {!couponApplied ? (
+                                    <button
+                                        onClick={applyCoupon}
+                                        className={styles.applyCouponBtn}
+                                        disabled={!couponCode.trim()}
+                                    >
+                                        Apply
+                                    </button>
+                                ) : (
+                                    <button
+                                        onClick={removeCoupon}
+                                        className={styles.removeCouponBtn}
+                                    >
+                                        Remove
+                                    </button>
+                                )}
+                            </div>
+                            {couponMessage && (
+                                <div
+                                    className={`${styles.couponMessage} ${couponApplied ? styles.success : styles.error}`}
+                                >
+                                    {couponMessage}
+                                </div>
+                            )}
+                            <div className={styles.availableCoupons}>
+                                <p>Available coupons:</p>
+                                <span>SAVE10 (10% off)</span>
+                                <span>SAVE20 (20% off)</span>
+                                <span>FREESHIP (Free shipping)</span>
+                                <span>NEWUSER ($15 off)</span>
+                            </div>
                         </div>
 
                         <div className={styles.shippingNote}>

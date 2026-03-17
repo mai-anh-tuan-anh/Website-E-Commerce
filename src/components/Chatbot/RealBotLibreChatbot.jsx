@@ -34,8 +34,8 @@ const RealBotLibreChatbot = () => {
                     domain: 'https://www.botlibre.com',
                     floating: false, // We'll control positioning ourselves
                     title: 'BotLibre AI Assistant',
-                    send: 'Gửi',
-                    placeholder: 'Nhập tin nhắn...'
+                    send: 'Send',
+                    placeholder: 'Enter message...'
                 });
             }
         } catch (error) {
@@ -45,13 +45,15 @@ const RealBotLibreChatbot = () => {
 
     const handleToggleChat = () => {
         setIsOpen(!isOpen);
-        
+
         // If opening and BotLibre is loaded, show the widget
         if (!isOpen && isBotLibreLoaded && window.botlibreInstance) {
             setTimeout(() => {
                 // Try to find and show BotLibre widget
-                const botlibreElements = document.querySelectorAll('[id*="botlibre"], .botlibre-chat, iframe[src*="botlibre"]');
-                botlibreElements.forEach(element => {
+                const botlibreElements = document.querySelectorAll(
+                    '[id*="botlibre"], .botlibre-chat, iframe[src*="botlibre"]'
+                );
+                botlibreElements.forEach((element) => {
                     element.style.display = 'block';
                     element.style.position = 'fixed';
                     element.style.bottom = '10px';
@@ -62,8 +64,10 @@ const RealBotLibreChatbot = () => {
             }, 100);
         } else if (isOpen) {
             // Hide BotLibre widget when closing
-            const botlibreElements = document.querySelectorAll('[id*="botlibre"], .botlibre-chat, iframe[src*="botlibre"]');
-            botlibreElements.forEach(element => {
+            const botlibreElements = document.querySelectorAll(
+                '[id*="botlibre"], .botlibre-chat, iframe[src*="botlibre"]'
+            );
+            botlibreElements.forEach((element) => {
                 element.style.display = 'none';
             });
         }
@@ -100,7 +104,7 @@ const RealBotLibreChatbot = () => {
                     <div className='chat-messages'>
                         <div className='message bot-message botlibre-bot'>
                             <div className='message-text'>
-                                Đang tải BotLibre AI... Vui lòng đợi.
+                                Loading BotLibre AI... Please wait.
                             </div>
                             <div className='message-time'>
                                 {formatTime(new Date())}
@@ -108,7 +112,8 @@ const RealBotLibreChatbot = () => {
                         </div>
                         <div className='message bot-message botlibre-bot'>
                             <div className='message-text'>
-                                Nếu không tải được, BotLibre có thể đang bảo trì hoặc có lỗi kết nối.
+                                If it doesn't load, BotLibre may be under
+                                maintenance or experiencing connection issues.
                             </div>
                             <div className='message-time'>
                                 {formatTime(new Date())}
@@ -132,7 +137,8 @@ const RealBotLibreChatbot = () => {
                     <div className='chat-messages'>
                         <div className='message bot-message botlibre-bot'>
                             <div className='message-text'>
-                                BotLibre AI đã sẵn sàng! Đây là chatbot AI thực sự từ BotLibre.com.
+                                BotLibre AI is ready! This is a real AI chatbot
+                                from BotLibre.com.
                             </div>
                             <div className='message-time'>
                                 {formatTime(new Date())}
@@ -140,7 +146,8 @@ const RealBotLibreChatbot = () => {
                         </div>
                         <div className='message bot-message botlibre-bot'>
                             <div className='message-text'>
-                                Chat widget sẽ xuất hiện bên trái. Nếu không thấy, vui lòng làm mới trang.
+                                Chat widget will appear on the left. If you
+                                don't see it, please refresh the page.
                             </div>
                             <div className='message-time'>
                                 {formatTime(new Date())}

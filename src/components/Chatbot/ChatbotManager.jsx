@@ -8,6 +8,10 @@ import RealBotLibreChatbot from './RealBotLibreChatbot';
 const ChatbotManager = () => {
     const [activeBot, setActiveBot] = useState('custom'); // 'webot', 'botlibre', 'tawk', 'custom'
     const [showSelector, setShowSelector] = useState(false);
+    const [minimizedBots, setMinimizedBots] = useState({
+        webot: false,
+        tawk: false
+    });
 
     useEffect(() => {
         // Hide other chatbots when custom bot is active
@@ -71,6 +75,13 @@ const ChatbotManager = () => {
         }
     }, [activeBot]);
 
+    const toggleBotMinimize = (botType) => {
+        setMinimizedBots((prev) => ({
+            ...prev,
+            [botType]: !prev[botType]
+        }));
+    };
+
     const switchBot = (botType) => {
         setActiveBot(botType);
         setShowSelector(false);
@@ -80,13 +91,13 @@ const ChatbotManager = () => {
             webot: 'Webot Chatbot',
             botlibre: 'BotLibre Chatbot',
             tawk: 'Tawk.to Chatbot',
-            custom: 'AI Chatbot Tùy chỉnh'
+            custom: 'Custom AI Chatbot'
         };
 
         const handleBotChange = (botType) => {
             const selectedBot = botType;
             const botNames = {
-                ai: 'AI Chatbot Tùy chỉnh',
+                ai: 'Custom AI Chatbot',
                 simple: 'Simple Chatbot',
                 advanced: 'Advanced Chatbot'
             };
@@ -96,8 +107,18 @@ const ChatbotManager = () => {
     return (
         <div className='chatbot-manager'>
             {/* Render the active chatbot */}
-            {activeBot === 'webot' && <WebotChatbot />}
-            {activeBot === 'tawk' && <TawkChatbot />}
+            {activeBot === 'webot' && (
+                <WebotChatbot
+                    isMinimized={minimizedBots.webot}
+                    onToggleMinimize={() => toggleBotMinimize('webot')}
+                />
+            )}
+            {activeBot === 'tawk' && (
+                <TawkChatbot
+                    isMinimized={minimizedBots.tawk}
+                    onToggleMinimize={() => toggleBotMinimize('tawk')}
+                />
+            )}
             {activeBot === 'custom' && <BotLibreChatbot />}
             {activeBot === 'botlibre' && <RealBotLibreChatbot />}
 
@@ -105,7 +126,7 @@ const ChatbotManager = () => {
             <button
                 className='bot-selector-btn'
                 onClick={() => setShowSelector(!showSelector)}
-                title='Chọn chatbot'
+                title='Select chatbot'
             >
                 🤖
             </button>
@@ -113,27 +134,16 @@ const ChatbotManager = () => {
             {/* Bot Selection Panel */}
             {showSelector && (
                 <div className='bot-selector-panel'>
-                    <h4>Chọn Chatbot</h4>
+                    <h4>Select Chatbot</h4>
                     <div className='bot-options'>
-                        <button
-                            className={`bot-option ${activeBot === 'custom' ? 'active' : ''}`}
-                            onClick={() => switchBot('custom')}
-                        >
-                            <span className='bot-icon'>🤖</span>
-                            <div className='bot-info'>
-                                <strong>AI Chatbot Tùy chỉnh</strong>
-                                <small>Thông minh, đa ngôn ngữ</small>
-                            </div>
-                        </button>
-
                         <button
                             className={`bot-option ${activeBot === 'webot' ? 'active' : ''}`}
                             onClick={() => switchBot('webot')}
                         >
-                            <span className='bot-icon'>🔧</span>
+                            <span className='bot-icon'>🤖</span>
                             <div className='bot-info'>
                                 <strong>Webot</strong>
-                                <small>Chuyên gia kỹ thuật công nghệ</small>
+                                <small>Fashion style consultant expert</small>
                             </div>
                         </button>
 
@@ -144,7 +154,7 @@ const ChatbotManager = () => {
                             <span className='bot-icon'>💬</span>
                             <div className='bot-info'>
                                 <strong>Tawk.to</strong>
-                                <small>Chăm sóc khách hàng 24/7</small>
+                                <small>24/7 customer service</small>
                             </div>
                         </button>
 
@@ -155,7 +165,7 @@ const ChatbotManager = () => {
                             <span className='bot-icon'>🤖</span>
                             <div className='bot-info'>
                                 <strong>BotLibre</strong>
-                                <small>Chatbot AI chuyên nghiệp</small>
+                                <small>Professional AI chatbot</small>
                             </div>
                         </button>
                     </div>
@@ -166,7 +176,7 @@ const ChatbotManager = () => {
             <div className='active-bot-indicator'>
                 <span className='indicator-text'>
                     {activeBot === 'custom' && '🤖 AI Bot'}
-                    {activeBot === 'webot' && '🔧 Webot'}
+                    {activeBot === 'webot' && '� Webot'}
                     {activeBot === 'tawk' && '💬 Tawk.to'}
                     {activeBot === 'botlibre' && '🤖 BotLibre'}
                 </span>

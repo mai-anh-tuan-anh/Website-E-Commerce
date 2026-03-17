@@ -5,7 +5,7 @@ const BotLibreChatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([
         {
-            text: 'Xin chào! Tôi là trợ lý AI của cửa hàng. Tôi có thể giúp bạn tìm sản phẩm, tư vấn mua sắm, hỗ trợ thanh toán và giải đáp các thắc mắc của bạn. Bạn cần giúp gì hôm nay?',
+            text: "Hello! I'm the store's AI assistant. I can help you find products, provide shopping consultation, assist with payments, and answer your questions. What do you need help with today?",
             isBot: true,
             timestamp: new Date()
         }
@@ -32,7 +32,7 @@ const BotLibreChatbot = () => {
             message.includes('đây là trang gì') ||
             message.includes('shop bán gì')
         ) {
-            return '🛍️ Đây là website thương mại điện tử chuyên nghiệp!\n\nChúng tôi bán:\n📱 Đồ công nghệ (iPhone, Samsung, Laptop)\n👕 Thời trang nam/nữ/unisex\n💄 Mỹ phẩm chính hãng\n🏠 Gia dụng thông minh\n📚 Sách và văn phòng phẩm\n⚽ Dụng cụ thể thao\n\n✨ Cam kết:\n• Hàng chính hãng 100%\n• Giá tốt nhất thị trường\n• Giao hàng toàn quốc\n• Đổi trả 30 ngày\n\nBạn cần tìm sản phẩm nào? 😊';
+            return '🛍️ This is a professional e-commerce website!\n\nWe sell:\n📱 Electronics (iPhone, Samsung, Laptop)\n👕 Fashion (men/women/unisex)\n💄 Authentic cosmetics\n🏠 Smart home appliances\n📚 Books and office supplies\n⚽ Sports equipment\n\n✨ Commitments:\n• 100% authentic products\n• Best market prices\n• Nationwide delivery\n• 30-day returns\n\nWhich product are you looking for? 😊';
         }
 
         if (
@@ -40,7 +40,7 @@ const BotLibreChatbot = () => {
             message.includes('bán sản phẩm gì') ||
             message.includes('có mặt hàng gì')
         ) {
-            return '🏪 Chúng tôi có đầy đủ các danh mục sản phẩm:\n\n📱 **Đồ công nghệ**: iPhone, Samsung, Laptop, Tablet, Phụ kiện\n👕 **Thời trang**: Áo, quần, váy, giày, túi xách\n💄 **Mỹ phẩm**: Skincare, makeup, son, kem chống nắng\n🏠 **Gia dụng**: Bếp từ, robot hút bụi, máy lọc không khí\n📚 **Sách**: Văn học, kỹ năng, kinh doanh, giáo dục\n⚽ **Thể thao**: Dụng cụ gym, yoga, bóng đá, cầu lông\n\nBạn muốn xem danh mục nào? 🤔';
+            return '🏪 We have full product categories:\n\n📱 **Electronics**: iPhone, Samsung, Laptop, Tablet, Accessories\n👕 **Fashion**: Shirts, pants, dresses, shoes, bags\n💄 **Cosmetics**: Skincare, makeup, lipstick, sunscreen\n🏠 **Home appliances**: Induction cookers, robot vacuums, air purifiers\n📚 **Books**: Literature, skills, business, education\n⚽ **Sports**: Gym equipment, yoga, football, badminton\n\nWhich category would you like to see? 🤔';
         }
 
         // Product Intents
@@ -49,7 +49,7 @@ const BotLibreChatbot = () => {
             message.includes('có gì hot') ||
             message.includes('sản phẩm bán chạy')
         ) {
-            return '🔥 Sản phẩm bán chạy nhất tuần này:\n\n📱 iPhone 15 Pro Max - Giảm 15%\n👕 Áo Polo Nam - Chỉ 299k\n💄 Son MAC Ruby Woo - 650k\n🏠 Nồi chiên không dầu Philips - 1.2tr\n📚 Sách "Nhà Giả Kim" - 120k\n⚽ Giày Nike Air Force - 1.8tr\n\nBạn muốn xem chi tiết sản phẩm nào? ✨';
+            return '🔥 Best selling products this week:\n\n📱 iPhone 15 Pro Max - 15% off\n👕 Men\'s Polo Shirt - Only 299k\n💄 MAC Ruby Woo Lipstick - 650k\n🏠 Philips Air Fryer - 1.2M\n📚 "The Alchemist" Book - 120k\n⚽ Nike Air Force Shoes - 1.8M\n\nWhich product details would you like to see? ✨';
         }
 
         if (
@@ -57,7 +57,7 @@ const BotLibreChatbot = () => {
             message.includes('giá cả') ||
             message.includes('bao nhiêu tiền')
         ) {
-            return '💰 Giá sản phẩm rất đa dạng:\n\n📱 Điện thoại: 3tr - 25tr\n💻 Laptop: 8tr - 45tr\n👕 Quần áo: 150k - 1.5tr\n💄 Mỹ phẩm: 100k - 2tr\n🏠 Gia dụng: 500k - 10tr\n📚 Sách: 50k - 500k\n⚽ Thể thao: 200k - 3tr\n\nBạn quan tâm sản phẩm nào để tôi báo giá chính xác? 🎯';
+            return '💰 Product prices are very diverse:\n\n📱 Phones: 3M - 25M\n💻 Laptops: 8M - 45M\n👕 Clothing: 150k - 1.5M\n💄 Cosmetics: 100k - 2M\n🏠 Home appliances: 500k - 10M\n📚 Books: 50k - 500k\n⚽ Sports: 200k - 3M\n\nWhich product are you interested in for exact pricing? 🎯';
         }
 
         if (
@@ -65,7 +65,7 @@ const BotLibreChatbot = () => {
             message.includes('tồn kho') ||
             message.includes('có sẵn không')
         ) {
-            return '📦 Tình trạng tồn kho:\n\n✅ **Còn hàng (90% sản phẩm)**:\n• iPhone 15 series: Đủ màu, đủ dung lượng\n• Samsung Galaxy: Full box quốc tế\n• Quần áo: Size S-XL đầy đủ\n• Mỹ phẩm: Hết hạn 2025+\n\n⚠️ **Sắp hết hàng**:\n• MacBook Air M2 (còn 5 cái)\n• Nike Air Jordan (còn 10 đôi)\n\nBạn muốn kiểm tra sản phẩm cụ thể nào? 🔍';
+            return '📦 Stock status:\n\n✅ **In stock (90% of products)**:\n• iPhone 15 series: All colors, all storage\n• Samsung Galaxy: Full international box\n• Clothing: Sizes S-XL fully available\n• Cosmetics: Expires 2025+\n\n⚠️ **Almost out of stock**:\n• MacBook Air M2 (5 left)\n• Nike Air Jordan (10 pairs left)\n\nWhich specific product would you like to check? 🔍';
         }
 
         // Shipping Intents
@@ -74,7 +74,7 @@ const BotLibreChatbot = () => {
             message.includes('thời gian giao') ||
             message.includes('bao lâu nhận hàng')
         ) {
-            return '⏰ Thời gian giao hàng:\n\n🚀 **Nhanh nhất**:\n• Hà Nội & TP.HCM: 1-2 ngày\n• Các tỉnh lân cận: 2-3 ngày\n\n📦 **Tiêu chuẩn**:\n• Miền Bắc: 3-4 ngày\n• Miền Trung: 3-4 ngày\n• Miền Nam: 2-3 ngày\n\n🏝️ **Đảo xa**: 5-7 ngày\n\nBạn ở khu vực nào? Tôi sẽ kiểm tra chính xác! 📍';
+            return "⏰ Delivery time:\n\n🚀 **Fastest**:\n• Hanoi & Ho Chi Minh City: 1-2 days\n• Nearby provinces: 2-3 days\n\n📦 **Standard**:\n• Northern region: 3-4 days\n• Central region: 3-4 days\n• Southern region: 2-3 days\n\n🏝️ **Remote islands**: 5-7 days\n\nWhich area are you in? I'll check exactly! 📍";
         }
 
         if (
@@ -82,7 +82,7 @@ const BotLibreChatbot = () => {
             message.includes('giao hàng toàn quốc') ||
             message.includes('giao mọi nơi')
         ) {
-            return '🇻🇳 Có, chúng tôi giao hàng toàn quốc 63 tỉnh thành!\n\n✅ **Các khu vực**:\n• Thành phố lớn: Hà Nội, TP.HCM, Đà Nẵng\n• Tỉnh thành: Cần Thơ, Hải Phòng, Buôn Ma Thuột...\n• Huyện đảo: Phú Quốc, Côn Đảo, Lý Sơn\n\n🚚 **Đơn vị vận chuyển**:\n• GHN, GHTK, Viettel Post, VNPost\n\nBạn muốn giao đến đâu? 🗺️';
+            return '🇻🇳 Yes, we deliver nationwide to all 63 provinces!\n\n✅ **Areas covered**:\n• Major cities: Hanoi, Ho Chi Minh City, Da Nang\n• Provincial cities: Can Tho, Hai Phong, Buon Ma Thuot...\n• Island districts: Phu Quoc, Con Dao, Ly Son\n\n🚚 **Shipping partners**:\n• GHN, GHTK, Viettel Post, VNPost\n\nWhere would you like delivery to? 🗺️';
         }
 
         if (
@@ -90,7 +90,7 @@ const BotLibreChatbot = () => {
             message.includes('chi phí vận chuyển') ||
             message.includes('phí giao hàng')
         ) {
-            return '💸 Bảng giá vận chuyển:\n\n🆓 **Miễn phí**:\n• Đơn hàng từ 500.000đ\n• Khách hàng VIP (hạng Bạc trở lên)\n\n💰 **Phí tiêu chuẩn**:\n• Dưới 500k: 30.000đ\n• Nội thành Hà Nội/TP.HCM: 20.000đ\n\n⚡ **Dịch vụ đặc biệt**:\n• Giao hỏa tốc: +50.000đ\n• Giao trong ngày: +80.000đ\n\nBạn muốn chọn phương thức nào? 🚚';
+            return '💸 Shipping fee table:\n\n🆓 **Free shipping**:\n• Orders from 500,000đ\n• VIP customers (Silver tier and above)\n\n💰 **Standard fee**:\n• Under 500k: 30,000đ\n• Inner city Hanoi/HCMC: 20,000đ\n\n⚡ **Special services**:\n• Express delivery: +50,000đ\n• Same day delivery: +80,000đ\n\nWhich method would you like to choose? 🚚';
         }
 
         // Payment Intents
@@ -99,7 +99,7 @@ const BotLibreChatbot = () => {
             message.includes('chuyển khoản') ||
             message.includes('thẻ tín dụng')
         ) {
-            return '💳 Có, chúng tôi chấp nhận thanh toán online:\n\n🔐 **An toàn tuyệt đối**:\n• Thẻ tín dụng/ghi nợ (Visa, Mastercard, JCB)\n• Ví điện tử (MoMo, ZaloPay, ShopeePay)\n• Chuyển khoản ngân hàng 24/7\n\n🎁 **Ưu đãi khi thanh toán online**:\n• Giảm 5% cho đơn hàng từ 1tr\n• Tích điểm thành viên 2x\n• Voucher 100k cho lần đầu\n\nBạn muốn dùng phương thức nào? 💰';
+            return '💳 Yes, we accept online payments:\n\n🔐 **Absolutely secure**:\n• Credit/debit cards (Visa, Mastercard, JCB)\n• E-wallets (MoMo, ZaloPay, ShopeePay)\n• 24/7 bank transfers\n\n🎁 **Online payment benefits**:\n• 5% off orders over 1M\n• 2x member points\n• 100k voucher for first time\n\nWhich payment method would you like to use? 💰';
         }
 
         if (
@@ -107,7 +107,7 @@ const BotLibreChatbot = () => {
             message.includes('thanh toán khi nhận hàng') ||
             message.includes('nhận hàng mới trả tiền')
         ) {
-            return '📦 Có, chúng tôi hỗ trợ COD (Thanh toán khi nhận hàng):\n\n✅ **Quy trình COD**:\n• Nhận hàng → Kiểm tra → Thanh toán\n• Có thể quét mã QR hoặc trả tiền mặt\n• Nhân viên giao hàng có máy POS\n\n🎯 **Lưu ý**:\n• COD chỉ áp dụng cho đơn dưới 5tr\n• Phí COD: 20.000đ\n• Miễn phí COD cho đơn từ 1tr\n\nBạn muốn thanh toán COD hay online? 🤔';
+            return '📦 Yes, we support COD (Cash on Delivery):\n\n✅ **COD process**:\n• Receive → Check → Pay\n• Can scan QR or pay cash\n• Delivery staff have POS machines\n\n🎯 **Notes**:\n• COD only for orders under 5M\n• COD fee: 20,000đ\n• Free COD for orders over 1M\n\nWould you prefer COD or online payment? 🤔';
         }
 
         // Support Intents
@@ -116,7 +116,7 @@ const BotLibreChatbot = () => {
             message.includes('liên hệ') ||
             message.includes('tư vấn')
         ) {
-            return '📞 Kênh liên hệ của chúng tôi:\n\n🆘 **Hỗ trợ 24/7**:\n• Hotline: 1900-1234 (Miễn phí)\n• Live chat: Trên website\n• Zalo: 0987-654-321\n\n📧 **Email**:\n• Hỗ trợ: support@shop.com\n• Khiếu nại: complaint@shop.com\n\n🏢 **Văn phòng**:\n• 123 Nguyễn Trãi, Q.1, TP.HCM\n• Giờ làm việc: 8:00 - 20:00\n\nBạn cần hỗ trợ gấp không? 🚀';
+            return '📞 Our contact channels:\n\n🆘 **24/7 Support**:\n• Hotline: 1900-1234 (Toll free)\n• Live chat: On website\n• Zalo: 0987-654-321\n\n📧 **Email**:\n• Support: support@shop.com\n• Complaints: complaint@shop.com\n\n🏢 **Office**:\n• 123 Nguyen Trai, District 1, HCMC\n• Business hours: 8:00 - 20:00\n\nDo you need urgent assistance? 🚀';
         }
 
         if (
@@ -124,7 +124,7 @@ const BotLibreChatbot = () => {
             message.includes('địa chỉ email') ||
             message.includes('mail')
         ) {
-            return '📧 Địa chỉ email của chúng tôi:\n\n💌 **Email chính**:\n• support@shop.com (Hỗ trợ chung)\n• order@shop.com (Đơn hàng)\n• feedback@shop.com (Góp ý)\n\n⏰ **Thời gian phản hồi**:\n• Email thông thường: 2-4 giờ\n• Email khẩn cấp: 30 phút\n• Email khiếu nại: 1 giờ\n\nBạn có thể gửi email ngay bây giờ! 📮';
+            return '📧 Our email addresses:\n\n💌 **Main emails**:\n• support@shop.com (General support)\n• order@shop.com (Orders)\n• feedback@shop.com (Feedback)\n\n⏰ **Response time**:\n• Regular email: 2-4 hours\n• Urgent email: 30 minutes\n• Complaint email: 1 hour\n\nYou can send an email right now! 📮';
         }
 
         if (
@@ -132,11 +132,11 @@ const BotLibreChatbot = () => {
             message.includes('hotline') ||
             message.includes('điện thoại')
         ) {
-            return '📱 Số điện thoại liên hệ:\n\n🆘 **Hotline chính**:\n• 1900-1234 (Hỗ trợ 24/7 - Miễn phí)\n• 0987-654-321 (Zalo/WhatsApp)\n\n🏢 **Các bộ phận**:\n• Bán hàng: 1900-1234 (nhấn 1)\n• Kỹ thuật: 1900-1234 (nhấn 2)\n• Khiếu nại: 1900-1234 (nhấn 3)\n\n📞 **Zalo Business**:\n• 0987-654-321 (Chat trực tiếp)\n\nBạn có thể gọi ngay! 📞';
+            return '📱 Contact phone numbers:\n\n🆘 **Main hotline**:\n• 1900-1234 (24/7 support - Toll free)\n• 0987-654-321 (Zalo/WhatsApp)\n\n🏢 **Departments**:\n• Sales: 1900-1234 (press 1)\n• Technical: 1900-1234 (press 2)\n• Complaints: 1900-1234 (press 3)\n\n📞 **Zalo Business**:\n• 0987-654-321 (Direct chat)\n\nYou can call right now! 📞';
         }
 
         // Fallback for unknown intents
-        return '🤔 Xin lỗi, tôi chưa hiểu câu hỏi của bạn.\n\nBạn có thể hỏi tôi về:\n\n💰 **Giá sản phẩm**: "iPhone bao nhiêu tiền?"\n📦 **Giao hàng**: "Giao hàng mất bao lâu?"\n🔄 **Đổi trả**: "Chính sách đổi trả thế nào?"\n📞 **Liên hệ**: "Số điện thoại shop?"\n🛍️ **Sản phẩm**: "Có sản phẩm nào hot?"\n💳 **Thanh toán**: "Có COD không?"\n📍 **Địa chỉ**: "Shop ở đâu?"\n⏰ **Giờ mở**: "Mấy giờ đóng cửa?"\n\nBạn muốn hỏi về vấn đề nào? 😊';
+        return '🤔 Sorry, I don\'t understand your question.\n\nYou can ask me about:\n\n💰 **Product prices**: "How much is iPhone?"\n📦 **Delivery**: "How long does shipping take?"\n🔄 **Returns**: "What\'s the return policy?"\n📞 **Contact**: "What\'s the shop phone number?"\n🛍️ **Products**: "What products are hot?"\n💳 **Payment**: "Do you have COD?"\n📍 **Address**: "Where is the shop located?"\n⏰ **Hours**: "What time do you close?"\n\nWhat would you like to know about? 😊';
     };
 
     const handleSendMessage = async () => {
@@ -178,7 +178,7 @@ const BotLibreChatbot = () => {
     };
 
     const formatTime = (date) => {
-        return date.toLocaleTimeString('vi-VN', {
+        return date.toLocaleTimeString('en-US', {
             hour: '2-digit',
             minute: '2-digit'
         });
@@ -197,7 +197,7 @@ const BotLibreChatbot = () => {
             {isOpen && (
                 <div className='chat-window'>
                     <div className='chat-header'>
-                        <h3>🤖 Trợ lý AI thông minh</h3>
+                        <h3>🤖 Smart AI Assistant</h3>
                         <button
                             onClick={() => setIsOpen(false)}
                             className='close-btn'
@@ -223,7 +223,7 @@ const BotLibreChatbot = () => {
                         {isTyping && (
                             <div className='message bot-message typing'>
                                 <div className='typing-message'>
-                                    Đang soạn phản hồi...
+                                    Typing response...
                                 </div>
                                 <div className='typing-indicator'>
                                     <span></span>
@@ -240,14 +240,14 @@ const BotLibreChatbot = () => {
                             value={inputMessage}
                             onChange={(e) => setInputMessage(e.target.value)}
                             onKeyPress={handleKeyPress}
-                            placeholder='Nhập tin nhắn...'
+                            placeholder='Enter message...'
                             disabled={isTyping}
                         />
                         <button
                             onClick={handleSendMessage}
                             disabled={isTyping || !inputMessage.trim()}
                         >
-                            {isTyping ? '...' : 'Gửi'}
+                            {isTyping ? '...' : 'Send'}
                         </button>
                     </div>
                 </div>

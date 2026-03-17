@@ -3,16 +3,14 @@
 .container {
     @include flex_box_custom(center, center, 10px);
     flex-direction: column;
-
-    color: white;
-    margin-bottom: 30px;
-    font-weight: 600;
-    background-color: rgba(0, 183, 255, 0.664);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgba(0, 183, 255, 1);
     width: 100%;
     padding: 20px;
     margin-left: -20px;
     margin-top: -30px;
-
     .titleClass {
         font-size: 18px;
         font-weight: 600;

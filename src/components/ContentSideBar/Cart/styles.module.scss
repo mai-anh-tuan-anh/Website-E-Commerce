@@ -1,12 +1,36 @@
 @import '@styles/mixin.module.scss';
 @import '@styles/variable.module.scss';
 .container {
-    padding: 30px 20px 0 20px;
-    height: 95vh;
+    height: 100vh;
     @include flex_box_custom(space-between, space-between, 0px);
     flex-direction: column;
+
     .boxContent {
+        width: 100%;
         flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 8px;
+
+        /* Hide scrollbar */
+        &::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: transparent;
+        }
+
+        /* Hide scrollbar for Firefox */
+        scrollbar-width: none;
+
+        /* Hide scrollbar for IE/Edge */
+        -ms-overflow-style: none;
     }
 
     .emptyCart {
@@ -45,19 +69,22 @@
         margin-bottom: 10px;
 
         .subtotalLabel {
+            margin-left: 15px;
             font-size: 16px;
             color: $third_color;
             font-weight: 500;
         }
 
         .subtotalPrice {
+            margin-right: 15px;
             font-size: 18px;
             color: $fifth_color;
             font-weight: 600;
         }
     }
     .buttonWrapper {
-        width: 100%;
+        margin-left: 10px;
+        width: 95%;
         padding: 20px 0;
         text-align: center;
         @include flex_box_custom(space-between, center, 10px);
@@ -69,7 +96,8 @@
         }
 
         .btn:first-child {
-            // VIEW CART button - mặc định
+            /* VIEW CART button - mặc định */
+            /* Sử dụng style mặc định của Button component */
         }
 
         .btn:nth-child(2) {

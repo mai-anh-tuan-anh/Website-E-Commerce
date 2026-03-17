@@ -36,7 +36,7 @@ export const SideBarProvider = ({ children }) => {
         Cookies.remove('refreshToken');
         Cookies.remove('userId');
         setListProductCart([]);
-        window.location.href = '/login';
+        window.location.href = '/';
     };
 
     // Hàm cập nhật số lượng sản phẩm trong giỏ hàng
