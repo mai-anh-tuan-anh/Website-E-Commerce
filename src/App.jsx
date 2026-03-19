@@ -9,12 +9,12 @@ import { StoreProvider } from '@/contexts/storeProvider';
 import ChatbotManager from '@components/Chatbot/ChatbotManager';
 function App() {
     return (
-        <StoreProvider>
-            <ToastProvider>
-                <SideBarProvider>
-                    <BrowserRouter>
-                        <SideBar />
-                        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<LoadingSpinner />}>
+            <StoreProvider>
+                <ToastProvider>
+                    <SideBarProvider>
+                        <BrowserRouter>
+                            <SideBar />
                             <Routes>
                                 {routers.map((item, index) => {
                                     return (
@@ -26,12 +26,12 @@ function App() {
                                     );
                                 })}
                             </Routes>
-                        </Suspense>
-                    </BrowserRouter>
-                    <ChatbotManager />
-                </SideBarProvider>
-            </ToastProvider>
-        </StoreProvider>
+                        </BrowserRouter>
+                        <ChatbotManager />
+                    </SideBarProvider>
+                </ToastProvider>
+            </StoreProvider>
+        </Suspense>
     );
 }
 

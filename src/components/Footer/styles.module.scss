@@ -78,4 +78,21 @@
             transform: scale(1.1);
         }
     }
+    .footerContent {
+        text-align: center;
+        margin-top: 20px;
+        max-width: 900px;
+        padding: 0 20px;
+
+        p {
+            color: $white_color;
+            font-size: 13px;
+            line-height: 1.6;
+            font-weight: 300;
+
+            strong {
+                font-weight: 500;
+            }
+        }
+    }
 }

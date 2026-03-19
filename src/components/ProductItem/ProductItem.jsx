@@ -34,7 +34,7 @@ function ProductItem({
     } = styles;
     const [sizeChoose, setSizeChoose] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { setIsOpen, setType, handleGetListProductsCart } =
+    const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
         useContext(SideBarContext);
     const { toast } = useContext(ToastContext);
     const userId = Cookies.get('userId');
@@ -74,6 +74,11 @@ function ProductItem({
                 setIsLoading(false);
             });
     };
+    const handleShowDetailProductSideBar = () => {
+        setIsOpen(true);
+        setType('detail');
+        setDetailProduct(details);
+    };
     return (
         <div className={container}>
             <div className={boxImg}>
@@ -92,7 +97,10 @@ function ProductItem({
                         <img src={rotateIcon} alt='' />
                         <span className={styles.iconTooltip}>Compare</span>
                     </div>
-                    <div className={boxIcon}>
+                    <div
+                        className={boxIcon}
+                        onClick={handleShowDetailProductSideBar}
+                    >
                         <img src={eyeIcon} alt='' />
                         <span className={styles.iconTooltip}>Review</span>
                     </div>

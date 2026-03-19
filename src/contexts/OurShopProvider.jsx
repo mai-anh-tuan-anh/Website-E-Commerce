@@ -28,7 +28,7 @@ export const OurShopProvider = ({ children }) => {
         const query = {
             sortType: sortId,
             page: 1,
-            limit: showId,
+            limit: term.trim() ? 'all' : showId, // Use 'all' only when searching for actual term, otherwise use normal pagination
             search: term
         };
         getProducts(query)
@@ -84,7 +84,7 @@ export const OurShopProvider = ({ children }) => {
         const query = {
             sortType: sortId,
             page,
-            limit: showId,
+            limit: searchTerm.trim() ? 'all' : showId, // Use 'all' only when searching for actual term, otherwise use showId
             search: searchTerm
         };
         getProducts(query)

@@ -1,5 +1,5 @@
 import styles from '../styles.module.scss';
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
 import SelectBox from './SelectBox';
 
@@ -10,11 +10,12 @@ function Filter() {
         boxRight,
         selectBox,
         searchBar,
+        products,
         searchBtn
     } = styles;
     const { sortOptions, setSortId, searchTerm, handleSearch } =
         useContext(OurShopContext);
-
+    const refer = useRef();
     const getValueSelect = (value, type) => {
         if (type === 'sort') {
             setSortId(value);
@@ -22,11 +23,27 @@ function Filter() {
     };
 
     const handleSearchInput = (e) => {
-        handleSearch(e.target.value);
+        if (e.key === 'Enter') {
+            const searchValue = e.target.value;
+            if (searchValue.trim() === '') {
+                // If input is empty, reset to show all products on page 1
+                handleSearch('');
+            } else {
+                // If input has value, search with that value
+                handleSearch(searchValue);
+            }
+        }
     };
 
     const handleSearchClick = () => {
-        handleSearch(searchTerm);
+        const searchValue = refer.current.value;
+        if (searchValue.trim() === '') {
+            // If input is empty, reset to show all products on page 1
+            handleSearch('');
+        } else {
+            // If input has value, search with that value
+            handleSearch(searchValue);
+        }
     };
 
     return (
@@ -44,8 +61,8 @@ function Filter() {
                     type='text'
                     placeholder='Search products...'
                     className={searchBar}
-                    value={searchTerm}
-                    onChange={handleSearchInput}
+                    onKeyDown={handleSearchInput}
+                    ref={refer}
                 />
                 <button className={searchBtn} onClick={handleSearchClick}>
                     <svg

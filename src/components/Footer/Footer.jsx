@@ -39,8 +39,24 @@ function MyFooter() {
                     <img src={paypal} alt='PayPal' className={paymentIcon} />
                 </div>
             </div>
-            <div styles={{ textAlign: 'center', marginTop: '50px' }}>
-                Copyright © 1996-2026, Skibidi Shop, Created by Mai Anh Tuan Anh
+            <div className={styles.footerContent}>
+                <p>
+                    <strong>Address:</strong> Floors 4–5–6, Capital Place
+                    Building, No. 29 Lieu Giai Street, Ngoc Ha Ward, Hanoi,
+                    Vietnam.
+                    <br />
+                    <strong>Customer Service:</strong> Call the Skibidi Shop
+                    hotline (free of charge) or chat with us directly via the
+                    Help Center.
+                    <br />
+                    <strong>Content Management Responsible Person:</strong> Mai
+                    Anh Tuan Anh
+                    <br />
+                    <strong>Business Registration Number:</strong> 0106773786,
+                    first issued by the Hanoi Department of Planning and
+                    Investment on February 10, 1996.
+                    <br />© 1996-2026, Skibidi Shop, Created by Mai Anh Tuan Anh
+                </p>
             </div>
         </div>
     );

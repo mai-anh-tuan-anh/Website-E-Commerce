@@ -6,6 +6,7 @@ export const SideBarProvider = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [type, setType] = useState('');
     const [listProductCart, setListProductCart] = useState([]);
+    const [detailProduct, setDetailProduct] = useState();
     const handleGetListProductsCart = (userId, type) => {
         if (userId && type === 'cart') {
             getCart(userId)
@@ -85,7 +86,9 @@ export const SideBarProvider = ({ children }) => {
                 handleGetListProductsCart,
                 handleLogout,
                 updateCartItemQuantity,
-                removeCartItem
+                removeCartItem,
+                detailProduct,
+                setDetailProduct
             }}
         >
             {children}

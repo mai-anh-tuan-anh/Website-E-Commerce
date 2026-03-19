@@ -1,0 +1,15 @@
+.slick-arrow {
+    width: 50px;
+    height: 50px;
+}
+.slick-prev {
+    fill: black;
+    stroke: black;
+    left: 0;
+    z-index: 9999;
+}
+.slick-next {
+    stroke: black;
+    right: 0;
+    z-index: 9999;
+}

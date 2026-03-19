@@ -1,0 +1,19 @@
+@import '@styles/variable.module.scss';
+.container {
+    padding: 20px;
+    .title {
+        margin-top: 50px;
+        font-size: 24px;
+        color: $fourth_color;
+        font-weight: bold;
+    }
+    .price {
+        font-size: 20px;
+        color: $fifth_color;
+        margin: 15px 0px;
+    }
+    .des {
+        color: $third_color;
+        margin: 10px 0px;
+    }
+}
