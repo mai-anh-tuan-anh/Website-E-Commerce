@@ -6,7 +6,6 @@ import SliderCommon from '@components/SliderCommon/SliderCommon';
 function DetailProduct() {
     const { detailProduct } = useContext(SideBarContext);
     const { container, title, price, des } = styles;
-    console.log(detailProduct);
     return (
         <div className={container}>
             <SliderCommon data={detailProduct?.images || []} />
@@ -16,6 +15,10 @@ function DetailProduct() {
             <div className={des}>
                 <strong>Material: </strong>
                 {detailProduct.material}
+                <br />
+                <br />
+                <strong>Delivery: </strong>
+                <span>3 - 5 days</span>
             </div>
         </div>
     );

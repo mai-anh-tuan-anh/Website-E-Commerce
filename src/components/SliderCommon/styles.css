@@ -1,6 +1,6 @@
 .slick-arrow {
-    width: 50px;
-    height: 50px;
+    width: 35px;
+    height: 35px;
 }
 .slick-prev {
     fill: black;
@@ -10,6 +10,10 @@
 }
 .slick-next {
     stroke: black;
-    right: 0;
+    color: black;
+    right: 0px;
     z-index: 9999;
+    &:hover {
+        color: black;
+    }
 }

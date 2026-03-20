@@ -1,0 +1,377 @@
+import { useContext, useState, useEffect } from 'react';
+import { SideBarContext } from '@/contexts/SideBarProvider';
+import { ToastContext } from '@contexts/ToastProvider';
+import styles from './styles.module.scss';
+import SliderCommon from '@components/SliderCommon/SliderCommon';
+import Cookies from 'js-cookie';
+import { addProductToCart } from '@/apis/cartService';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FaHome } from 'react-icons/fa';
+
+function DetailProduct() {
+    const { detailProduct, setDetailProduct } = useContext(SideBarContext);
+    const { toast } = useContext(ToastContext);
+    const navigate = useNavigate();
+    const { id } = useParams();
+
+    const [selectedSize, setSelectedSize] = useState('');
+    const [quantity, setQuantity] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [showAdditionalInfo, setShowAdditionalInfo] = useState(false);
+    const [showReviews, setShowReviews] = useState(false);
+    const [productLoading, setProductLoading] = useState(true);
+
+    // Load product data if not available in context
+    useEffect(() => {
+        if (!detailProduct && id) {
+            // TODO: Fetch product data by ID from API
+            // For now, using mock data or waiting for context to be set
+            setProductLoading(false);
+        } else if (detailProduct) {
+            setProductLoading(false);
+        }
+    }, [detailProduct, id]);
+
+    const handleBack = () => {
+        navigate(-1);
+    };
+
+    const handleAddToCart = () => {
+        if (!selectedSize) {
+            toast.warning('Please choose a size');
+            return;
+        }
+
+        const userId = Cookies.get('userId');
+        if (!userId) {
+            toast.warning('Please login to add products to cart');
+            navigate('/login');
+            return;
+        }
+
+        setIsLoading(true);
+        const data = {
+            userId: userId,
+            productId: detailProduct._id,
+            quantity: quantity,
+            size: selectedSize
+        };
+
+        addProductToCart(data)
+            .then((res) => {
+                toast.success('Product added to cart successfully!');
+                // Update cart in context if needed
+            })
+            .catch((err) => {
+                toast.error(err.message || 'Failed to add product to cart');
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const handleAddToWishlist = () => {
+        const userId = Cookies.get('userId');
+        if (!userId) {
+            toast.warning('Please login to add products to wishlist');
+            return;
+        }
+        // TODO: Implement wishlist functionality
+        toast.success('Product added to wishlist!');
+    };
+
+    const handleAddToCompare = () => {
+        const userId = Cookies.get('userId');
+        if (!userId) {
+            toast.warning('Please login to add products to compare');
+            return;
+        }
+        // TODO: Implement compare functionality
+        toast.success('Product added to compare!');
+    };
+
+    const handleSizeSelect = (size) => {
+        setSelectedSize(size);
+    };
+
+    const handleQuantityChange = (type) => {
+        if (type === 'increase') {
+            setQuantity((prev) => prev + 1);
+        } else if (type === 'decrease' && quantity > 1) {
+            setQuantity((prev) => prev - 1);
+        }
+    };
+
+    const handleBuyNow = () => {
+        if (!selectedSize) {
+            toast.warning('Please choose a size');
+            return;
+        }
+
+        const userId = Cookies.get('userId');
+        if (!userId) {
+            toast.warning('Please login to continue');
+            navigate('/login');
+            return;
+        }
+
+        // Add to cart first, then navigate to checkout
+        handleAddToCart();
+        setTimeout(() => {
+            navigate('/checkout');
+        }, 1000);
+    };
+
+    if (productLoading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.loading}>
+                    <LoadingSpinner />
+                    <p>Loading product details...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!detailProduct) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.notFound}>
+                    <h2>Product Not Found</h2>
+                    <p>The product you're looking for doesn't exist.</p>
+                    <button
+                        onClick={() => navigate('/shop')}
+                        className={styles.backButton}
+                    >
+                        Back to Shop
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className={styles.container}>
+            {/* Navigation Buttons */}
+            <div className={styles.functionBox}>
+                <div>
+                    <button
+                        onClick={() => navigate('/')}
+                        className={styles.btnBack}
+                    >
+                        <FaHome /> Home
+                    </button>
+                </div>
+                <button onClick={handleBack} className={styles.btnBack}>
+                    ← Back
+                </button>
+            </div>
+
+            <div className={styles.productLayout}>
+                {/* Product Images Section */}
+
+                {/* Product Info Section */}
+                <div className={styles.infoSection}>
+                    <h1 className={styles.productName}>{detailProduct.name}</h1>
+
+                    <div className={styles.priceSection}>
+                        <span className={styles.currentPrice}>
+                            ${detailProduct.price}
+                        </span>
+                        {detailProduct.originalPrice && (
+                            <span className={styles.originalPrice}>
+                                ${detailProduct.originalPrice}
+                            </span>
+                        )}
+                    </div>
+
+                    <p className={styles.description}>
+                        {detailProduct.description}
+                    </p>
+
+                    {/* Size Selection */}
+                    <div className={styles.sizeSection}>
+                        <h3>Size</h3>
+                        <div className={styles.sizeOptions}>
+                            {detailProduct.size?.map((sizeItem) => (
+                                <button
+                                    key={sizeItem.name}
+                                    className={`${styles.sizeButton} ${selectedSize === sizeItem.name ? styles.selected : ''}`}
+                                    onClick={() =>
+                                        handleSizeSelect(sizeItem.name)
+                                    }
+                                >
+                                    {sizeItem.name}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Quantity Selection */}
+                    <div className={styles.quantitySection}>
+                        <h3>Quantity</h3>
+                        <div className={styles.quantityControls}>
+                            <button
+                                className={styles.quantityButton}
+                                onClick={() => handleQuantityChange('decrease')}
+                                disabled={quantity <= 1}
+                            >
+                                -
+                            </button>
+                            <input
+                                type='number'
+                                value={quantity}
+                                readOnly
+                                className={styles.quantityInput}
+                            />
+                            <button
+                                className={styles.quantityButton}
+                                onClick={() => handleQuantityChange('increase')}
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className={styles.actionButtons}>
+                        <button
+                            className={styles.addToCartButton}
+                            onClick={handleAddToCart}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? <LoadingSpinner /> : 'ADD TO CART'}
+                        </button>
+                        <button
+                            className={styles.buyNowButton}
+                            onClick={handleBuyNow}
+                            disabled={isLoading}
+                        >
+                            BUY NOW
+                        </button>
+                    </div>
+
+                    {/* Action Icons */}
+                    <div className={styles.actionIcons}>
+                        <button
+                            className={styles.iconButton}
+                            onClick={handleAddToWishlist}
+                        >
+                            <span className={styles.iconText}>♡</span>
+                            <span className={styles.iconLabel}>Wishlist</span>
+                        </button>
+                        <button
+                            className={styles.iconButton}
+                            onClick={handleAddToCompare}
+                        >
+                            <span className={styles.iconText}>⇄</span>
+                            <span className={styles.iconLabel}>Compare</span>
+                        </button>
+                    </div>
+
+                    {/* Payment Security Section */}
+                    <div className={styles.paymentSection}>
+                        <h3 className={styles.securityTitle}>
+                            GUARANTEED SAFE CHECKOUT
+                        </h3>
+                        <p className={styles.securityText}>
+                            Your Payment is 100% Secure
+                        </p>
+                        <div className={styles.paymentIcons}>
+                            <div className={styles.paymentIcon}>VISA</div>
+                            <div className={styles.paymentIcon}>MASTERCARD</div>
+                            <div className={styles.paymentIcon}>PAYPAL</div>
+                            <div className={styles.paymentIcon}>AMEX</div>
+                            <div className={styles.paymentIcon}>DISCOVER</div>
+                            <div className={styles.paymentIcon}>BITCOIN</div>
+                        </div>
+                    </div>
+
+                    {/* Product Details */}
+                    <div className={styles.productDetails}>
+                        <div className={styles.detailRow}>
+                            <span className={styles.detailLabel}>Brand:</span>
+                            <span className={styles.detailValue}>
+                                {detailProduct.brand || 'N/A'}
+                            </span>
+                        </div>
+                        <div className={styles.detailRow}>
+                            <span className={styles.detailLabel}>SKU:</span>
+                            <span className={styles.detailValue}>
+                                {detailProduct.sku || 'N/A'}
+                            </span>
+                        </div>
+                        <div className={styles.detailRow}>
+                            <span className={styles.detailLabel}>
+                                Category:
+                            </span>
+                            <span className={styles.detailValue}>
+                                {detailProduct.category || 'N/A'}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Collapsible Sections */}
+                    <div className={styles.collapsibleSections}>
+                        <div className={styles.collapsibleSection}>
+                            <button
+                                className={styles.collapsibleHeader}
+                                onClick={() =>
+                                    setShowAdditionalInfo(!showAdditionalInfo)
+                                }
+                            >
+                                <span>ADDITIONAL INFORMATION</span>
+                                <span className={styles.arrow}>
+                                    {showAdditionalInfo ? '−' : '+'}
+                                </span>
+                            </button>
+                            {showAdditionalInfo && (
+                                <div className={styles.collapsibleContent}>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>
+                                            Material:
+                                        </span>
+                                        <span className={styles.detailValue}>
+                                            {detailProduct.material || 'N/A'}
+                                        </span>
+                                    </div>
+                                    <div className={styles.detailRow}>
+                                        <span className={styles.detailLabel}>
+                                            Delivery:
+                                        </span>
+                                        <span className={styles.detailValue}>
+                                            3 - 5 days
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+                        <div className={styles.collapsibleSection}>
+                            <button
+                                className={styles.collapsibleHeader}
+                                onClick={() => setShowReviews(!showReviews)}
+                            >
+                                <span>REVIEWS (0)</span>
+                                <span className={styles.arrow}>
+                                    {showReviews ? '−' : '+'}
+                                </span>
+                            </button>
+                            {showReviews && (
+                                <div className={styles.collapsibleContent}>
+                                    <p className={styles.noReviews}>
+                                        No reviews yet. Be the first to review
+                                        this product!
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default DetailProduct;

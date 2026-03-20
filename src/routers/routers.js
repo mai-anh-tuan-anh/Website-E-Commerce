@@ -9,7 +9,7 @@ const Checkout = lazy(() => import('@pages/Checkout/Checkout'));
 const OrderConfirmation = lazy(
     () => import('@pages/OrderConfirmation/OrderConfirmation')
 );
-
+const DetailProduct = lazy(() => import('@pages/DetailProduct/DetailProduct'));
 const routers = [
     {
         path: '/',
@@ -38,6 +38,10 @@ const routers = [
     {
         path: '/order-confirmation',
         component: OrderConfirmation
+    },
+    {
+        path: '/product/:id',
+        component: DetailProduct
     }
 ];
 export default routers;

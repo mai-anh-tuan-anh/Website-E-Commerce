@@ -10,6 +10,7 @@ import { SideBarContext } from '@contexts/SideBarProvider';
 import { ToastContext } from '@contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
 function ProductItem({
     src,
     prevSrc,
@@ -38,10 +39,13 @@ function ProductItem({
         useContext(SideBarContext);
     const { toast } = useContext(ToastContext);
     const userId = Cookies.get('userId');
-    const handleChooseSize = (size) => {
+    const navigate = useNavigate();
+    const handleChooseSize = (e, size) => {
+        e.stopPropagation(); // Ngăn click lan truyền lên thẻ cha
         setSizeChoose((prevSize) => (prevSize === size ? '' : size));
     };
-    const handleAddToCart = () => {
+    const handleAddToCart = (e) => {
+        e.stopPropagation(); // Ngăn click lan truyền lên thẻ cha
         if (!userId) {
             setIsOpen(true);
             setType('login');
@@ -74,26 +78,42 @@ function ProductItem({
                 setIsLoading(false);
             });
     };
-    const handleShowDetailProductSideBar = () => {
+    const handleShowDetailProductSideBar = (e) => {
+        e.stopPropagation(); // Ngăn click lan truyền lên thẻ cha
         setIsOpen(true);
         setType('detail');
         setDetailProduct(details);
     };
+    const handleNavigateToDetail = () => {
+        setDetailProduct(details);
+        navigate(`/product/${details._id}`);
+    };
     return (
-        <div className={container}>
+        <div className={container} onClick={handleNavigateToDetail}>
             <div className={boxImg}>
                 <img src={src} alt='' />
                 <img src={prevSrc} alt='' className={revealWhenHover} />
                 <div className={showFcWhenHover}>
-                    <div className={boxIcon}>
+                    <div
+                        className={boxIcon}
+                        onClick={(e) => {
+                            e.stopPropagation(); /* Add to cart handler */
+                        }}
+                    >
                         <img src={bagIcon} alt='' />
                         <span className={styles.iconTooltip}>Add to cart</span>
                     </div>
-                    <div className={boxIcon}>
+                    <div
+                        className={boxIcon}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <img src={wishIcon} alt='' />
                         <span className={styles.iconTooltip}>Favorite</span>
                     </div>
-                    <div className={boxIcon}>
+                    <div
+                        className={boxIcon}
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <img src={rotateIcon} alt='' />
                         <span className={styles.iconTooltip}>Compare</span>
                     </div>
@@ -112,7 +132,7 @@ function ProductItem({
                         <div
                             key={index}
                             className={`${size} ${sizeChoose === item.name ? active : ''}`}
-                            onClick={() => handleChooseSize(item.name)}
+                            onClick={(e) => handleChooseSize(e, item.name)}
                         >
                             {item.name}
                         </div>
@@ -141,7 +161,10 @@ function ProductItem({
                                 ADD TO CART
                             </>
                         }
-                        onClick={handleAddToCart}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleAddToCart(e);
+                        }}
                         disabled={isLoading}
                     />
                 </div>
