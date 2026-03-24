@@ -21,10 +21,12 @@ export const OurShopProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleSearch = (term) => {
         setSearchTerm(term);
         setPage(1); // Reset to first page when searching
+        setIsLoading(true);
         const query = {
             sortType: sortId,
             page: 1,
@@ -38,11 +40,15 @@ export const OurShopProvider = ({ children }) => {
             })
             .catch((err) => {
                 console.error('Error fetching products:', err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 
     const handleNext = () => {
         const nextPage = page + 1;
+        setIsLoading(true);
         const query = {
             sortType: sortId,
             page: nextPage,
@@ -57,12 +63,16 @@ export const OurShopProvider = ({ children }) => {
             })
             .catch((err) => {
                 console.error('Error fetching products:', err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     };
 
     const handleBack = () => {
         if (page > 1) {
             const prevPage = page - 1;
+            setIsLoading(true);
             const query = {
                 sortType: sortId,
                 page: prevPage,
@@ -76,11 +86,15 @@ export const OurShopProvider = ({ children }) => {
                     setTotal(res.total);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error('Error fetching products:', err);
+                })
+                .finally(() => {
+                    setIsLoading(false);
                 });
         }
     };
     useEffect(() => {
+        setIsLoading(true);
         const query = {
             sortType: sortId,
             page,
@@ -94,6 +108,9 @@ export const OurShopProvider = ({ children }) => {
             })
             .catch((err) => {
                 console.error('Error fetching products:', err);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, [sortId, showId, searchTerm]);
     return (
@@ -111,7 +128,8 @@ export const OurShopProvider = ({ children }) => {
                 page,
                 total,
                 handleBack,
-                handleNext
+                handleNext,
+                isLoading
             }}
         >
             {children}

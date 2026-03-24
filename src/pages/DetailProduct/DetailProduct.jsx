@@ -5,12 +5,26 @@ import styles from './styles.module.scss';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import Cookies from 'js-cookie';
 import { addProductToCart } from '@/apis/cartService';
+import { getCart } from '@/apis/cartService';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useNavigate, useParams } from 'react-router-dom';
-import { FaHome } from 'react-icons/fa';
+import {
+    FaHome,
+    FaCcVisa,
+    FaCcMastercard,
+    FaCcPaypal,
+    FaCcAmex,
+    FaCcDiscover
+} from 'react-icons/fa';
 
 function DetailProduct() {
-    const { detailProduct, setDetailProduct } = useContext(SideBarContext);
+    const {
+        detailProduct,
+        setDetailProduct,
+        setIsOpen,
+        setType,
+        handleGetListProductsCart
+    } = useContext(SideBarContext);
     const { toast } = useContext(ToastContext);
     const navigate = useNavigate();
     const { id } = useParams();
@@ -46,7 +60,8 @@ function DetailProduct() {
         const userId = Cookies.get('userId');
         if (!userId) {
             toast.warning('Please login to add products to cart');
-            navigate('/login');
+            setIsOpen(true);
+            setType('login');
             return;
         }
 
@@ -61,13 +76,19 @@ function DetailProduct() {
         addProductToCart(data)
             .then((res) => {
                 toast.success('Product added to cart successfully!');
-                // Update cart in context if needed
+                // Auto reload cart products
+                const userId = Cookies.get('userId');
+                if (userId) {
+                    handleGetListProductsCart(userId, 'cart');
+                }
             })
             .catch((err) => {
                 toast.error(err.message || 'Failed to add product to cart');
             })
             .finally(() => {
                 setIsLoading(false);
+                setIsOpen(true);
+                setType('cart');
             });
     };
 
@@ -112,14 +133,15 @@ function DetailProduct() {
         const userId = Cookies.get('userId');
         if (!userId) {
             toast.warning('Please login to continue');
-            navigate('/login');
+            setIsOpen(true);
+            setType('login');
             return;
         }
 
-        // Add to cart first, then navigate to checkout
+        // Add to cart first, then navigate to view cart
         handleAddToCart();
         setTimeout(() => {
-            navigate('/checkout');
+            navigate('/view-cart');
         }, 1000);
     };
 
@@ -170,7 +192,11 @@ function DetailProduct() {
 
             <div className={styles.productLayout}>
                 {/* Product Images Section */}
-
+                <div className={styles.imagesSection}>
+                    {detailProduct.images.map((image, index) => (
+                        <img key={index} src={image} alt={detailProduct.name} />
+                    ))}
+                </div>
                 {/* Product Info Section */}
                 <div className={styles.infoSection}>
                     <h1 className={styles.productName}>{detailProduct.name}</h1>
@@ -279,12 +305,31 @@ function DetailProduct() {
                             Your Payment is 100% Secure
                         </p>
                         <div className={styles.paymentIcons}>
-                            <div className={styles.paymentIcon}>VISA</div>
-                            <div className={styles.paymentIcon}>MASTERCARD</div>
-                            <div className={styles.paymentIcon}>PAYPAL</div>
-                            <div className={styles.paymentIcon}>AMEX</div>
-                            <div className={styles.paymentIcon}>DISCOVER</div>
-                            <div className={styles.paymentIcon}>BITCOIN</div>
+                            <div className={styles.paymentIcon}>
+                                <FaCcVisa size={32} color='#1a1f71' />
+                            </div>
+                            <div className={styles.paymentIcon}>
+                                <FaCcMastercard size={32} color='#eb001b' />
+                            </div>
+                            <div className={styles.paymentIcon}>
+                                <FaCcPaypal size={32} color='#003087' />
+                            </div>
+                            <div className={styles.paymentIcon}>
+                                <FaCcAmex size={32} color='#006fcf' />
+                            </div>
+                            <div className={styles.paymentIcon}>
+                                <FaCcDiscover size={32} color='#ff6000' />
+                            </div>
+                            <div className={styles.paymentIcon}>
+                                <span
+                                    style={{
+                                        fontSize: '32px',
+                                        color: '#f7931a'
+                                    }}
+                                >
+                                    ₿
+                                </span>
+                            </div>
                         </div>
                     </div>
 

@@ -10,11 +10,12 @@ import { useContext } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
 import ListProducts from './components/ListProducts';
 import MyFooter from '@components/Footer/Footer';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 
 function OurShopContent() {
     const { container, functionBox, btnBack } = styles;
     const navigate = useNavigate();
-    const { showId } = useContext(OurShopContext);
+    const { showId, isLoading } = useContext(OurShopContext);
 
     const handleBack = () => {
         navigate(-1);
@@ -44,6 +45,7 @@ function OurShopContent() {
                 <Banner />
                 <div>
                     <Filter />
+                    {isLoading && <LoadingSpinner />}
                     <ListProducts />
                 </div>
             </MainLayout>

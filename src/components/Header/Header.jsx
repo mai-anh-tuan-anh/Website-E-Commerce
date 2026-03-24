@@ -81,9 +81,13 @@ function MyHeader() {
                         })}
                     </div>
                     <div className={containerMenu}>
-                        {dataMenu.slice(0, 3).map((item) => {
+                        {dataMenu.slice(0, 3).map((item, index) => {
                             return (
-                                <Menu content={item.content} href={item.href} />
+                                <Menu
+                                    content={item.content}
+                                    href={item.href}
+                                    key={index}
+                                />
                             );
                         })}
                     </div>

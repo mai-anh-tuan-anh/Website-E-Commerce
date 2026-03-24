@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { SideBarContext } from '@/contexts/SideBarProvider';
 // method create cua axios nhan ve 1 doi tuong
 const axiosClient = axios.create({
     baseURL: 'https://be-project-reactjs.onrender.com/api/v1',
@@ -45,8 +46,19 @@ axiosClient.interceptors.response.use(
                 Cookies.remove('token');
                 Cookies.remove('refreshToken');
                 Cookies.remove('userId');
-                // Redirect về trang login khi token hết hạn
-                window.location.href = '/login';
+
+                // Try to get sidebar context and open login sidebar
+                try {
+                    // This is a workaround since we can't use hooks outside React components
+                    // We'll use a custom event to trigger login sidebar
+                    window.dispatchEvent(new CustomEvent('openLoginSidebar'));
+                } catch (e) {
+                    // Fallback to redirect if context is not available
+                    console.log(
+                        'Sidebar context not available, redirecting to home'
+                    );
+                }
+
                 return Promise.reject(error);
             }
         }
