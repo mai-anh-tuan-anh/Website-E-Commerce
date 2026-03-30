@@ -21,6 +21,9 @@ function Menu({ content, href }) {
         if (content === 'Our shop') {
             navigate('/shop');
         }
+        if (content === 'Contact us') {
+            navigate('/contact');
+        }
     };
     const handleRenderText = (content) => {
         if (content === 'Sign In' && userInfo) {

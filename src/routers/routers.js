@@ -10,6 +10,7 @@ const OrderConfirmation = lazy(
     () => import('@pages/OrderConfirmation/OrderConfirmation')
 );
 const DetailProduct = lazy(() => import('@pages/DetailProduct/DetailProduct'));
+const Contact = lazy(() => import('@pages/Contact/Contact'));
 const routers = [
     {
         path: '/',
@@ -26,6 +27,10 @@ const routers = [
     {
         path: '/about',
         component: AboutUs
+    },
+    {
+        path: '/contact',
+        component: Contact
     },
     {
         path: '/view-cart',
