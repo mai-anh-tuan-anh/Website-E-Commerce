@@ -12,17 +12,20 @@
 }
 .containerMiddleBox {
     @include flex_box_custom(center, center, 0px);
-    width: 60%;
+    width: 70%;
     padding: 0px 50px;
     flex-direction: column;
-    line-height: 2px;
+
+    line-height: 1.5;
 }
 .des {
     font-size: 14px;
     color: $third_color;
     text-transform: uppercase;
+    flex-wrap: nowrap;
 }
 .title {
     font-size: 24px;
     color: $primary_color;
+    flex-wrap: nowrap;
 }

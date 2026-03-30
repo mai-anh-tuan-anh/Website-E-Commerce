@@ -10,7 +10,7 @@ const dataBoxIcon = [
     }
 ];
 const dataMenu = [
-    { content: 'Elements', href: '#' },
+    { content: 'Elements', href: '/elements' },
     { content: 'Our shop', href: '/shop' },
     { content: 'About us', href: '/about' },
     { content: 'Contact us', href: '/contact' },

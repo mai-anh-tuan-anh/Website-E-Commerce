@@ -147,19 +147,25 @@ function ProductItem({
                 <div className={boxBtn}>
                     <Button
                         content={
-                            <>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    justifyContent: 'center'
+                                }}
+                            >
                                 <img
                                     src={bagIcon}
                                     alt=''
                                     style={{
-                                        width: '16px',
-                                        height: '16px',
-                                        marginRight: '8px',
+                                        width: 16,
+                                        height: 16,
                                         filter: 'brightness(3) saturate(100%)'
                                     }}
                                 />
-                                ADD TO CART
-                            </>
+                                <span>ADD TO CART</span>
+                            </div>
                         }
                         onClick={(e) => {
                             e.stopPropagation();

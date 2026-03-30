@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@hookform/resolvers": "^5.2.2",
+        "@tailwindcss/vite": "^4.2.2",
         "aos": "^2.3.4",
         "axios": "^1.13.6",
         "classname": "^0.0.0",
@@ -27,6 +28,7 @@
         "react-toastify": "^11.0.5",
         "simple-image-magnifier": "^1.1.5",
         "slick-carousel": "^1.8.1",
+        "tailwindcss": "^4.2.2",
         "yup": "^1.7.1",
         "zod": "^4.3.6"
     },
