@@ -99,18 +99,13 @@
 
 .imagesSection {
     top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
-    img {
-        width: 250px;
-        height: 350px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin: 6px;
-        transition: transform 0.3s ease;
-
-        &:hover {
-            transform: scale(1.05);
-        }
+    > * {
+        flex: 0 0 calc(50% - 4px);
+        max-width: calc(50% - 4px);
     }
 }
 
@@ -456,6 +451,108 @@
             font-style: italic;
             text-align: center;
             padding: 20px 0;
+        }
+
+        .reviewForm {
+            @include flex_box_custom(flex-start, flex-start, 20px);
+            flex-direction: column;
+            padding: 20px 0;
+        }
+
+        .reviewRating {
+            @include flex_box_custom(space-between, center, 0px);
+            margin-bottom: 20px;
+
+            label {
+                font-size: 14px;
+                font-weight: 600;
+                color: $primary_color;
+            }
+        }
+
+        .starRating {
+            @include flex_box_custom(center, center, 8px);
+        }
+
+        .starButton {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.2s ease;
+
+            &:hover {
+                transform: scale(1.1);
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+
+        .reviewField {
+            @include flex_box_custom(flex-start, flex-start, 8px);
+            flex-direction: column;
+            width: 100%;
+
+            label {
+                font-size: 14px;
+                font-weight: 600;
+                color: $primary_color;
+            }
+        }
+
+        .reviewInput,
+        .reviewTextarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+
+            &:focus {
+                outline: none;
+                border-color: #21ceec;
+                box-shadow: 0 0 0 3px rgba(33, 206, 236, 0.1);
+            }
+
+            &::placeholder {
+                color: $secondary_color;
+            }
+        }
+
+        .reviewTextarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submitReviewBtn {
+            padding: 14px 28px;
+            background-color: rgba(33, 206, 236, 0.945);
+            color: black;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+
+            &:hover {
+                background-color: rgb(28, 184, 211);
+                transform: translateY(-1px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
         }
     }
 

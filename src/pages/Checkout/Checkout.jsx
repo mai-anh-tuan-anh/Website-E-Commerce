@@ -1,7 +1,8 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import {
     AiOutlineUser,
     AiOutlineMail,
@@ -48,57 +49,80 @@ const Checkout = () => {
     const calculateTotal = () =>
         calculateSubtotal() + calculateShipping() + calculateTax();
 
-    const validationSchema = Yup.object({
-        fullName: Yup.string()
-            .required('Full name is required')
-            .min(2, 'Name must be at least 2 characters'),
-        email: Yup.string()
+    const validationSchema = z.object({
+        fullName: z
+            .string()
+            .min(2, 'Name must be at least 2 characters')
+            .refine((val) => val.trim().length > 0, 'Full name is required'),
+        email: z
+            .string()
             .email('Invalid email address')
-            .required('Email is required'),
-        phone: Yup.string()
-            .required('Phone number is required')
-            .matches(/^[+]?[\d\s\-\(\)]+$/, 'Invalid phone number'),
-        address: Yup.string()
-            .required('Address is required')
-            .min(5, 'Address must be at least 5 characters'),
-        city: Yup.string()
-            .required('City is required')
-            .min(2, 'City must be at least 2 characters'),
-        postalCode: Yup.string()
-            .required('Postal code is required')
-            .matches(/^[A-Za-z0-9\s\-]+$/, 'Invalid postal code'),
-        country: Yup.string().required('Country is required'),
+            .refine((val) => val.trim().length > 0, 'Email is required'),
+        phone: z
+            .string()
+            .min(1, 'Phone number is required')
+            .regex(/^[+]?[\d\s\-\(\)]+$/, 'Invalid phone number'),
+        address: z
+            .string()
+            .min(5, 'Address must be at least 5 characters')
+            .refine((val) => val.trim().length > 0, 'Address is required'),
+        city: z
+            .string()
+            .min(2, 'City must be at least 2 characters')
+            .refine((val) => val.trim().length > 0, 'City is required'),
+        postalCode: z
+            .string()
+            .min(1, 'Postal code is required')
+            .regex(/^[A-Za-z0-9\s\-]+$/, 'Invalid postal code'),
+        country: z
+            .string()
+            .refine((val) => val.trim().length > 0, 'Country is required'),
         cardNumber:
             selectedPayment === 'card'
-                ? Yup.string()
-                      .required('Card number is required')
-                      .matches(/^[0-9\s]{16,19}$/, 'Invalid card number')
-                : Yup.string(),
+                ? z
+                      .string()
+                      .min(1, 'Card number is required')
+                      .regex(/^[0-9\s]{16,19}$/, 'Invalid card number')
+                : z.string().optional(),
         cardName:
             selectedPayment === 'card'
-                ? Yup.string()
-                      .required('Name on card is required')
+                ? z
+                      .string()
                       .min(2, 'Name must be at least 2 characters')
-                : Yup.string(),
+                      .refine(
+                          (val) => val.trim().length > 0,
+                          'Name on card is required'
+                      )
+                : z.string().optional(),
         expiryDate:
             selectedPayment === 'card'
-                ? Yup.string()
-                      .required('Expiry date is required')
-                      .matches(
+                ? z
+                      .string()
+                      .min(1, 'Expiry date is required')
+                      .regex(
                           /^(0[1-9]|1[0-2])\/\d{2}$/,
                           'Invalid expiry date (MM/YY)'
                       )
-                : Yup.string(),
+                : z.string().optional(),
         cvv:
             selectedPayment === 'card'
-                ? Yup.string()
-                      .required('CVV is required')
-                      .matches(/^\d{3,4}$/, 'Invalid CVV')
-                : Yup.string()
+                ? z
+                      .string()
+                      .min(1, 'CVV is required')
+                      .regex(/^\d{3,4}$/, 'Invalid CVV')
+                : z.string().optional()
     });
 
-    const formik = useFormik({
-        initialValues: {
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: { errors, isSubmitting },
+        watch,
+        setValue,
+        getValues
+    } = useForm({
+        defaultValues: {
             fullName: '',
             email: '',
             phone: '',
@@ -111,17 +135,19 @@ const Checkout = () => {
             expiryDate: '',
             cvv: ''
         },
-        validationSchema,
-        onSubmit: async (values) => {
-            setIsProcessing(true);
-
-            // Simulate order processing
-            setTimeout(() => {
-                setIsProcessing(false);
-                navigate('/order-confirmation');
-            }, 2000);
-        }
+        resolver: zodResolver(validationSchema),
+        mode: 'onBlur'
     });
+
+    const onSubmit = async (data) => {
+        setIsProcessing(true);
+
+        // Simulate order processing
+        setTimeout(() => {
+            setIsProcessing(false);
+            navigate('/order-confirmation');
+        }, 2000);
+    };
 
     const subtotal = calculateSubtotal();
     const shipping = calculateShipping();
@@ -170,7 +196,7 @@ const Checkout = () => {
             </div>
 
             <form
-                onSubmit={formik.handleSubmit}
+                onSubmit={handleSubmit(onSubmit)}
                 className={styles.checkoutForm}
             >
                 <div className={styles.formGrid}>
@@ -186,23 +212,16 @@ const Checkout = () => {
                                 <input
                                     type='text'
                                     id='fullName'
-                                    name='fullName'
-                                    value={formik.values.fullName}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
+                                    {...register('fullName')}
                                     className={
-                                        formik.errors.fullName &&
-                                        formik.touched.fullName
-                                            ? styles.error
-                                            : ''
+                                        errors.fullName ? styles.error : ''
                                     }
                                 />
-                                {formik.errors.fullName &&
-                                    formik.touched.fullName && (
-                                        <span className={styles.errorMessage}>
-                                            {formik.errors.fullName}
-                                        </span>
-                                    )}
+                                {errors.fullName && (
+                                    <span className={styles.errorMessage}>
+                                        {errors.fullName.message}
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className={styles.formRow}>
@@ -211,46 +230,28 @@ const Checkout = () => {
                                 <input
                                     type='email'
                                     id='email'
-                                    name='email'
-                                    value={formik.values.email}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    className={
-                                        formik.errors.email &&
-                                        formik.touched.email
-                                            ? styles.error
-                                            : ''
-                                    }
+                                    {...register('email')}
+                                    className={errors.email ? styles.error : ''}
                                 />
-                                {formik.errors.email &&
-                                    formik.touched.email && (
-                                        <span className={styles.errorMessage}>
-                                            {formik.errors.email}
-                                        </span>
-                                    )}
+                                {errors.email && (
+                                    <span className={styles.errorMessage}>
+                                        {errors.email.message}
+                                    </span>
+                                )}
                             </div>
                             <div className={styles.formGroup}>
                                 <label htmlFor='phone'>Phone Number *</label>
                                 <input
                                     type='tel'
                                     id='phone'
-                                    name='phone'
-                                    value={formik.values.phone}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    className={
-                                        formik.errors.phone &&
-                                        formik.touched.phone
-                                            ? styles.error
-                                            : ''
-                                    }
+                                    {...register('phone')}
+                                    className={errors.phone ? styles.error : ''}
                                 />
-                                {formik.errors.phone &&
-                                    formik.touched.phone && (
-                                        <span className={styles.errorMessage}>
-                                            {formik.errors.phone}
-                                        </span>
-                                    )}
+                                {errors.phone && (
+                                    <span className={styles.errorMessage}>
+                                        {errors.phone.message}
+                                    </span>
+                                )}
                             </div>
                         </div>
                     </section>
@@ -269,23 +270,16 @@ const Checkout = () => {
                                 <input
                                     type='text'
                                     id='address'
-                                    name='address'
-                                    value={formik.values.address}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
+                                    {...register('address')}
                                     className={
-                                        formik.errors.address &&
-                                        formik.touched.address
-                                            ? styles.error
-                                            : ''
+                                        errors.address ? styles.error : ''
                                     }
                                 />
-                                {formik.errors.address &&
-                                    formik.touched.address && (
-                                        <span className={styles.errorMessage}>
-                                            {formik.errors.address}
-                                        </span>
-                                    )}
+                                {errors.address && (
+                                    <span className={styles.errorMessage}>
+                                        {errors.address.message}
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className={styles.formRow}>
@@ -294,20 +288,12 @@ const Checkout = () => {
                                 <input
                                     type='text'
                                     id='city'
-                                    name='city'
-                                    value={formik.values.city}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    className={
-                                        formik.errors.city &&
-                                        formik.touched.city
-                                            ? styles.error
-                                            : ''
-                                    }
+                                    {...register('city')}
+                                    className={errors.city ? styles.error : ''}
                                 />
-                                {formik.errors.city && formik.touched.city && (
+                                {errors.city && (
                                     <span className={styles.errorMessage}>
-                                        {formik.errors.city}
+                                        {errors.city.message}
                                     </span>
                                 )}
                             </div>
@@ -318,59 +304,61 @@ const Checkout = () => {
                                 <input
                                     type='text'
                                     id='postalCode'
-                                    name='postalCode'
-                                    value={formik.values.postalCode}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
+                                    {...register('postalCode')}
                                     className={
-                                        formik.errors.postalCode &&
-                                        formik.touched.postalCode
-                                            ? styles.error
-                                            : ''
+                                        errors.postalCode ? styles.error : ''
                                     }
                                 />
-                                {formik.errors.postalCode &&
-                                    formik.touched.postalCode && (
-                                        <span className={styles.errorMessage}>
-                                            {formik.errors.postalCode}
-                                        </span>
-                                    )}
+                                {errors.postalCode && (
+                                    <span className={styles.errorMessage}>
+                                        {errors.postalCode.message}
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className={styles.formRow}>
                             <div className={styles.formGroup}>
                                 <label htmlFor='country'>Country *</label>
-                                <select
-                                    id='country'
+                                <Controller
                                     name='country'
-                                    value={formik.values.country}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    className={
-                                        formik.errors.country &&
-                                        formik.touched.country
-                                            ? styles.error
-                                            : ''
-                                    }
-                                >
-                                    <option value='United States'>
-                                        United States
-                                    </option>
-                                    <option value='Canada'>Canada</option>
-                                    <option value='United Kingdom'>
-                                        United Kingdom
-                                    </option>
-                                    <option value='Australia'>Australia</option>
-                                    <option value='Germany'>Germany</option>
-                                    <option value='France'>France</option>
-                                    <option value='Japan'>Japan</option>
-                                </select>
-                                {formik.errors.country &&
-                                    formik.touched.country && (
-                                        <span className={styles.errorMessage}>
-                                            {formik.errors.country}
-                                        </span>
+                                    control={control}
+                                    render={({ field }) => (
+                                        <select
+                                            id='country'
+                                            {...field}
+                                            className={
+                                                errors.country
+                                                    ? styles.error
+                                                    : ''
+                                            }
+                                        >
+                                            <option value='United States'>
+                                                United States
+                                            </option>
+                                            <option value='Canada'>
+                                                Canada
+                                            </option>
+                                            <option value='United Kingdom'>
+                                                United Kingdom
+                                            </option>
+                                            <option value='Australia'>
+                                                Australia
+                                            </option>
+                                            <option value='Germany'>
+                                                Germany
+                                            </option>
+                                            <option value='France'>
+                                                France
+                                            </option>
+                                            <option value='Japan'>Japan</option>
+                                        </select>
                                     )}
+                                />
+                                {errors.country && (
+                                    <span className={styles.errorMessage}>
+                                        {errors.country.message}
+                                    </span>
+                                )}
                             </div>
                         </div>
                     </section>
@@ -398,9 +386,7 @@ const Checkout = () => {
                                             Standard Shipping
                                         </span>
                                         <span className={styles.optionPrice}>
-                                            {calculateShipping() === 0
-                                                ? 'FREE'
-                                                : `$${calculateShipping()}`}
+                                            FREE
                                         </span>
                                     </div>
                                     <span className={styles.optionDescription}>
@@ -505,28 +491,21 @@ const Checkout = () => {
                                         <input
                                             type='text'
                                             id='cardNumber'
-                                            name='cardNumber'
+                                            {...register('cardNumber')}
                                             placeholder='1234 5678 9012 3456'
-                                            value={formik.values.cardNumber}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
                                             className={
-                                                formik.errors.cardNumber &&
-                                                formik.touched.cardNumber
+                                                errors.cardNumber
                                                     ? styles.error
                                                     : ''
                                             }
                                         />
-                                        {formik.errors.cardNumber &&
-                                            formik.touched.cardNumber && (
-                                                <span
-                                                    className={
-                                                        styles.errorMessage
-                                                    }
-                                                >
-                                                    {formik.errors.cardNumber}
-                                                </span>
-                                            )}
+                                        {errors.cardNumber && (
+                                            <span
+                                                className={styles.errorMessage}
+                                            >
+                                                {errors.cardNumber.message}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles.formRow}>
@@ -537,27 +516,20 @@ const Checkout = () => {
                                         <input
                                             type='text'
                                             id='cardName'
-                                            name='cardName'
-                                            value={formik.values.cardName}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
+                                            {...register('cardName')}
                                             className={
-                                                formik.errors.cardName &&
-                                                formik.touched.cardName
+                                                errors.cardName
                                                     ? styles.error
                                                     : ''
                                             }
                                         />
-                                        {formik.errors.cardName &&
-                                            formik.touched.cardName && (
-                                                <span
-                                                    className={
-                                                        styles.errorMessage
-                                                    }
-                                                >
-                                                    {formik.errors.cardName}
-                                                </span>
-                                            )}
+                                        {errors.cardName && (
+                                            <span
+                                                className={styles.errorMessage}
+                                            >
+                                                {errors.cardName.message}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className={styles.formRow}>
@@ -568,56 +540,40 @@ const Checkout = () => {
                                         <input
                                             type='text'
                                             id='expiryDate'
-                                            name='expiryDate'
+                                            {...register('expiryDate')}
                                             placeholder='MM/YY'
-                                            value={formik.values.expiryDate}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
                                             className={
-                                                formik.errors.expiryDate &&
-                                                formik.touched.expiryDate
+                                                errors.expiryDate
                                                     ? styles.error
                                                     : ''
                                             }
                                         />
-                                        {formik.errors.expiryDate &&
-                                            formik.touched.expiryDate && (
-                                                <span
-                                                    className={
-                                                        styles.errorMessage
-                                                    }
-                                                >
-                                                    {formik.errors.expiryDate}
-                                                </span>
-                                            )}
+                                        {errors.expiryDate && (
+                                            <span
+                                                className={styles.errorMessage}
+                                            >
+                                                {errors.expiryDate.message}
+                                            </span>
+                                        )}
                                     </div>
                                     <div className={styles.formGroup}>
                                         <label htmlFor='cvv'>CVV *</label>
                                         <input
                                             type='text'
                                             id='cvv'
-                                            name='cvv'
+                                            {...register('cvv')}
                                             placeholder='123'
-                                            value={formik.values.cvv}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
                                             className={
-                                                formik.errors.cvv &&
-                                                formik.touched.cvv
-                                                    ? styles.error
-                                                    : ''
+                                                errors.cvv ? styles.error : ''
                                             }
                                         />
-                                        {formik.errors.cvv &&
-                                            formik.touched.cvv && (
-                                                <span
-                                                    className={
-                                                        styles.errorMessage
-                                                    }
-                                                >
-                                                    {formik.errors.cvv}
-                                                </span>
-                                            )}
+                                        {errors.cvv && (
+                                            <span
+                                                className={styles.errorMessage}
+                                            >
+                                                {errors.cvv.message}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -694,8 +650,12 @@ const Checkout = () => {
 
                     <Button
                         type='submit'
-                        content={isProcessing ? 'Processing...' : 'Place Order'}
-                        disabled={isProcessing}
+                        content={
+                            isProcessing || isSubmitting
+                                ? 'Processing...'
+                                : 'Place Order'
+                        }
+                        disabled={isProcessing || isSubmitting}
                         className={styles.placeOrderBtn}
                     />
                 </div>
