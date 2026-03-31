@@ -639,18 +639,6 @@ const TawkChatbot = ({
                 .minimize-btn:hover {
                     background: rgba(255, 255, 255, 0.3);
                 }
-
-                @media (max-width: 480px) {
-                    .tawk-chatbot {
-                        width: 100%;
-                        height: 100vh;
-                        border-radius: 0;
-                    }
-
-                    .tawk-chatbot.minimized {
-                        width: 100%;
-                    }
-                }
             `}</style>
         </div>
     );

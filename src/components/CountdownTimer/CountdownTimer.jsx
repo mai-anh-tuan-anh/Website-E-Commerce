@@ -34,9 +34,11 @@ function CountdownTimer({ targetDate }) {
     Object.keys(timeLeft).forEach((interval) => {
         if (timeLeft[interval] !== undefined) {
             timerComponents.push(
-                <span key={interval} className={box}>
+                <span key={interval} className={`${box} p-2 md:p-[10px]`}>
                     {formatNumber(timeLeft[interval])}{' '}
-                    <span className={title}>{interval}</span>{' '}
+                    <span className={`${title} text-[16px] md:text-[18px]`}>
+                        {interval}
+                    </span>{' '}
                 </span>
             );
         }

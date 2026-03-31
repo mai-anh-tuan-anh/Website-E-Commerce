@@ -34,12 +34,18 @@ function SideBar() {
         <div className={container}>
             {isOpen && <div className={overLay} onClick={handleToggle} />}
             <div
-                className={classNames(sideBar, {
+                className={classNames(
+                    `${sideBar} w-[85vw] max-w-[85vw] md:w-[370px] md:max-w-[100vw]`,
+                    {
                     [slideSideBar]: isOpen
-                })}
+                    }
+                )}
             >
                 {isOpen && (
-                    <div className={boxIcon} onClick={handleToggle}>
+                    <div
+                        className={`${boxIcon} left-[-35px] md:left-[-60px]`}
+                        onClick={handleToggle}
+                    >
                         <IoCloseSharp />
                     </div>
                 )}

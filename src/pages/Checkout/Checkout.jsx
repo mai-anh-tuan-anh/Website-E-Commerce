@@ -170,14 +170,18 @@ const Checkout = () => {
     }
 
     return (
-        <div className={`${styles.checkoutContainer} px-4 sm:px-6 lg:px-8`}>
+        <div
+            className={`${styles.checkoutContainer} px-4 py-4 sm:px-6 lg:px-8 lg:py-8`}
+        >
             {/* Progress Indicator */}
-            <div className={styles.progressIndicator}>
+            <div
+                className={`${styles.progressIndicator} flex flex-col gap-6 py-4 lg:flex-row lg:items-center lg:justify-between lg:gap-0 lg:py-8`}
+            >
                 <button className={styles.backBtn} onClick={handleBack}>
                     <AiOutlineArrowLeft />
                     <span>Back</span>
                 </button>
-                <div className={`${styles.progressSteps} overflow-x-auto`}>
+                <div className={`${styles.progressSteps} w-full overflow-x-auto lg:w-auto`}>
                     <div className={styles.progressStep}>
                         <AiOutlineShoppingCart />
                         <span>Cart</span>
@@ -197,7 +201,7 @@ const Checkout = () => {
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={`${styles.checkoutForm} gap-6 lg:gap-8`}
+                className={`${styles.checkoutForm} grid grid-cols-1 gap-6 lg:grid-cols-[1fr_380px] lg:gap-8`}
             >
                 <div className={styles.formGrid}>
                     {/* Customer Information */}
@@ -206,7 +210,7 @@ const Checkout = () => {
                             <AiOutlineUser />
                             Customer Information
                         </h2>
-                        <div className={styles.formRow}>
+                        <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                             <div className={styles.formGroup}>
                                 <label htmlFor='fullName'>Full Name *</label>
                                 <input
@@ -224,7 +228,7 @@ const Checkout = () => {
                                 )}
                             </div>
                         </div>
-                        <div className={styles.formRow}>
+                        <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                             <div className={styles.formGroup}>
                                 <label htmlFor='email'>Email Address *</label>
                                 <input
@@ -262,7 +266,7 @@ const Checkout = () => {
                             <AiOutlineHome />
                             Shipping Address
                         </h2>
-                        <div className={styles.formRow}>
+                        <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                             <div className={styles.formGroup}>
                                 <label htmlFor='address'>
                                     Street Address *
@@ -282,7 +286,7 @@ const Checkout = () => {
                                 )}
                             </div>
                         </div>
-                        <div className={styles.formRow}>
+                        <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                             <div className={styles.formGroup}>
                                 <label htmlFor='city'>City *</label>
                                 <input
@@ -316,7 +320,7 @@ const Checkout = () => {
                                 )}
                             </div>
                         </div>
-                        <div className={styles.formRow}>
+                        <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                             <div className={styles.formGroup}>
                                 <label htmlFor='country'>Country *</label>
                                 <Controller
@@ -483,7 +487,7 @@ const Checkout = () => {
 
                         {selectedPayment === 'card' && (
                             <div className={styles.cardDetails}>
-                                <div className={styles.formRow}>
+                                <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                                     <div className={styles.formGroup}>
                                         <label htmlFor='cardNumber'>
                                             Card Number *
@@ -508,7 +512,7 @@ const Checkout = () => {
                                         )}
                                     </div>
                                 </div>
-                                <div className={styles.formRow}>
+                                <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                                     <div className={styles.formGroup}>
                                         <label htmlFor='cardName'>
                                             Name on Card *
@@ -532,7 +536,7 @@ const Checkout = () => {
                                         )}
                                     </div>
                                 </div>
-                                <div className={styles.formRow}>
+                                <div className={`${styles.formRow} grid grid-cols-1 gap-4 md:grid-cols-2`}>
                                     <div className={styles.formGroup}>
                                         <label htmlFor='expiryDate'>
                                             Expiry Date *
@@ -582,7 +586,9 @@ const Checkout = () => {
                 </div>
 
                 {/* Order Summary */}
-                <div className={styles.orderSummary}>
+                <div
+                    className={`${styles.orderSummary} static lg:sticky lg:top-8`}
+                >
                     <h2>Order Summary</h2>
 
                     <div className={styles.productList}>

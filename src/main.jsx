@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './style.css';
 import '@styles/main.scss';
 import 'aos/dist/aos.css';
 

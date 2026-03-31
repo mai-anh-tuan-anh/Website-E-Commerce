@@ -16,8 +16,6 @@
         top: 0;
         right: 0;
         background-color: rgb(233, 231, 231);
-        width: 370px;
-        max-width: 100vw;
         height: 100vh;
         z-index: 1002;
         transform: translateX(100%);
@@ -30,7 +28,6 @@
     .boxIcon {
         position: absolute;
         top: 25px;
-        left: -60px;
         width: 35px;
         height: 35px;
         border-radius: 50%;
@@ -40,19 +37,6 @@
         @include flex_box_custom(center, center, 0);
         &:hover {
             background-color: #ccc;
-        }
-    }
-}
-
-@media (max-width: 768px) {
-    .container {
-        .sideBar {
-            width: 85vw;
-            max-width: 85vw;
-        }
-
-        .boxIcon {
-            left: -35px;
         }
     }
 }

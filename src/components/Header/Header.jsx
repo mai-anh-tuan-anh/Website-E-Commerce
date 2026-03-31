@@ -89,10 +89,10 @@ function MyHeader() {
     }, [isMobileMenuOpen]);
     return (
         <div className={`${container} ${!isVisible ? hidden : ''}`}>
-            <div className={containerHeader}>
+            <div className={`${containerHeader} px-2 sm:px-4`}>
                 <div className={containerBox}>
                     <div
-                        className={`${containerBoxIcon} ${styles.socialIcons}`}
+                        className={`${containerBoxIcon} ${styles.socialIcons} hidden sm:flex !gap-2 sm:!gap-3 md:!gap-5`}
                     >
                         {dataBoxIcon.map((item) => {
                             return (
@@ -105,16 +105,16 @@ function MyHeader() {
                         })}
                     </div>
                     <div
-                        className={styles.mobileMenuWrap}
+                        className={`${styles.mobileMenuWrap} md:hidden`}
                         ref={mobileMenuWrapRef}
                     >
                         <button
                             type='button'
-                            className={styles.mobileMenuButton}
+                            className={`md:hidden  ${styles.mobileMenuButton} `}
                             aria-expanded={isMobileMenuOpen}
                             onClick={() => setIsMobileMenuOpen((v) => !v)}
                         >
-                            <FiMenu />
+                            <FiMenu className='md:hidden' />
                         </button>
 
                         {isMobileMenuOpen && (
@@ -136,10 +136,11 @@ function MyHeader() {
                         )}
                     </div>
 
-                    <div className={`${containerMenu} ${styles.desktopMenu}`}>
+                    <div className={`${containerMenu} ${styles.desktopMenu} `}>
                         {dataMenu.slice(0, 3).map((item, index) => {
                             return (
                                 <Menu
+                                    className={'hidden md:inline-flex'}
                                     content={item.content}
                                     href={item.href}
                                     key={index}
@@ -148,28 +149,42 @@ function MyHeader() {
                         })}
                     </div>
                 </div>
-                <div className={styles.logoWrapper}>
+                <div
+                    className={`${styles.logoWrapper} w-[100px] sm:w-[120px] md:w-[153px]`}
+                >
                     <img src={Logo} alt='Logo' className={styles.logo} />
                 </div>
                 <div className={containerBox}>
-                    <div className={`${containerMenu} ${styles.desktopMenu}`}>
+                    <div
+                        className={`${containerMenu} ${styles.desktopMenu} hidden md:flex`}
+                    >
                         {dataMenu.slice(3, dataMenu.length).map((item) => {
                             return (
-                                <Menu content={item.content} href={item.href} />
+                                <Menu
+                                    className={'hidden md:inline-flex'}
+                                    content={item.content}
+                                    href={item.href}
+                                />
                             );
                         })}
                     </div>
-                    <div className={containerBoxIcon}>
-                        <TfiReload
-                            className={styles.iconHover}
-                            style={{ fontSize: '20px' }}
-                            onClick={() => handleOpenSideBar('compare')}
-                        />
-                        <TfiHeart
-                            className={styles.iconHover}
-                            style={{ fontSize: '20px' }}
-                            onClick={() => handleOpenSideBar('wishlist')}
-                        />
+                    <div
+                        className={`${containerBoxIcon} !gap-2 sm:!gap-3 md:!gap-5`}
+                    >
+                        <span>
+                            <TfiReload
+                                className={styles.iconHover}
+                                style={{ fontSize: '20px' }}
+                                onClick={() => handleOpenSideBar('compare')}
+                            />
+                        </span>
+                        <span>
+                            <TfiHeart
+                                className={styles.iconHover}
+                                style={{ fontSize: '20px' }}
+                                onClick={() => handleOpenSideBar('wishlist')}
+                            />
+                        </span>
                         <div className={boxCart}>
                             <AiOutlineShoppingCart
                                 className={styles.iconHover}

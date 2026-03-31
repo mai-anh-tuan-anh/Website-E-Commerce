@@ -4,7 +4,6 @@
     @include flex_box_custom(center, center, 0px);
     background-image: url(../../assets/images/banner.jpg);
     width: 100%;
-    min-height: 750px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -17,38 +16,10 @@
     text-align: center;
 }
 .title {
-    font-size: 50px;
     font-weight: 600;
     margin: 18px;
 }
 .description {
     font-weight: 400;
     margin-bottom: 25px;
-    font-size: 25px;
-}
-
-@media (max-width: 768px) {
-    .container {
-        min-height: 520px;
-    }
-    .title {
-        font-size: 34px;
-        margin: 12px 0;
-    }
-    .description {
-        font-size: 18px;
-        margin-bottom: 18px;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        min-height: 460px;
-    }
-    .title {
-        font-size: 30px;
-    }
-    .description {
-        font-size: 16px;
-    }
 }

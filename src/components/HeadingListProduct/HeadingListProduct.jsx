@@ -6,9 +6,9 @@ function HeadingListProduct({ data }) {
     const { container, containerItem } = styles;
     return (
         <MainLayout>
-            <div className={container}>
+            <div className={`${container} flex flex-col items-stretch gap-2 md:flex-row md:items-start`}>
                 <CountdownBanner />
-                <div className={containerItem}>
+                <div className={`${containerItem} flex w-full flex-wrap justify-center gap-2`}>
                     {data.map((item) => (
                         <ProductItem
                             key={item.id}

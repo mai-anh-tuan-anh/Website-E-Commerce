@@ -520,18 +520,6 @@ const WebotChatbot = ({ isMinimized = false, onToggleMinimize }) => {
                 .minimize-btn:hover {
                     background: rgba(255, 255, 255, 0.3);
                 }
-
-                @media (max-width: 480px) {
-                    .webot-chatbot {
-                        width: 100%;
-                        height: 100vh;
-                        border-radius: 0;
-                    }
-
-                    .webot-chatbot.minimized {
-                        width: 100%;
-                    }
-                }
             `}</style>
         </div>
     );

@@ -125,13 +125,4 @@
     gap: 5px;
 }
 
-@media (max-width: 768px) {
-    .bot-selector-panel {
-        width: 250px;
-        right: -10px;
-    }
-
-    .active-bot-indicator {
-        display: none;
-    }
-}
+/* Mobile is handled by `ChatbotManager` (returns null on mobile). */

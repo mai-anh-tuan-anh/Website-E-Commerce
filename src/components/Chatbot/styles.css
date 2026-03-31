@@ -262,37 +262,7 @@
     transform: none !important;
 }
 
-@media (max-width: 768px) {
-    .chat-window {
-        width: 300px;
-        height: 450px;
-        right: -10px;
-    }
-
-    .tawk-chatbot .chat-window {
-        right: auto;
-        left: -320px; /* Adjust for mobile */
-        bottom: 10px; /* Very close to bottom for mobile */
-    }
-
-    .webot-chatbot .chat-window {
-        right: auto;
-        left: -320px; /* Adjust for mobile */
-        bottom: 10px; /* Very close to bottom for mobile */
-    }
-
-    .botlibre-chatbot .chat-window {
-        right: auto;
-        left: -320px; /* Adjust for mobile */
-        bottom: 10px; /* Very close to bottom for mobile */
-    }
-
-    .chat-button {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-    }
-}
+/* Mobile is handled by `ChatbotManager` (returns null on mobile). */
 
 /* Tawk.to Chatbot Styles */
 .tawk-chatbot {

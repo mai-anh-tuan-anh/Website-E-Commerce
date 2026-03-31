@@ -6,7 +6,9 @@ function AdvanceHeading() {
         <MainLayout>
             <div className={container}>
                 <div className={headline}></div>
-                <div className={containerMiddleBox}>
+                <div
+                    className={`${containerMiddleBox} w-full px-4 md:w-[70%] md:px-[50px]`}
+                >
                     <p className={des}>DON'T MISS OUR POPULAR OFFERS</p>
                     <p className={title}>Our best products</p>
                 </div>

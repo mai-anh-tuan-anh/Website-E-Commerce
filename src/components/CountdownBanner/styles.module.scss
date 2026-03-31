@@ -3,16 +3,9 @@
 .container {
     background-image: url('../../assets/images/pic1.jpg');
     height: 409px;
-    width: calc(100% / 2.05);
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-    .container {
-        width: 100%;
-    }
 }
 .containerTimer {
     @include flex_box_custom(center, center, 5px);

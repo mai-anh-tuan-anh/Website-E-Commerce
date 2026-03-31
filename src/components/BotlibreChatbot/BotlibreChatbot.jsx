@@ -769,14 +769,6 @@ return (
                     cursor: not-allowed;
                     transform: scale(1);
                 }
-
-                @media (max-width: 480px) {
-                    .botlibre-chatbot {
-                        width: 100%;
-                        height: 100vh;
-                        border-radius: 0;
-                    }
-                }
             `}</style>
         </div>
     );

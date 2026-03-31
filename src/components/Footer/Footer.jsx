@@ -10,11 +10,13 @@ function MyFooter() {
     const { container, img, boxNav, boxPayment, boxIcons, paymentIcon } =
         styles;
     return (
-        <div className={container}>
+        <div className={`${container} pb-10 md:pb-[50px]`}>
             <div>
                 <img src={logo} alt='Divine Beauty' className={img} />
             </div>
-            <div className={boxNav}>
+            <div
+                className={`${boxNav} flex flex-wrap justify-center gap-3 md:flex-nowrap md:gap-[30px]`}
+            >
                 {dataMenu.map((item, index) => (
                     <a key={index} href={item.href}>
                         {item.content}
@@ -23,7 +25,9 @@ function MyFooter() {
             </div>
             <div className={boxPayment}>
                 <p>Guaranteed safe payment</p>
-                <div className={boxIcons}>
+                <div
+                    className={`${boxIcons} flex flex-wrap justify-center gap-3 md:flex-nowrap md:gap-5`}
+                >
                     <img src={visa} alt='Visa' className={paymentIcon} />
                     <img src={amazon} alt='Amazon' className={paymentIcon} />
                     <img

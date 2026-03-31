@@ -43,10 +43,6 @@
     @include flex_box_custom(center, center, 40px);
 }
 
-.desktopMenu {
-    display: none;
-}
-
 .mobileMenuWrap {
     display: flex;
     align-items: center;
@@ -63,6 +59,10 @@
     border: 1px solid rgba(255, 255, 255, 0.45);
     cursor: pointer;
     transition: all 0.2s ease;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
 
     &:hover {
         background-color: rgba(255, 255, 255, 0.35);
@@ -167,7 +167,6 @@
     background-color: rgba(37, 99, 235, 0.08) !important;
 }
 .logoWrapper {
-    width: 153px;
     height: 83px;
 }
 
@@ -201,53 +200,4 @@
     }
 }
 
-@media (max-width: 768px) {
-    .logoWrapper {
-        width: 120px;
-    }
-
-    .containerMenu {
-        gap: 16px;
-    }
-
-    .containerBoxIcon,
-    .containerBox {
-        gap: 12px;
-    }
-
-    .menu {
-        font-size: 13px;
-        padding: 6px 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .containerHeader {
-        padding: 0 10px;
-    }
-
-    .logoWrapper {
-        width: 100px;
-    }
-
-    .containerBoxIcon,
-    .containerBox {
-        gap: 8px;
-    }
-
-    // Social icons are nice-to-have; hide on very small screens
-    .socialIcons {
-        display: none;
-    }
-}
-
-@media (min-width: 769px) {
-    .desktopMenu {
-        display: flex;
-    }
-
-    .mobileMenuButton,
-    .mobileMenuPanel {
-        display: none;
-    }
-}
+// Responsive behavior migrated to Tailwind classes in `Header.jsx`.

@@ -84,17 +84,10 @@
 .contentWrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 80px 20px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: start;
-
-    @media (max-width: 968px) {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        padding: 60px 20px;
-    }
 }
 
 .contactInfo {
@@ -213,7 +206,6 @@
 
     .contactForm {
         background: white;
-        padding: 60px;
         border-radius: 16px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         border: 1px solid #e2e8f0;
@@ -223,10 +215,6 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 20px;
-
-            @media (max-width: 768px) {
-                grid-template-columns: 1fr;
-            }
         }
 
         .formGroup {
@@ -439,45 +427,4 @@
     }
 }
 
-// Responsive Design
-@media (max-width: 768px) {
-    .functionBox {
-        margin-top: 90px;
-        gap: 10px;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 16px;
-    }
-
-    .heroSection {
-        padding: 80px 0 60px;
-
-        .heroContent {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            p {
-                font-size: 1.1rem;
-            }
-        }
-    }
-
-    .contentWrapper {
-        padding: 40px 15px;
-    }
-
-    .contactInfo h2,
-    .contactFormSection h2,
-    .mapSection h2 {
-        font-size: 2rem;
-    }
-
-    .contactForm {
-        padding: 30px 20px;
-    }
-
-    .contactInfo .infoCard {
-        padding: 20px;
-    }
-}
+// Responsive behavior migrated to Tailwind classes in `Contact.jsx`.

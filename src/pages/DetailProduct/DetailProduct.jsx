@@ -233,7 +233,7 @@ function DetailProduct() {
             <div className={styles.container}>
                 {/* Navigation Buttons */}
                 <div
-                    className={`${styles.functionBox} flex flex-col gap-3 sm:flex-row sm:items-center`}
+                    className={`${styles.functionBox} flex  mb-10 gap-3 flex-row justify-between sm:items-center`}
                 >
                     <div>
                         <button

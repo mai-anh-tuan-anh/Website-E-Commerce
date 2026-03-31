@@ -12,8 +12,6 @@
 }
 .containerMiddleBox {
     @include flex_box_custom(center, center, 0px);
-    width: 70%;
-    padding: 0px 50px;
     flex-direction: column;
 
     line-height: 1.5;
@@ -28,11 +26,4 @@
     font-size: 24px;
     color: $primary_color;
     flex-wrap: nowrap;
-}
-
-@media (max-width: 768px) {
-    .containerMiddleBox {
-        width: 100%;
-        padding: 0 16px;
-    }
 }

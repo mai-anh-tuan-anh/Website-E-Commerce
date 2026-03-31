@@ -422,12 +422,11 @@
     position: absolute;
     left: 50%;
     top: 0;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background: white;
     border-radius: 50%;
     transform: translateX(-50%);
-    z-index: 2;
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
 }
 
@@ -435,12 +434,11 @@
     position: absolute;
     left: calc(50% + 30px);
     top: 0;
-    font-weight: 600;
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
     border-radius: 20px;
     font-size: 14px;
+    white-space: nowrap;
 }
 
 .timelineContent {
@@ -449,8 +447,7 @@
 
     h4 {
         font-size: 20px;
-        font-weight: 600;
-        margin: 0 0 8px 0;
+        margin-bottom: 10px;
         color: white;
     }
 
@@ -458,7 +455,74 @@
         font-size: 16px;
         line-height: 1.6;
         color: rgba(255, 255, 255, 0.9);
-        margin: 0;
+    }
+}
+
+// Mobile responsive for timeline
+@media (max-width: 768px) {
+    .timeline {
+        max-width: 100%;
+        margin: 40px 20px 0;
+
+        &::before {
+            left: 30px;
+        }
+    }
+
+    .timelineItem {
+        margin-left: 0;
+        margin-bottom: 40px;
+
+        .timelineContent {
+            margin-left: 60px;
+            margin-right: 0;
+            padding-left: 20px;
+            padding-right: 0;
+            text-align: left;
+            transform: none !important;
+            margin-top: 40px; // Add space for date above
+
+            h4 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+
+        .timelineDot {
+            left: 30px;
+            top: 40px; // Position dot to align with content
+        }
+
+        .timelineDate {
+            position: relative;
+            left: 0;
+            margin-left: 70px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            padding: 6px 12px;
+            white-space: normal;
+            display: inline-block;
+        }
+
+        &:nth-child(even) {
+            .timelineContent {
+                margin-left: 60px;
+                margin-right: 0;
+                padding-left: 20px;
+                padding-right: 0;
+                text-align: left;
+                transform: none !important;
+            }
+
+            .timelineDate {
+                left: 70px;
+                right: auto;
+            }
+        }
     }
 }
 
