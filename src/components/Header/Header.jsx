@@ -91,7 +91,9 @@ function MyHeader() {
         <div className={`${container} ${!isVisible ? hidden : ''}`}>
             <div className={containerHeader}>
                 <div className={containerBox}>
-                    <div className={`${containerBoxIcon} ${styles.socialIcons}`}>
+                    <div
+                        className={`${containerBoxIcon} ${styles.socialIcons}`}
+                    >
                         {dataBoxIcon.map((item) => {
                             return (
                                 <BoxIcon
@@ -102,7 +104,10 @@ function MyHeader() {
                             );
                         })}
                     </div>
-                    <div className={styles.mobileMenuWrap} ref={mobileMenuWrapRef}>
+                    <div
+                        className={styles.mobileMenuWrap}
+                        ref={mobileMenuWrapRef}
+                    >
                         <button
                             type='button'
                             className={styles.mobileMenuButton}

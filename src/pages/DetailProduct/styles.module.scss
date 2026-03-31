@@ -6,85 +6,77 @@
     margin: 0 auto;
     padding: 20px;
     background: white;
-        color: $secondary_color;
+    color: $secondary_color;
+    font-size: 14px;
+    font-weight: 300;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+    .btnBack {
+        cursor: pointer;
+        background-color: rgba(33, 206, 236, 0.945);
+        border: none;
+        color: black;
         font-size: 14px;
-        font-weight: 300;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        .functionBox {
-        @include flex_box_custom(space-between, center, 0px);
-        color: $secondary_color;
-        font-size: 14px;
-        font-weight: 300;
-        margin-top: 0px;
-        padding: 0 20px;
-    }
-        .btnBack {
-            cursor: pointer;
-            background-color: rgba(33, 206, 236, 0.945);
-            border: none;
-            color: black;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-            &:hover {
-                background-color: rgb(28, 184, 211);
-                transform: translateY(-1px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-            }
-
-            &:active {
-                transform: translateY(0);
-            }
-
-            svg {
-                font-size: 16px;
-            }
-        }
-    }
-
-    .breadcrumb {
+        font-weight: 500;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
         display: flex;
         align-items: center;
-        gap: 8px;
-        margin-bottom: 30px;
-        font-size: 14px;
+        gap: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            background-color: rgb(28, 184, 211);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+
+        svg {
+            font-size: 16px;
+        }
+    }
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    color: $secondary_color;
+
+    .separator {
+        color: $secondary_color;
+        opacity: 0.6;
+    }
+
+    .breadcrumbLink {
+        cursor: pointer;
+        transition: all 0.3s ease;
         color: $secondary_color;
 
-        .separator {
-            color: $secondary_color;
-            opacity: 0.6;
-        }
-
-        .breadcrumbLink {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: $secondary_color;
-
-            &:hover {
-                background-color: rgba(33, 206, 236, 0.1);
-                color: $primary_color;
-                transform: translateY(-1px);
-                padding: 4px 8px;
-                border-radius: 4px;
-            }
-
-            &:active {
-                transform: translateY(0);
-            }
-        }
-
-        .current {
+        &:hover {
+            background-color: rgba(33, 206, 236, 0.1);
             color: $primary_color;
-            font-weight: 600;
+            transform: translateY(-1px);
+            padding: 4px 8px;
+            border-radius: 4px;
         }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .current {
+        color: $primary_color;
+        font-weight: 600;
     }
 }
 
