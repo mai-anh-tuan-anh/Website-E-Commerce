@@ -102,8 +102,8 @@ function AboutUs() {
     };
 
     return (
-        <div>
-            <div className={container}>
+        <div className='bg-gray-50'>
+            <div className={`${container} px-4 sm:px-6 lg:px-8`}>
                 <MyHeader />
 
                 {/* Hero Section */}
@@ -135,7 +135,9 @@ function AboutUs() {
                         </div>
                     </div>
                 </div>
-                <div className={functionBox}>
+                <div
+                    className={`${functionBox} flex flex-col gap-3 sm:flex-row sm:items-center`}
+                >
                     <div>
                         <button
                             onClick={() => navigate('/')}

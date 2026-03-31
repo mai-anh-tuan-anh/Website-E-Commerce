@@ -1,5 +1,5 @@
 import styles from '../styles.module.scss';
-import { useContext, useState, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
 import SelectBox from './SelectBox';
 
@@ -10,11 +10,9 @@ function Filter() {
         boxRight,
         selectBox,
         searchBar,
-        products,
         searchBtn
     } = styles;
-    const { sortOptions, setSortId, searchTerm, handleSearch } =
-        useContext(OurShopContext);
+    const { sortOptions, setSortId, handleSearch } = useContext(OurShopContext);
     const refer = useRef();
     const getValueSelect = (value, type) => {
         if (type === 'sort') {

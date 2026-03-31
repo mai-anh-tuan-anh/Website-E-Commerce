@@ -108,7 +108,7 @@ const Contact = () => {
     ];
 
     return (
-        <div className={styles.contactContainer}>
+        <div className={`${styles.contactContainer} px-4 sm:px-6 lg:px-8`}>
             <MyHeader />
 
             {/* Hero Section */}
@@ -122,7 +122,7 @@ const Contact = () => {
                 </div>
             </section>
 
-            <div className={styles.contentWrapper}>
+            <div className={`${styles.contentWrapper} mx-auto w-full max-w-7xl`}>
                 {/* Contact Information */}
                 <section className={styles.contactInfo}>
                     <h2>Get in Touch</h2>
@@ -278,7 +278,7 @@ const Contact = () => {
             </div>
 
             {/* Map Section */}
-            <section className={styles.mapSection}>
+            <section className={`${styles.mapSection} mx-auto w-full max-w-7xl`}>
                 <h2>Find Us</h2>
                 <div className={styles.mapContainer}>
                     <iframe

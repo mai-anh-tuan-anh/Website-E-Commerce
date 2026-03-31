@@ -1,5 +1,5 @@
 import MainLayout from '@components/Layout/Layout';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { OurShopContext } from '@contexts/OurShopProvider';
 import ProductItem from '@components/ProductItem/ProductItem';
 import styles from '../styles.module.scss';

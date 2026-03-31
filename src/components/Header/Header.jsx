@@ -6,9 +6,10 @@ import Logo from '@icons/images/logo.png';
 import { TfiReload } from 'react-icons/tfi';
 import { TfiHeart } from 'react-icons/tfi';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import Cookies from 'js-cookie';
+import { FiMenu } from 'react-icons/fi';
 function MyHeader() {
     const {
         containerBoxIcon,
@@ -23,6 +24,8 @@ function MyHeader() {
 
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const mobileMenuWrapRef = useRef(null);
 
     const {
         isOpen,
@@ -65,6 +68,25 @@ function MyHeader() {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [lastScrollY]);
+
+    useEffect(() => {
+        if (!isMobileMenuOpen) return;
+
+        const handleDocMouseDown = (event) => {
+            const target = event.target;
+            if (
+                mobileMenuWrapRef.current &&
+                !mobileMenuWrapRef.current.contains(target)
+            ) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleDocMouseDown);
+        return () => {
+            document.removeEventListener('mousedown', handleDocMouseDown);
+        };
+    }, [isMobileMenuOpen]);
     return (
         <div className={`${container} ${!isVisible ? hidden : ''}`}>
             <div className={containerHeader}>
@@ -80,7 +102,36 @@ function MyHeader() {
                             );
                         })}
                     </div>
-                    <div className={containerMenu}>
+                    <div className={styles.mobileMenuWrap} ref={mobileMenuWrapRef}>
+                        <button
+                            type='button'
+                            className={styles.mobileMenuButton}
+                            aria-expanded={isMobileMenuOpen}
+                            onClick={() => setIsMobileMenuOpen((v) => !v)}
+                        >
+                            <FiMenu />
+                        </button>
+
+                        {isMobileMenuOpen && (
+                            <div className={styles.mobileMenuPanel}>
+                                <div className={styles.mobileMenuList}>
+                                    {dataMenu.map((item, index) => (
+                                        <Menu
+                                            key={index}
+                                            content={item.content}
+                                            href={item.href}
+                                            className={styles.mobileMenuItem}
+                                            onSelect={() =>
+                                                setIsMobileMenuOpen(false)
+                                            }
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className={`${containerMenu} ${styles.desktopMenu}`}>
                         {dataMenu.slice(0, 3).map((item, index) => {
                             return (
                                 <Menu
@@ -96,7 +147,7 @@ function MyHeader() {
                     <img src={Logo} alt='Logo' className={styles.logo} />
                 </div>
                 <div className={containerBox}>
-                    <div className={containerMenu}>
+                    <div className={`${containerMenu} ${styles.desktopMenu}`}>
                         {dataMenu.slice(3, dataMenu.length).map((item) => {
                             return (
                                 <Menu content={item.content} href={item.href} />

@@ -2,12 +2,16 @@
 @import '@styles/mixin.module.scss';
 .container {
     margin-top: 0;
+    width: 100%;
+    max-width: 300px;
 }
 .boxImg {
     cursor: pointer;
-    width: 300px;
-    height: 353px;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 300 / 353;
     position: relative;
+    max-width: 300px;
     &:hover .revealWhenHover {
         opacity: 1;
     }
@@ -46,8 +50,8 @@
         height: 40px;
         width: 40px;
         img {
-            width: 17px;
-            height: 17px;
+            width: 25px;
+            height: 25px;
             transition: transform 0.2s ease;
             border-radius: 50%;
             background-color: rgba(189, 189, 189, 0.3);
@@ -80,13 +84,6 @@
         }
     }
 }
-
-@media (max-width: 768px) {
-    .boxImg {
-        width: 100%;
-        max-width: 100%;
-    }
-}
 .priceBoard {
     background-color: rgba(9, 235, 197, 0.9);
     border-bottom-left-radius: 5px;
@@ -100,8 +97,8 @@
         font-size: 16px;
         color: $fourth_color;
         margin: 0;
-        width: 268px;
-        max-width: 268px;
+        width: 100%;
+        max-width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

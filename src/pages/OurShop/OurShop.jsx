@@ -15,7 +15,7 @@ import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 function OurShopContent() {
     const { container, functionBox, btnBack } = styles;
     const navigate = useNavigate();
-    const { showId, isLoading } = useContext(OurShopContext);
+    const { isLoading } = useContext(OurShopContext);
 
     const handleBack = () => {
         navigate(-1);

@@ -202,7 +202,7 @@ function DetailProduct() {
 
     if (productLoading) {
         return (
-            <div className={styles.container}>
+            <div className={`${styles.container} px-4 sm:px-6 lg:px-8`}>
                 <div className={styles.loading}>
                     <LoadingSpinner />
                     <p>Loading product details...</p>
@@ -232,7 +232,9 @@ function DetailProduct() {
         <>
             <div className={styles.container}>
                 {/* Navigation Buttons */}
-                <div className={styles.functionBox}>
+                <div
+                    className={`${styles.functionBox} flex flex-col gap-3 sm:flex-row sm:items-center`}
+                >
                     <div>
                         <button
                             onClick={() => navigate('/')}
@@ -634,7 +636,7 @@ function DetailProduct() {
                         </div>
                     </div>
                 </div>
-                <div>
+                <div className='mt-10'>
                     <h2>Related Product</h2>
                     <SliderCommon
                         data={tempDataSlider}

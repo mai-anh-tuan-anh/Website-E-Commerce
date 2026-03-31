@@ -17,9 +17,10 @@
         right: 0;
         background-color: rgb(233, 231, 231);
         width: 370px;
+        max-width: 100vw;
         height: 100vh;
         z-index: 1002;
-        transform: translateX(370px);
+        transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
     }
     .slideSideBar {
@@ -38,6 +39,18 @@
         @include flex_box_custom(center, center, 0);
         &:hover {
             background-color: #ccc;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        .sideBar {
+            width: 100vw;
+        }
+
+        .boxIcon {
+            left: -45px;
         }
     }
 }

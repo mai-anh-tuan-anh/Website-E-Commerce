@@ -113,18 +113,17 @@ function ViewCart() {
 
     const subtotal = calculateSubtotal();
     const shipping = calculateShipping();
-    const total = calculateTotal();
     const hasItems = listProductCart && listProductCart.length > 0;
 
     return (
-        <div className={styles.viewCartContainer}>
+        <div className={`${styles.viewCartContainer} px-4 sm:px-6 lg:px-8`}>
             {/* Progress Indicator */}
             <div className={styles.progressIndicator}>
                 <button className={styles.backBtn} onClick={handleBack}>
                     <AiOutlineArrowLeft />
                     <span>Back</span>
                 </button>
-                <div className={styles.progressSteps}>
+                <div className={`${styles.progressSteps} overflow-x-auto`}>
                     <div className={`${styles.progressStep} ${styles.active}`}>
                         <AiOutlineShoppingCart />
                         <span>Cart</span>

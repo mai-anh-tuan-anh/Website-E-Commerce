@@ -18,7 +18,7 @@ const OrderConfirmation = () => {
     };
 
     return (
-        <div className={styles.confirmationContainer}>
+        <div className={`${styles.confirmationContainer} px-4 sm:px-6 lg:px-8`}>
             <button className={styles.backBtn} onClick={handleBack}>
                 <AiOutlineArrowLeft />
                 <span>Back to Shop</span>
