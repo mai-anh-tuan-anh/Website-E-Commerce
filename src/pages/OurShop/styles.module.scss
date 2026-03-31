@@ -65,7 +65,7 @@
 }
 .containerBanner {
     background-image: url(https://static.vecteezy.com/system/resources/previews/050/809/377/non_2x/beautiful-stylish-models-showcasing-the-latest-fashion-trends-photo.jpeg);
-    height: 300px;
+    min-height: 300px;
     width: 100%;
     background-position: top;
     background-repeat: no-repeat;
@@ -93,11 +93,20 @@
 
 @media (max-width: 768px) {
     .containerBanner {
-        height: 220px;
+        min-height: 220px;
         .contentBox {
             padding: 40px 0;
+            justify-content: center;
+            gap: 16px;
             .title {
                 font-size: 24px;
+            }
+            .countdown {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .boxBtn {
+                width: 140px;
             }
         }
     }
@@ -105,11 +114,18 @@
 
 @media (max-width: 480px) {
     .containerBanner {
-        height: 200px;
+        min-height: 200px;
         .contentBox {
             padding: 32px 0;
+            gap: 14px;
             .title {
                 font-size: 22px;
+            }
+            .countdown {
+                gap: 10px;
+            }
+            .boxBtn {
+                width: 130px;
             }
         }
     }

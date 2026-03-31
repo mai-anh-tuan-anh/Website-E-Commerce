@@ -22,6 +22,7 @@
         z-index: 1002;
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
+        overflow-y: auto;
     }
     .slideSideBar {
         transform: translateX(0);
@@ -46,11 +47,12 @@
 @media (max-width: 768px) {
     .container {
         .sideBar {
-            width: 100vw;
+            width: 85vw;
+            max-width: 85vw;
         }
 
         .boxIcon {
-            left: -45px;
+            left: -35px;
         }
     }
 }

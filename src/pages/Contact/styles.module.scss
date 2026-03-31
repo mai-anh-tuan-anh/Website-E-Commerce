@@ -1,6 +1,40 @@
+@import '@styles/mixin.module.scss';
+
 .contactContainer {
     min-height: 100vh;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.functionBox {
+    @include flex_box_custom(space-between, center, 0px);
+    padding: 0 20px;
+    margin-top: 83px;
+    gap: 12px;
+}
+
+.btnBack {
+    cursor: pointer;
+    background-color: rgba(33, 206, 236, 0.945);
+    border: none;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        background-color: rgb(28, 184, 211);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    &:active {
+        transform: translateY(0);
+    }
 }
 
 .heroSection {
@@ -407,6 +441,14 @@
 
 // Responsive Design
 @media (max-width: 768px) {
+    .functionBox {
+        margin-top: 90px;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px;
+    }
+
     .heroSection {
         padding: 80px 0 60px;
 

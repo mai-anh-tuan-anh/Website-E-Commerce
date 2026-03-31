@@ -11,10 +11,12 @@ import {
     AiOutlineClockCircle,
     AiOutlineSend
 } from 'react-icons/ai';
+import { FaHome } from 'react-icons/fa';
 import MyHeader from '@components/Header/Header';
 import MyFooter from '@components/Footer/Footer';
 import Button from '@components/Button/Button';
 import styles from './styles.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const validationSchema = z.object({
     name: z
@@ -40,6 +42,7 @@ const validationSchema = z.object({
 });
 
 const Contact = () => {
+    const navigate = useNavigate();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
 
@@ -107,6 +110,10 @@ const Contact = () => {
         }
     ];
 
+    const handleBack = () => {
+        navigate(-1);
+    };
+
     return (
         <div className={`${styles.contactContainer} px-4 sm:px-6 lg:px-8`}>
             <MyHeader />
@@ -121,8 +128,27 @@ const Contact = () => {
                     </p>
                 </div>
             </section>
-
-            <div className={`${styles.contentWrapper} mx-auto w-full max-w-7xl`}>
+            <div className={styles.functionBox}>
+                <div>
+                    <button
+                        type='button'
+                        onClick={() => navigate('/')}
+                        className={styles.btnBack}
+                    >
+                        <FaHome /> Home
+                    </button>
+                </div>
+                <button
+                    type='button'
+                    onClick={handleBack}
+                    className={styles.btnBack}
+                >
+                    ← Back
+                </button>
+            </div>
+            <div
+                className={`${styles.contentWrapper} mx-auto w-full max-w-7xl`}
+            >
                 {/* Contact Information */}
                 <section className={styles.contactInfo}>
                     <h2>Get in Touch</h2>
@@ -278,7 +304,9 @@ const Contact = () => {
             </div>
 
             {/* Map Section */}
-            <section className={`${styles.mapSection} mx-auto w-full max-w-7xl`}>
+            <section
+                className={`${styles.mapSection} mx-auto w-full max-w-7xl`}
+            >
                 <h2>Find Us</h2>
                 <div className={styles.mapContainer}>
                     <iframe

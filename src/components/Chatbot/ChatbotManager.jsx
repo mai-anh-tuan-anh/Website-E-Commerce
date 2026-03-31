@@ -8,14 +8,45 @@ import RealBotLibreChatbot from './RealBotLibreChatbot';
 const ChatbotManager = () => {
     const [activeBot, setActiveBot] = useState('custom'); // 'webot', 'botlibre', 'tawk', 'custom'
     const [showSelector, setShowSelector] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const [minimizedBots, setMinimizedBots] = useState({
         webot: false,
         tawk: false
     });
 
     useEffect(() => {
+        const mql = window.matchMedia('(max-width: 768px)');
+        const update = () => setIsMobile(mql.matches);
+
+        update();
+        if (mql.addEventListener) {
+            mql.addEventListener('change', update);
+            return () => mql.removeEventListener('change', update);
+        }
+
+        // Safari fallback
+        mql.addListener(update);
+        return () => mql.removeListener(update);
+    }, []);
+
+    useEffect(() => {
         // Hide other chatbots when custom bot is active
         const hideExternalBots = () => {
+            // On mobile we want absolutely no chatbot widgets.
+            if (isMobile) {
+                const tawkWidgets = document.querySelectorAll(
+                    'iframe[title*="chat widget"], iframe[src*="tawk.to"]'
+                );
+                tawkWidgets.forEach((widget) => {
+                    widget.style.display = 'none';
+                });
+
+                const botlibreWidget = document.querySelector('#botlibre-chat');
+                if (botlibreWidget) botlibreWidget.style.display = 'none';
+
+                return;
+            }
+
             // Hide Tawk.to iframe
             const tawkWidgets = document.querySelectorAll(
                 'iframe[title*="chat widget"], iframe[src*="tawk.to"]'
@@ -50,10 +81,11 @@ const ChatbotManager = () => {
         };
 
         hideExternalBots();
-    }, [activeBot]);
+    }, [activeBot, isMobile]);
 
     // Additional effect to handle Tawk.to positioning after it loads
     useEffect(() => {
+        if (isMobile) return;
         if (activeBot === 'tawk') {
             const positionTawkWidget = () => {
                 const tawkWidgets = document.querySelectorAll(
@@ -103,6 +135,8 @@ const ChatbotManager = () => {
             };
         };
     };
+
+    if (isMobile) return null;
 
     return (
         <div className='chatbot-manager'>

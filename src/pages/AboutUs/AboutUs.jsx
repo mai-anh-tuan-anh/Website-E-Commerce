@@ -135,9 +135,7 @@ function AboutUs() {
                         </div>
                     </div>
                 </div>
-                <div
-                    className={`${functionBox} flex flex-col gap-3 sm:flex-row sm:items-center`}
-                >
+                <div className={functionBox}>
                     <div>
                         <button
                             onClick={() => navigate('/')}
