@@ -6,16 +6,19 @@
     margin: 0 auto;
     padding: 20px;
     background: white;
-    padding-top: 93px;
-
-    .functionBox {
-        @include flex_box_custom(space-between, center, 0px);
         color: $secondary_color;
         font-size: 14px;
         font-weight: 300;
         margin-top: 10px;
         margin-bottom: 20px;
-
+        .functionBox {
+        @include flex_box_custom(space-between, center, 0px);
+        color: $secondary_color;
+        font-size: 14px;
+        font-weight: 300;
+        margin-top: 0px;
+        padding: 0 20px;
+    }
         .btnBack {
             cursor: pointer;
             background-color: rgba(33, 206, 236, 0.945);

@@ -3,14 +3,20 @@
 .container {
     @include flex_box_custom(center, center, 0px);
     background-image: url(../../assets/images/banner.jpg);
-    min-height: 750px;
+    width: 100vw;
+    min-height: 800px;
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
 }
 .content {
     @include flex_box_custom(center, center, 10px);
     flex-direction: column;
     color: white;
+    padding: 0 16px;
+    text-align: center;
 }
 .title {
     font-size: 50px;
@@ -21,4 +27,30 @@
     font-weight: 400;
     margin-bottom: 25px;
     font-size: 25px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        min-height: 360px;
+    }
+    .title {
+        font-size: 34px;
+        margin: 12px 0;
+    }
+    .description {
+        font-size: 18px;
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        min-height: 460px;
+    }
+    .title {
+        font-size: 30px;
+    }
+    .description {
+        font-size: 16px;
+    }
 }

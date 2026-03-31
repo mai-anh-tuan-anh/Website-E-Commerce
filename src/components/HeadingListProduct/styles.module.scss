@@ -6,6 +6,8 @@
 }
 .containerItem {
     @include flex_box_custom(center, center, 10px);
+    flex-wrap: wrap;
+    width: 100%;
 }
 @media (max-width: 768px) {
     .container {
@@ -13,6 +15,6 @@
         align-items: stretch;
     }
     .containerItem {
-        justify-content: flex-start;
+        justify-content: center;
     }
 }

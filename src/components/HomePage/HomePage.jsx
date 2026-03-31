@@ -42,29 +42,27 @@ function HomePage() {
     }, []);
     const { container } = styles;
     return (
-        <div>
-            <div className={container}>
-                <MyHeader />
-                <Banner />
-                <Info></Info>
-                <AdvanceHeading />
+        <div className={`${container} px-4 sm:px-6 lg:px-8`}>
+            <MyHeader />
+            <Banner />
+            <Info></Info>
+            <AdvanceHeading />
 
-                {/* Loading State */}
-                {isLoading && <LoadingSpinner />}
+            {/* Loading State */}
+            {isLoading && <LoadingSpinner />}
 
-                {/* Error State */}
-                {error && <div className={styles.errorMessage}>{error}</div>}
+            {/* Error State */}
+            {error && <div className={styles.errorMessage}>{error}</div>}
 
-                {/* Content - only show when not loading and no error */}
-                {!isLoading && !error && (
-                    <>
-                        <HeadingListProduct data={listProducts.slice(0, 2)} />
-                        <PopularProduct data={listProducts.slice(2, 10)} />
-                    </>
-                )}
-                <SaleHomepage />
-                <MyFooter />
-            </div>
+            {/* Content - only show when not loading and no error */}
+            {!isLoading && !error && (
+                <>
+                    <HeadingListProduct data={listProducts.slice(0, 2)} />
+                    <PopularProduct data={listProducts.slice(2, 10)} />
+                </>
+            )}
+            <SaleHomepage />
+            <MyFooter />
         </div>
     );
 }

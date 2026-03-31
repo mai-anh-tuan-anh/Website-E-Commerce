@@ -91,7 +91,7 @@ function MyHeader() {
         <div className={`${container} ${!isVisible ? hidden : ''}`}>
             <div className={containerHeader}>
                 <div className={containerBox}>
-                    <div className={containerBoxIcon}>
+                    <div className={`${containerBoxIcon} ${styles.socialIcons}`}>
                         {dataBoxIcon.map((item) => {
                             return (
                                 <BoxIcon

@@ -32,6 +32,10 @@
         cursor: pointer;
     }
 }
+
+.socialIcons {
+    flex-shrink: 0;
+}
 .containerBox {
     @include flex_box_custom(center, center, 20px);
 }
@@ -214,6 +218,26 @@
     .menu {
         font-size: 13px;
         padding: 6px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .containerHeader {
+        padding: 0 10px;
+    }
+
+    .logoWrapper {
+        width: 100px;
+    }
+
+    .containerBoxIcon,
+    .containerBox {
+        gap: 8px;
+    }
+
+    // Social icons are nice-to-have; hide on very small screens
+    .socialIcons {
+        display: none;
     }
 }
 
