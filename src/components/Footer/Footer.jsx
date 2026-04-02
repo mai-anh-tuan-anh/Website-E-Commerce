@@ -15,7 +15,7 @@ function MyFooter() {
                 <img src={logo} alt='Divine Beauty' className={img} />
             </div>
             <div
-                className={`${boxNav} flex flex-wrap justify-center gap-3 md:flex-nowrap md:gap-[30px]`}
+                className={`${boxNav} flex flex-wrap justify-center  md:flex-nowrap md:gap-[30px]`}
             >
                 {dataMenu.map((item, index) => (
                     <a key={index} href={item.href}>
@@ -49,16 +49,20 @@ function MyFooter() {
                     Building, No. 29 Lieu Giai Street, Ngoc Ha Ward, Hanoi,
                     Vietnam.
                     <br />
+                    <br />
                     <strong>Customer Service:</strong> Call the Skibidi Shop
                     hotline (free of charge) or chat with us directly via the
                     Help Center.
                     <br />
+                    <br />
                     <strong>Content Management Responsible Person:</strong> Mai
                     Anh Tuan Anh
+                    <br />
                     <br />
                     <strong>Business Registration Number:</strong> 0106773786,
                     first issued by the Hanoi Department of Planning and
                     Investment on February 10, 1996.
+                    <br />
                     <br />© 1996-2026, Skibidi Shop, Created by Mai Anh Tuan Anh
                 </p>
             </div>

@@ -103,6 +103,38 @@ function Login() {
             }
         }
     });
+
+    // Handle third-party social login
+    const handleSocialLogin = async (provider) => {
+        try {
+            setIsLoading(true);
+
+            // For demo purposes - you'll need to implement actual OAuth flow
+            switch (provider) {
+                case 'google':
+                    // Google OAuth implementation
+                    toast.info('Google login coming soon!');
+                    break;
+                case 'facebook':
+                    // Facebook OAuth implementation
+                    toast.info('Facebook login coming soon!');
+                    break;
+                case 'twitter':
+                    // Twitter OAuth implementation
+                    toast.info('Twitter login coming soon!');
+                    break;
+                default:
+                    toast.error('Invalid provider');
+            }
+
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Social login error:', error);
+            toast.error('Social login failed');
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className={container}>
             {isLoading && <LoadingSpinner />}
@@ -173,13 +205,22 @@ function Login() {
 
             <div className={socialLogin}>
                 <div className={socialButtons}>
-                    <button className={`${socialButton} ${facebookButton}`}>
+                    <button
+                        className={`${socialButton} ${facebookButton}`}
+                        onClick={() => handleSocialLogin('facebook')}
+                    >
                         <FaFacebookF />
                     </button>
-                    <button className={`${socialButton} ${twitterButton}`}>
+                    <button
+                        className={`${socialButton} ${twitterButton}`}
+                        onClick={() => handleSocialLogin('twitter')}
+                    >
                         <FaTwitter />
                     </button>
-                    <button className={`${socialButton} ${googleButton}`}>
+                    <button
+                        className={`${socialButton} ${googleButton}`}
+                        onClick={() => handleSocialLogin('google')}
+                    >
                         <FaGoogle />
                     </button>
                 </div>

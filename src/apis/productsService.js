@@ -9,4 +9,9 @@ const getProducts = async (query) => {
     );
     return res.data;
 };
-export { getProducts };
+
+const getProductById = async (id) => {
+    const res = await axiosClient.get(`/product/${id}`);
+    return res.data;
+};
+export { getProducts, getProductById };

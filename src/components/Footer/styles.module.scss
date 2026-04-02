@@ -1,11 +1,14 @@
 @import '@styles/variable.module.scss';
 @import '@styles/mixin.module.scss';
 .container {
-    @include flex_box_custom(center, center, 15px);
+    @include flex_box_custom(center, center, 10px);
     flex-direction: column;
     background-color: #363636;
     margin-top: 100px;
     color: $white_color;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
     padding: 20px 0px 50px;
     .img {
         width: 100%;
@@ -96,5 +99,3 @@
         }
     }
 }
-
-

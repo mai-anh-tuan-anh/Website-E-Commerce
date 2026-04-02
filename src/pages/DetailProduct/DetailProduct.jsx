@@ -6,6 +6,7 @@ import SliderCommon from '@components/SliderCommon/SliderCommon';
 import Cookies from 'js-cookie';
 import { addProductToCart } from '@/apis/cartService';
 import { getCart } from '@/apis/cartService';
+import { getProductById } from '@/apis/productsService';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
@@ -49,14 +50,25 @@ function DetailProduct() {
     // Load product data if not available in context
     useEffect(() => {
         if (!detailProduct && id) {
-            // TODO: Fetch product data by ID from API
-            // For now, using mock data or waiting for context to be set
-            setProductLoading(false);
+            fetchDataDetail();
         } else if (detailProduct) {
             setProductLoading(false);
         }
     }, [detailProduct, id]);
-
+    const fetchDataDetail = async () => {
+        try {
+            console.log('Fetching product with ID:', id);
+            const res = await getProductById(id);
+            console.log('API response:', res);
+            setDetailProduct(res);
+            setProductLoading(false);
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            // Don't set detailProduct to null on error, let it remain as is
+            // Only set loading to false
+            setProductLoading(false);
+        }
+    };
     const handleBack = () => {
         navigate(-1);
     };
@@ -211,7 +223,7 @@ function DetailProduct() {
         );
     }
 
-    if (!detailProduct) {
+    if (!detailProduct && !productLoading) {
         return (
             <div className={styles.container}>
                 <div className={styles.notFound}>
@@ -255,8 +267,8 @@ function DetailProduct() {
                             <ReactImageMagnifier
                                 srcPreview={image}
                                 srcOriginal={image}
-                                width={290}
-                                height={350}
+                                width={'100%'}
+                                height={'100%'}
                                 className='max-w-xs bg-gray-200 rounded-lg md:max-w-none max-h-80 md:max-h-none'
                                 objectFit='contain'
                             />
