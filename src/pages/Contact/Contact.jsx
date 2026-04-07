@@ -120,7 +120,7 @@ const Contact = () => {
 
             {/* Hero Section */}
             <section
-                className={`${styles.heroSection} py-[80px] pb-[60px] md:py-[120px] md:pb-[80px]`}
+                className={`${styles.heroSection} w-full py-[80px] pb-[60px] md:py-[120px] md:pb-[80px]`}
             >
                 <div className={styles.heroContent}>
                     <h1>Contact Us</h1>

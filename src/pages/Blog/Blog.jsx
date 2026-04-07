@@ -503,10 +503,10 @@ const Blog = () => {
             {/* Newsletter Section */}
             <section className='bg-linear-to-r from-primary to-secondary pt-16'>
                 <div className='mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8'>
-                    <h2 className='mb-4 text-3xl font-bold text-white md:text-4xl'>
+                    <h2 className='mb-4 text-3xl font-bold text-black md:text-4xl'>
                         Stay Updated with Our Newsletter
                     </h2>
-                    <p className=' text-white/80'>
+                    <p className=' text-black/80'>
                         Get the latest fashion tips, beauty secrets, and
                         exclusive offers delivered to your inbox
                     </p>
