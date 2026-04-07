@@ -19,7 +19,7 @@ function SaleHomepage() {
                     data-aos-delay='500'
                 />
             </div>
-            <div className='text-center'>
+            <div className='w-full'>
                 <h2
                     className={`${title} text-[26px] md:text-[35px]`}
                     data-aos='fade-up'

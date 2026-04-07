@@ -18,7 +18,8 @@
     .boxNav {
         @include flex_box_custom(center, center, 30px);
         font-size: 15px;
-        a {
+        a,
+        .navLink {
             color: $white_color;
             text-decoration: none;
             font-size: 14px;
@@ -29,6 +30,10 @@
             border-radius: 4px;
             transition: all 0.3s ease;
             position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
 
             &:hover {
                 color: $white_color;

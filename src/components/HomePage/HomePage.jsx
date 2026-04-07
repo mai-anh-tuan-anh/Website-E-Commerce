@@ -3,14 +3,14 @@ import Banner from '@components/Banner/Banner';
 import styles from './styles.module.scss';
 import AdvanceHeading from '@components/AdvanceHeading/AdvanceHeading';
 import Info from '@components/Info/Info';
-import HeadingListProduct from '@components/HeadingListProduct/HeadingListProduct';
+
 import { useEffect, useState } from 'react';
 import { getProducts } from '@/apis/productsService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomepage from '@components/SaleHomepage/SaleHomepage';
 import MyFooter from '@components/Footer/Footer';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
-
+import CountdownBanner from '@components/CountdownBanner/CountdownBanner';
 function HomePage() {
     const [listProducts, setListProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -58,8 +58,10 @@ function HomePage() {
                 {/* Content - only show when not loading and no error */}
                 {!isLoading && !error && (
                     <>
-                        <HeadingListProduct data={listProducts.slice(0, 2)} />
-                        <PopularProduct data={listProducts.slice(2, 10)} />
+                        <div className='flex justify-center my-5'>
+                            <CountdownBanner />
+                        </div>
+                        <PopularProduct data={listProducts.slice(0, 10)} />
                     </>
                 )}
                 <SaleHomepage />

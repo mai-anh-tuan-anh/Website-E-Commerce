@@ -6,8 +6,8 @@ import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
 
 import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import ProductItem from '@components/ProductItem/ProductItem';
-function SliderCommon({ data, isProductItem = false, showItem = 1 }) {
-    var settings = {
+function SliderCommon({ data, isProductItem = false, showItem = 4 }) {
+    const settings = {
         dots: true,
         infinite: true,
         speed: 500,
@@ -17,7 +17,30 @@ function SliderCommon({ data, isProductItem = false, showItem = 1 }) {
         autoplay: true,
         autoplaySpeed: 3000,
         prevArrow: <MdKeyboardDoubleArrowLeft />,
-        nextArrow: <MdKeyboardDoubleArrowRight />
+        nextArrow: <MdKeyboardDoubleArrowRight />,
+        responsive: [
+            {
+                breakpoint: 640, // sm breakpoint
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768, // md breakpoint
+                settings: {
+                    slidesToShow: Math.min(2, showItem),
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 1024, // lg breakpoint
+                settings: {
+                    slidesToShow: Math.min(3, showItem),
+                    slidesToScroll: 1
+                }
+            }
+        ]
     };
     return (
         <div>

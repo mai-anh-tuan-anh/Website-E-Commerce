@@ -14,7 +14,7 @@ const dataMenu = [
     { content: 'Our shop', href: '/shop' },
     { content: 'About us', href: '/about' },
     { content: 'Contact us', href: '/contact' },
-    { content: 'Search', href: '#' },
+    { content: 'Blog', href: '/blog' },
     { content: 'Sign In', href: '#' }
 ];
 export { dataBoxIcon, dataMenu };

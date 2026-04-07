@@ -6,9 +6,18 @@ import amazon from '@icons/svgs/amazonicon.svg';
 import discover from '@icons/svgs/discovericon.svg';
 import mastercard from '@icons/svgs/mastercardicon.svg';
 import paypal from '@icons/svgs/paypalicon.svg';
+import { useNavigate } from 'react-router-dom';
 function MyFooter() {
-    const { container, img, boxNav, boxPayment, boxIcons, paymentIcon } =
-        styles;
+    const navigate = useNavigate();
+    const {
+        container,
+        img,
+        boxNav,
+        boxPayment,
+        boxIcons,
+        paymentIcon,
+        navLink
+    } = styles;
     return (
         <div className={`${container} pb-10 md:pb-[50px]`}>
             <div>
@@ -18,9 +27,16 @@ function MyFooter() {
                 className={`${boxNav} flex flex-wrap justify-center  md:flex-nowrap md:gap-[30px]`}
             >
                 {dataMenu.map((item, index) => (
-                    <a key={index} href={item.href}>
+                    <button
+                        key={index}
+                        className={navLink}
+                        onClick={() => {
+                            navigate(item.href);
+                            window.scrollTo(0, 0);
+                        }}
+                    >
                         {item.content}
-                    </a>
+                    </button>
                 ))}
             </div>
             <div className={boxPayment}>

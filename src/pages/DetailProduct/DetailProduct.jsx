@@ -6,7 +6,7 @@ import SliderCommon from '@components/SliderCommon/SliderCommon';
 import Cookies from 'js-cookie';
 import { addProductToCart } from '@/apis/cartService';
 import { getCart } from '@/apis/cartService';
-import { getProductById } from '@/apis/productsService';
+import { getProductById, getProducts } from '@/apis/productsService';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
@@ -20,6 +20,7 @@ import {
     FaStar
 } from 'react-icons/fa';
 import MyFooter from '@components/Footer/Footer';
+import MyHeader from '@components/Header/Header';
 
 function DetailProduct() {
     const {
@@ -46,7 +47,8 @@ function DetailProduct() {
         email: ''
     });
     const [productLoading, setProductLoading] = useState(true);
-    const tempDataSlider = [{ image: '', name: '', price: '' }];
+    const [relatedProducts, setRelatedProducts] = useState([]);
+    const [relatedLoading, setRelatedLoading] = useState(false);
     // Load product data if not available in context
     useEffect(() => {
         if (!detailProduct && id) {
@@ -55,20 +57,52 @@ function DetailProduct() {
             setProductLoading(false);
         }
     }, [detailProduct, id]);
+
+    // Fetch related products when detailProduct is loaded
+    useEffect(() => {
+        if (detailProduct) {
+            fetchRelatedProducts();
+        }
+    }, [detailProduct]);
+
     const fetchDataDetail = async () => {
         try {
-            console.log('Fetching product with ID:', id);
             const res = await getProductById(id);
-            console.log('API response:', res);
             setDetailProduct(res);
             setProductLoading(false);
         } catch (error) {
-            console.error('Error fetching product:', error);
-            // Don't set detailProduct to null on error, let it remain as is
-            // Only set loading to false
             setProductLoading(false);
         }
     };
+
+    const fetchRelatedProducts = async () => {
+        if (!detailProduct) return;
+
+        setRelatedLoading(true);
+        try {
+            // Fetch products with same category, excluding current product
+            const query = {
+                sortType: '0', // Default sort
+                page: 1,
+                limit: 8,
+                search: detailProduct.category || ''
+            };
+
+            const res = await getProducts(query);
+            if (res && res.contents) {
+                // Filter out current product and limit to 8 items
+                const filtered = res.contents
+                    .filter((item) => item._id !== detailProduct._id)
+                    .slice(0, 8);
+                setRelatedProducts(filtered);
+            }
+        } catch (error) {
+            console.error('Error fetching related products:', error);
+        } finally {
+            setRelatedLoading(false);
+        }
+    };
+
     const handleBack = () => {
         navigate(-1);
     };
@@ -242,10 +276,11 @@ function DetailProduct() {
 
     return (
         <>
+            <MyHeader />
             <div className={styles.container}>
                 {/* Navigation Buttons */}
                 <div
-                    className={`${styles.functionBox} flex  mb-10 gap-3 flex-row justify-between sm:items-center`}
+                    className={`${styles.functionBox} flex mt-20 mb-10 gap-3 flex-row justify-between sm:items-center`}
                 >
                     <div>
                         <button
@@ -649,12 +684,27 @@ function DetailProduct() {
                     </div>
                 </div>
                 <div className='mt-10'>
-                    <h2>Related Product</h2>
-                    <SliderCommon
-                        data={tempDataSlider}
-                        isProductItem
-                        showItem={4}
-                    />
+                    <h2>Related Products</h2>
+                    {relatedLoading ? (
+                        <div style={{ padding: '40px 0', textAlign: 'center' }}>
+                            <LoadingSpinner />
+                        </div>
+                    ) : relatedProducts.length > 0 ? (
+                        <SliderCommon
+                            data={relatedProducts.map((item) => ({
+                                image: item.images?.[0] || item.image || '',
+                                name: item.name,
+                                price: item.price,
+                                ...item
+                            }))}
+                            isProductItem
+                            showItem={4}
+                        />
+                    ) : (
+                        <p style={{ padding: '20px 0', color: '#666' }}>
+                            No related products found.
+                        </p>
+                    )}
                 </div>
             </div>
             <MyFooter />

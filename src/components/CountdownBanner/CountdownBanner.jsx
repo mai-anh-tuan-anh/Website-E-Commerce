@@ -3,7 +3,7 @@ import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 function CountdownBanner() {
     const { container, containerTimer, title, boxBtn } = styles;
-    const targetDate = '2026-04-01T09:20:00';
+    const targetDate = '2026-06-01T09:20:00';
     return (
         <div className={`${container} w-full md:w-[calc(100%/2.05)]`}>
             <div className={title}>On Special Offer</div>

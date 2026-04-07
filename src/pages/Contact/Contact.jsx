@@ -119,7 +119,9 @@ const Contact = () => {
             <MyHeader />
 
             {/* Hero Section */}
-            <section className={`${styles.heroSection} py-[80px] pb-[60px] md:py-[120px] md:pb-[80px]`}>
+            <section
+                className={`${styles.heroSection} py-[80px] pb-[60px] md:py-[120px] md:pb-[80px]`}
+            >
                 <div className={styles.heroContent}>
                     <h1>Contact Us</h1>
                     <p>
@@ -128,7 +130,9 @@ const Contact = () => {
                     </p>
                 </div>
             </section>
-            <div className={`${styles.functionBox} mt-[90px] gap-[10px] px-4 md:mt-[83px] md:gap-3 md:px-5`}>
+            <div
+                className={`${styles.functionBox} mt-[90px] gap-[10px] px-4 md:mt-[83px] md:gap-3 md:px-5`}
+            >
                 <div>
                     <button
                         type='button'
@@ -151,10 +155,15 @@ const Contact = () => {
             >
                 {/* Contact Information */}
                 <section className={styles.contactInfo}>
-                    <h2 className="text-[2rem] md:text-[2.5rem]">Get in Touch</h2>
+                    <h2 className='text-[2rem] md:text-[2.5rem]'>
+                        Get in Touch
+                    </h2>
                     <div className={styles.infoGrid}>
                         {contactInfo.map((info, index) => (
-                            <div key={index} className={`${styles.infoCard} p-5 md:p-[30px]`}>
+                            <div
+                                key={index}
+                                className={`${styles.infoCard} p-5 md:p-[30px]`}
+                            >
                                 <div className={styles.infoIcon}>
                                     {info.icon}
                                 </div>
@@ -171,7 +180,9 @@ const Contact = () => {
 
                 {/* Contact Form */}
                 <section className={styles.contactFormSection}>
-                    <h2 className="text-[2rem] md:text-[2.5rem]">Send us a Message</h2>
+                    <h2 className='text-[2rem] md:text-[2.5rem]'>
+                        Send us a Message
+                    </h2>
 
                     {submitStatus && (
                         <div
@@ -185,7 +196,9 @@ const Contact = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         className={`${styles.contactForm} p-5 md:p-[60px]`}
                     >
-                        <div className={`${styles.formRow} grid grid-cols-1 md:grid-cols-2`}>
+                        <div
+                            className={`${styles.formRow} grid grid-cols-1 md:grid-cols-2`}
+                        >
                             <div className={styles.formGroup}>
                                 <label htmlFor='name'>
                                     <AiOutlineUser /> Full Name *
@@ -206,7 +219,7 @@ const Contact = () => {
 
                             <div className={styles.formGroup}>
                                 <label htmlFor='email'>
-                                    <AiOutlineMail /> Email Address *
+                                    <AiOutlineMail /> Email *
                                 </label>
                                 <input
                                     type='email'
@@ -223,7 +236,9 @@ const Contact = () => {
                             </div>
                         </div>
 
-                        <div className={`${styles.formRow} grid grid-cols-1 md:grid-cols-2`}>
+                        <div
+                            className={`${styles.formRow} grid grid-cols-1 md:grid-cols-2`}
+                        >
                             <div className={styles.formGroup}>
                                 <label htmlFor='phone'>
                                     <AiOutlinePhone /> Phone Number *
@@ -307,7 +322,7 @@ const Contact = () => {
             <section
                 className={`${styles.mapSection} mx-auto w-full max-w-7xl`}
             >
-                <h2 className="text-[2rem] md:text-[2.5rem]">Find Us</h2>
+                <h2 className='text-[2rem] md:text-[2.5rem]'>Find Us</h2>
                 <div className={styles.mapContainer}>
                     <iframe
                         src='https://www.openstreetmap.org/export/embed.html?bbox=105.786,20.970,105.796,20.978&layer=mapnik&marker=20.974,105.791'
