@@ -2,9 +2,11 @@ import Button from '@components/Button/Button';
 import styles from './styles.module.scss';
 import ptr1 from '@images/pic2 (1).jpg';
 import ptr2 from '@images/pic3.jpg';
+import { useNavigate } from 'react-router-dom';
 
 function SaleHomepage() {
     const { container, title, des, boxBtn, boxImage, pic } = styles;
+    const navigate = useNavigate();
 
     return (
         <div
@@ -39,7 +41,10 @@ function SaleHomepage() {
                     data-aos='fade-up'
                     data-aos-delay='700'
                 >
-                    <Button content={'Read More'} />
+                    <Button
+                        content={'Read More'}
+                        onClick={() => navigate('/blog')}
+                    />
                 </div>
             </div>
             <div className={`${boxImage} w-full`}>
