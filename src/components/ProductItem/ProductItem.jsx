@@ -35,17 +35,27 @@ function ProductItem({
     } = styles;
     const [sizeChoose, setSizeChoose] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
-        useContext(SideBarContext);
+    const {
+        setIsOpen,
+        setType,
+        handleGetListProductsCart,
+        setDetailProduct,
+        addToWishlist,
+        removeFromWishlist,
+        isInWishlist,
+        addToCompare,
+        removeFromCompare,
+        isInCompare
+    } = useContext(SideBarContext);
     const { toast } = useContext(ToastContext);
     const userId = Cookies.get('userId');
     const navigate = useNavigate();
     const handleChooseSize = (e, size) => {
-        e.stopPropagation(); // Ngăn click lan truyền lên thẻ cha
+        e.stopPropagation();
         setSizeChoose((prevSize) => (prevSize === size ? '' : size));
     };
     const handleAddToCart = (e) => {
-        e.stopPropagation(); // Ngăn click lan truyền lên thẻ cha
+        e.stopPropagation();
         if (!userId) {
             setIsOpen(true);
             setType('login');
@@ -79,7 +89,7 @@ function ProductItem({
             });
     };
     const handleShowDetailProductSideBar = (e) => {
-        e.stopPropagation(); // Ngăn click lan truyền lên thẻ cha
+        e.stopPropagation();
         setIsOpen(true);
         setType('detail');
         setDetailProduct(details);
@@ -88,41 +98,72 @@ function ProductItem({
         setDetailProduct(details);
         navigate(`/product/${details._id}`);
     };
+
+    const handleAddToWishlist = (e) => {
+        e.stopPropagation();
+        if (isInWishlist(details._id)) {
+            removeFromWishlist(details._id);
+            toast.info('Removed from wishlist');
+        } else {
+            addToWishlist(details);
+            toast.success('Added to wishlist');
+        }
+    };
+
+    const handleAddToCompare = (e) => {
+        e.stopPropagation();
+        if (isInCompare(details._id)) {
+            removeFromCompare(details._id);
+            toast.info('Removed from compare');
+        } else {
+            const success = addToCompare(details);
+            if (success) {
+                toast.success('Added to compare');
+            } else {
+                toast.warning(
+                    'Compare list is full (max 4 items) or item already exists'
+                );
+            }
+        }
+    };
     return (
         <div className={container} onClick={handleNavigateToDetail}>
             <div className={boxImg}>
                 <img src={src} alt='' />
                 <img src={prevSrc} alt='' className={revealWhenHover} />
                 <div className={showFcWhenHover}>
-                    <div
-                        className={boxIcon}
-                        onClick={(e) => {
-                            e.stopPropagation(); /* Add to cart handler */
-                        }}
-                    >
+                    <div className={boxIcon} onClick={handleAddToCart}>
                         <img src={bagIcon} alt='' />
                         <span className={styles.iconTooltip}>Add to cart</span>
                     </div>
                     <div
-                        className={boxIcon}
-                        onClick={(e) => e.stopPropagation()}
+                        className={`${boxIcon} ${isInWishlist(details?._id) ? styles.activeIcon : ''}`}
+                        onClick={handleAddToWishlist}
                     >
                         <img src={wishIcon} alt='' />
-                        <span className={styles.iconTooltip}>Favorite</span>
+                        <span className={styles.iconTooltip}>
+                            {isInWishlist(details?._id)
+                                ? 'Remove from wishlist'
+                                : 'Add to wishlist'}
+                        </span>
                     </div>
                     <div
-                        className={boxIcon}
-                        onClick={(e) => e.stopPropagation()}
+                        className={`${boxIcon} ${isInCompare(details?._id) ? styles.activeIcon : ''}`}
+                        onClick={handleAddToCompare}
                     >
                         <img src={rotateIcon} alt='' />
-                        <span className={styles.iconTooltip}>Compare</span>
+                        <span className={styles.iconTooltip}>
+                            {isInCompare(details?._id)
+                                ? 'Remove from compare'
+                                : 'Add to compare'}
+                        </span>
                     </div>
                     <div
                         className={boxIcon}
                         onClick={handleShowDetailProductSideBar}
                     >
                         <img src={eyeIcon} alt='' />
-                        <span className={styles.iconTooltip}>Review</span>
+                        <span className={styles.iconTooltip}>Quick Review</span>
                     </div>
                 </div>
             </div>
@@ -144,7 +185,7 @@ function ProductItem({
                 <div className={priceTitle}>{price}$</div>
             </div>
             {!isHomepage && (
-                <div className={boxBtn}>
+                <div className={`${boxBtn} flex justify-center px-4 sm:px-0`}>
                     <Button
                         content={
                             <div

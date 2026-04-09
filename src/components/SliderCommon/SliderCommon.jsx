@@ -3,10 +3,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './styles.css';
 import { MdKeyboardDoubleArrowLeft } from 'react-icons/md';
-
 import { MdKeyboardDoubleArrowRight } from 'react-icons/md';
 import ProductItem from '@components/ProductItem/ProductItem';
-function SliderCommon({ data, isProductItem = false, showItem = 4 }) {
+function SliderCommon({ data, isProductItem = false, showItem = 1 }) {
     const settings = {
         dots: true,
         infinite: true,
@@ -46,7 +45,7 @@ function SliderCommon({ data, isProductItem = false, showItem = 4 }) {
         <div>
             <Slider {...settings}>
                 {data.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} className='px-8'>
                         {isProductItem ? (
                             <ProductItem
                                 src={item.image}

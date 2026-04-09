@@ -19,7 +19,8 @@ function MyHeader() {
         container,
         hidden,
         boxCart,
-        quantity
+        quantity,
+        boxIconWithBadge
     } = styles;
 
     const [isVisible, setIsVisible] = useState(true);
@@ -33,7 +34,9 @@ function MyHeader() {
         type,
         setType,
         listProductCart,
-        handleGetListProductsCart
+        handleGetListProductsCart,
+        wishlist,
+        compareList
     } = useContext(SideBarContext);
     const userId = Cookies.get('userId');
 
@@ -171,20 +174,34 @@ function MyHeader() {
                     <div
                         className={`${containerBoxIcon} !gap-2 sm:!gap-3 md:!gap-5`}
                     >
-                        <span>
+                        <div className={boxIconWithBadge}>
                             <TfiReload
                                 className={styles.iconHover}
                                 style={{ fontSize: '20px' }}
                                 onClick={() => handleOpenSideBar('compare')}
                             />
-                        </span>
-                        <span>
+                            {compareList.length > 0 && (
+                                <div
+                                    className={`${quantity} ${styles.compareBadge}`}
+                                >
+                                    {compareList.length}
+                                </div>
+                            )}
+                        </div>
+                        <div className={boxIconWithBadge}>
                             <TfiHeart
                                 className={styles.iconHover}
                                 style={{ fontSize: '20px' }}
                                 onClick={() => handleOpenSideBar('wishlist')}
                             />
-                        </span>
+                            {wishlist.length > 0 && (
+                                <div
+                                    className={`${quantity} ${styles.wishlistBadge}`}
+                                >
+                                    {wishlist.length}
+                                </div>
+                            )}
+                        </div>
                         <div className={boxCart}>
                             <AiOutlineShoppingCart
                                 className={styles.iconHover}

@@ -195,4 +195,32 @@
     }
 }
 
+.boxIconWithBadge {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .quantity {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        background-color: $primary_color;
+        color: white;
+        @include radius_common(50%);
+        width: 15px;
+        height: 15px;
+        @include flex_box_custom(center, center, 0px);
+        font-size: 10px;
+    }
+
+    .wishlistBadge {
+        background-color: #e91e63;
+    }
+
+    .compareBadge {
+        background-color: #ff9800;
+    }
+}
+
 // Responsive behavior migrated to Tailwind classes in `Header.jsx`.

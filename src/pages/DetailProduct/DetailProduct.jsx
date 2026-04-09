@@ -684,7 +684,9 @@ function DetailProduct() {
                     </div>
                 </div>
                 <div className='mt-10'>
-                    <h2>Related Products</h2>
+                    <h2 className='font-bold text-center mb-5 text-2xl'>
+                        Related Products
+                    </h2>
                     {relatedLoading ? (
                         <div style={{ padding: '40px 0', textAlign: 'center' }}>
                             <LoadingSpinner />

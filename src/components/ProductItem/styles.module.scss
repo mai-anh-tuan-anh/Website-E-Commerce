@@ -4,6 +4,8 @@
     margin-top: 0;
     width: 100%;
     max-width: 300px;
+    display: flex;
+    flex-direction: column;
 }
 .boxImg {
     cursor: pointer;
@@ -150,9 +152,16 @@
     }
 }
 .boxBtn {
-    width: 142px;
+    width: 100%;
     margin: 10px auto;
 }
 .active {
     border: 3px solid #667eea !important;
+}
+
+.activeIcon {
+    img {
+        background-color: #e91e63 !important;
+        filter: brightness(1.2);
+    }
 }

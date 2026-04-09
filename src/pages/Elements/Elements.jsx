@@ -123,7 +123,7 @@ const Elements = () => {
                 </div>
 
                 {/* Typography Section */}
-                <div className='bg-white rounded-xl p-8 shadow-md'>
+                <div className=' flex flex-col bg-white rounded-xl p-8 shadow-md'>
                     <h2 className='text-2xl font-bold text-gray-900 mb-6'>
                         Typography Scale
                     </h2>

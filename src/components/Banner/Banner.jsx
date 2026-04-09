@@ -12,10 +12,12 @@ function Banner() {
 
     return (
         <div
-            className={`${container} min-h-[460px] md:min-h-[520px] lg:min-h-[750px]`}
+            className={`${container} min-h-[460px] md:min-h-[520px] lg:min-h-[800px]`}
         >
             <div className={content}>
-                <h1 className={`${title} text-[30px] md:text-[34px] lg:text-[50px]`}>
+                <h1
+                    className={`${title} text-[30px] md:text-[34px] lg:text-[50px]`}
+                >
                     Divine Beauty
                 </h1>
                 <div
