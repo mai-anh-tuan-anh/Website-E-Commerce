@@ -1,42 +1,30 @@
-import InputCommon from '@components/InputCommon/InputCommon';
 import styles from './styles.module.scss';
-import Button from '@components/Button/Button';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
-import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { ToastContext } from '@/contexts/ToastProvider';
-import { register, signIn, getInfo } from '@/apis/authService';
+import { register, signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import { StoreContext } from '@/contexts/storeProvider';
+import { COOKIE_EXPIRATION, TOAST_MESSAGES } from '@/constants/appConstants';
+
+import AuthForm from './components/AuthForm';
+import SocialLoginButtons from './components/SocialLoginButtons';
+import RememberMeCheckbox from './components/RememberMeCheckbox';
+
 function Login() {
-    const {
-        container,
-        title,
-        formGroup,
-        signInButton,
-        toggleButton,
-        divider,
-        socialLogin,
-        socialButtons,
-        socialButton,
-        facebookButton,
-        twitterButton,
-        googleButton,
-        footerLinks,
-        signupLink,
-        forgotPasswordLink,
-        boxRememberMe
-    } = styles;
+    const { container, title, footerLinks, forgotPasswordLink } = styles;
     const [isRegister, setIsRegister] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
+
     const { toast } = useContext(ToastContext);
     const { isOpen, setIsOpen, handleGetListProductsCart } =
         useContext(SideBarContext);
     const { setUserId } = useContext(StoreContext);
+
     const formik = useFormik({
         initialValues: { email: '', password: '', cfmpassword: '' },
         validationSchema: Yup.object({
@@ -52,9 +40,7 @@ function Login() {
             )
         }),
         onSubmit: async (values) => {
-            if (isLoading) {
-                return;
-            }
+            if (isLoading) return;
 
             const { email: username, password } = values;
             if (isRegister) {
@@ -76,10 +62,9 @@ function Login() {
                         const { id, token, refreshToken } = res.data;
                         setUserId(id);
 
-                        // Set cookies with different expiration based on remember me
                         const cookieOptions = rememberMe
-                            ? { expires: 30 } // 30 days
-                            : { expires: 1 }; // 1 day
+                            ? { expires: COOKIE_EXPIRATION.REMEMBER_ME }
+                            : { expires: COOKIE_EXPIRATION.SESSION };
 
                         Cookies.set('token', token, cookieOptions);
                         Cookies.set('userId', id, cookieOptions);
@@ -89,7 +74,7 @@ function Login() {
                             cookieOptions
                         );
                         setIsOpen(false);
-                        toast.success('Login successful!');
+                        toast.success(TOAST_MESSAGES.LOGIN_SUCCESS);
                         handleGetListProductsCart(id, 'cart');
                     })
                     .catch((err) => {
@@ -104,127 +89,56 @@ function Login() {
         }
     });
 
-    // Handle third-party social login
     const handleSocialLogin = async (provider) => {
         try {
             setIsLoading(true);
 
-            // For demo purposes - you'll need to implement actual OAuth flow
             switch (provider) {
                 case 'google':
-                    // Google OAuth implementation
-                    toast.info('Google login coming soon!');
+                    toast.info(TOAST_MESSAGES.GOOGLE_LOGIN_COMING_SOON);
                     break;
                 case 'facebook':
-                    // Facebook OAuth implementation
-                    toast.info('Facebook login coming soon!');
+                    toast.info(TOAST_MESSAGES.FACEBOOK_LOGIN_COMING_SOON);
                     break;
                 case 'twitter':
-                    // Twitter OAuth implementation
-                    toast.info('Twitter login coming soon!');
+                    toast.info(TOAST_MESSAGES.TWITTER_LOGIN_COMING_SOON);
                     break;
                 default:
-                    toast.error('Invalid provider');
+                    toast.error(TOAST_MESSAGES.INVALID_PROVIDER);
             }
 
             setIsLoading(false);
         } catch (error) {
             console.error('Social login error:', error);
-            toast.error('Social login failed');
+            toast.error(TOAST_MESSAGES.SOCIAL_LOGIN_FAILED);
             setIsLoading(false);
         }
+    };
+
+    const handleToggleForm = () => {
+        setIsRegister(!isRegister);
+        formik.resetForm();
     };
 
     return (
         <div className={container}>
             {isLoading && <LoadingSpinner />}
             <div className={title}>{isRegister ? 'SIGN UP' : 'SIGN IN'}</div>
-            <form onSubmit={formik.handleSubmit}>
-                <div className={formGroup}>
-                    <InputCommon
-                        id='email'
-                        label='Email'
-                        type='email'
-                        isRequired
-                        formik={formik}
-                    />
 
-                    <InputCommon
-                        id='password'
-                        label='Password'
-                        type='password'
-                        isRequired
-                        formik={formik}
-                    />
-                    {isRegister && (
-                        <InputCommon
-                            id='cfmpassword'
-                            label='Confirm Password'
-                            type='password'
-                            isRequired
-                            formik={formik}
-                        />
-                    )}
-                </div>
-                {!isRegister && (
-                    <div className={boxRememberMe}>
-                        <input
-                            type='checkbox'
-                            id='rememberMe'
-                            checked={rememberMe}
-                            onChange={(e) => setRememberMe(e.target.checked)}
-                        />
-                        <label htmlFor='rememberMe'>Remember me</label>
-                    </div>
-                )}
-                <div className={signInButton}>
-                    <Button
-                        content={isRegister ? 'REGISTER' : 'LOGIN'}
-                        type='submit'
-                        // onClick={() => {
-                        //     toast.success('Login successful!');
-                        // }}
-                    />
-                </div>
-            </form>
-            <div className={toggleButton}>
-                <Button
-                    content={
-                        isRegister
-                            ? 'Already have an account?'
-                            : "Don't have an account?"
-                    }
-                    onClick={() => {
-                        setIsRegister(!isRegister);
-                        formik.resetForm();
-                    }}
+            <AuthForm
+                formik={formik}
+                isRegister={isRegister}
+                onToggle={handleToggleForm}
+            />
+
+            {!isRegister && (
+                <RememberMeCheckbox
+                    checked={rememberMe}
+                    onChange={setRememberMe}
                 />
-            </div>
+            )}
 
-            <div className={divider}>OR</div>
-
-            <div className={socialLogin}>
-                <div className={socialButtons}>
-                    <button
-                        className={`${socialButton} ${facebookButton}`}
-                        onClick={() => handleSocialLogin('facebook')}
-                    >
-                        <FaFacebookF />
-                    </button>
-                    <button
-                        className={`${socialButton} ${twitterButton}`}
-                        onClick={() => handleSocialLogin('twitter')}
-                    >
-                        <FaTwitter />
-                    </button>
-                    <button
-                        className={`${socialButton} ${googleButton}`}
-                        onClick={() => handleSocialLogin('google')}
-                    >
-                        <FaGoogle />
-                    </button>
-                </div>
-            </div>
+            <SocialLoginButtons onSocialLogin={handleSocialLogin} />
 
             <div className={footerLinks}>
                 <span className={forgotPasswordLink}>

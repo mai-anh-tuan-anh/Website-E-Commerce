@@ -1,5 +1,12 @@
-import { createContext, useEffect, useState } from 'react';
+import {
+    createContext,
+    useEffect,
+    useState,
+    useMemo,
+    useCallback
+} from 'react';
 import { getProducts } from '@/apis/productsService';
+import { debounce } from 'lodash';
 export const OurShopContext = createContext();
 export const OurShopProvider = ({ children }) => {
     const sortOptions = [
@@ -23,28 +30,47 @@ export const OurShopProvider = ({ children }) => {
     const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
-    const handleSearch = (term) => {
-        setSearchTerm(term);
-        setPage(1); // Reset to first page when searching
-        setIsLoading(true);
-        const query = {
-            sortType: sortId,
-            page: 1,
-            limit: term.trim() ? 'all' : showId, // Use 'all' only when searching for actual term, otherwise use normal pagination
-            search: term
+    // Debounced search function - only called after 500ms of no typing
+    const debouncedSearch = useMemo(
+        () =>
+            debounce((term) => {
+                setPage(1); // Reset to first page when searching
+                setIsLoading(true);
+                const query = {
+                    sortType: sortId,
+                    page: 1,
+                    limit: term.trim() ? 'all' : showId,
+                    search: term
+                };
+                getProducts(query)
+                    .then((res) => {
+                        setProducts(res.contents);
+                        setTotal(res.total);
+                    })
+                    .catch((err) => {
+                        console.error('Error fetching products:', err);
+                    })
+                    .finally(() => {
+                        setIsLoading(false);
+                    });
+            }, 500),
+        [sortId, showId]
+    );
+
+    // Cleanup debounced function on unmount
+    useEffect(() => {
+        return () => {
+            debouncedSearch.cancel();
         };
-        getProducts(query)
-            .then((res) => {
-                setProducts(res.contents);
-                setTotal(res.total);
-            })
-            .catch((err) => {
-                console.error('Error fetching products:', err);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
-    };
+    }, [debouncedSearch]);
+
+    const handleSearch = useCallback(
+        (term) => {
+            setSearchTerm(term);
+            debouncedSearch(term);
+        },
+        [debouncedSearch]
+    );
 
     const handleNext = () => {
         const nextPage = page + 1;

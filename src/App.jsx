@@ -8,33 +8,40 @@ import AuthEventHandler from '@/components/AuthEventHandler/AuthEventHandler';
 import { ToastProvider } from '@/contexts/ToastProvider';
 import { SideBarProvider } from '@/contexts/SideBarProvider';
 import SideBar from '@components/SideBar/SideBar';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
 function App() {
     return (
         <Suspense fallback={<LoadingSpinner />}>
-            <StoreProvider>
-                <ToastProvider>
-                    <SideBarProvider>
-                        <AuthEventHandler>
-                            <BrowserRouter>
-                                <SideBar />
-                                <Routes>
-                                    {routers.map((item, index) => {
-                                        return (
-                                            <Route
-                                                path={item.path}
-                                                element={<item.component />}
-                                                key={index}
-                                            />
-                                        );
-                                    })}
-                                </Routes>
-                            </BrowserRouter>
-                        </AuthEventHandler>
-                        <ChatbotManager />
-                    </SideBarProvider>
-                </ToastProvider>
-            </StoreProvider>
+            <ErrorBoundary>
+                <StoreProvider>
+                    <ToastProvider>
+                        <SideBarProvider>
+                            <AuthEventHandler>
+                                <BrowserRouter>
+                                    <SideBar />
+                                    <Routes>
+                                        {routers.map((item, index) => {
+                                            return (
+                                                <Route
+                                                    path={item.path}
+                                                    element={
+                                                        <ErrorBoundary>
+                                                            <item.component />
+                                                        </ErrorBoundary>
+                                                    }
+                                                    key={index}
+                                                />
+                                            );
+                                        })}
+                                    </Routes>
+                                </BrowserRouter>
+                            </AuthEventHandler>
+                            <ChatbotManager />
+                        </SideBarProvider>
+                    </ToastProvider>
+                </StoreProvider>
+            </ErrorBoundary>
         </Suspense>
     );
 }

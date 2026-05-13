@@ -7,15 +7,13 @@ import { SideBarContext } from '@contexts/SideBarProvider';
 import { ToastContext } from '@contexts/ToastProvider';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import EmptyState from '@components/Shared/EmptyState';
 
 function Compare() {
     const {
         container,
         boxContent,
         buttonWrapper,
-        emptyCompare,
-        emptyCompareIcon,
-        emptyCompareTitle,
         compareItem,
         itemImage,
         itemContent,
@@ -66,14 +64,10 @@ function Compare() {
                 />
 
                 {compareList.length === 0 ? (
-                    <div className={emptyCompare}>
-                        <div className={emptyCompareIcon}>
-                            <TfiReload />
-                        </div>
-                        <h3 className={emptyCompareTitle}>
-                            No products to compare
-                        </h3>
-                    </div>
+                    <EmptyState
+                        icon={<TfiReload />}
+                        title='No products to compare'
+                    />
                 ) : (
                     <>
                         {compareList.map((product) => (

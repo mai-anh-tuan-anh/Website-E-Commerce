@@ -1,16 +1,18 @@
-import Button from '@components/Button/Button';
 import { useState, useContext } from 'react';
 import styles from './styles.module.scss';
-import bagIcon from '@icons/svgs/bagicon.svg';
-import eyeIcon from '@icons/svgs/eyeicon.svg';
-import rotateIcon from '@icons/svgs/rotateicon.svg';
-import wishIcon from '@icons/svgs/wishicon.svg';
 import Cookies from 'js-cookie';
 import { SideBarContext } from '@contexts/SideBarProvider';
 import { ToastContext } from '@contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
-import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
+import { TOAST_MESSAGES } from '@/constants/appConstants';
+
+import ProductImage from './components/ProductImage';
+import ProductSizeSelector from './components/ProductSizeSelector';
+import ProductInfo from './components/ProductInfo';
+import ProductAddToCartButton from './components/ProductAddToCartButton';
+import LoadingOverlay from './components/LoadingOverlay';
+
 function ProductItem({
     src,
     prevSrc,
@@ -19,22 +21,10 @@ function ProductItem({
     details,
     isHomepage = true
 }) {
-    const {
-        container,
-        boxImg,
-        revealWhenHover,
-        showFcWhenHover,
-        boxIcon,
-        title,
-        priceBoard,
-        priceTitle,
-        boxSize,
-        size,
-        boxBtn,
-        active
-    } = styles;
+    const { container } = styles;
     const [sizeChoose, setSizeChoose] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
     const {
         setIsOpen,
         setType,
@@ -47,23 +37,26 @@ function ProductItem({
         removeFromCompare,
         isInCompare
     } = useContext(SideBarContext);
+
     const { toast } = useContext(ToastContext);
     const userId = Cookies.get('userId');
     const navigate = useNavigate();
+
     const handleChooseSize = (e, size) => {
         e.stopPropagation();
         setSizeChoose((prevSize) => (prevSize === size ? '' : size));
     };
+
     const handleAddToCart = (e) => {
         e.stopPropagation();
         if (!userId) {
             setIsOpen(true);
             setType('login');
-            toast.warning('Please login to add products to cart');
+            toast.warning(TOAST_MESSAGES.LOGIN_REQUIRED);
             return;
         }
         if (!sizeChoose) {
-            toast.warning('Please choose a size');
+            toast.warning(TOAST_MESSAGES.SIZE_REQUIRED);
             return;
         }
         setIsLoading(true);
@@ -79,7 +72,7 @@ function ProductItem({
                 setIsOpen(true);
                 setType('cart');
                 handleGetListProductsCart(userId, 'cart');
-                toast.success('Product added to cart');
+                toast.success(TOAST_MESSAGES.ADD_TO_CART_SUCCESS);
             })
             .catch((err) => {
                 toast.error(err.message);
@@ -88,12 +81,14 @@ function ProductItem({
                 setIsLoading(false);
             });
     };
+
     const handleShowDetailProductSideBar = (e) => {
         e.stopPropagation();
         setIsOpen(true);
         setType('detail');
         setDetailProduct(details);
     };
+
     const handleNavigateToDetail = () => {
         setDetailProduct(details);
         navigate(`/product/${details._id}`);
@@ -103,10 +98,10 @@ function ProductItem({
         e.stopPropagation();
         if (isInWishlist(details._id)) {
             removeFromWishlist(details._id);
-            toast.info('Removed from wishlist');
+            toast.info(TOAST_MESSAGES.REMOVE_FROM_WISHLIST);
         } else {
             addToWishlist(details);
-            toast.success('Added to wishlist');
+            toast.success(TOAST_MESSAGES.ADD_TO_WISHLIST_SUCCESS);
         }
     };
 
@@ -114,126 +109,51 @@ function ProductItem({
         e.stopPropagation();
         if (isInCompare(details._id)) {
             removeFromCompare(details._id);
-            toast.info('Removed from compare');
+            toast.info(TOAST_MESSAGES.REMOVE_FROM_COMPARE);
         } else {
             const success = addToCompare(details);
             if (success) {
-                toast.success('Added to compare');
+                toast.success(TOAST_MESSAGES.ADD_TO_COMPARE_SUCCESS);
             } else {
-                toast.warning(
-                    'Compare list is full (max 4 items) or item already exists'
-                );
+                toast.warning(TOAST_MESSAGES.COMPARE_LIST_FULL);
             }
         }
     };
+
     return (
         <div className={container} onClick={handleNavigateToDetail}>
-            <div className={boxImg}>
-                <img src={src} alt='' />
-                <img src={prevSrc} alt='' className={revealWhenHover} />
-                <div className={showFcWhenHover}>
-                    <div className={boxIcon} onClick={handleAddToCart}>
-                        <img src={bagIcon} alt='' />
-                        <span className={styles.iconTooltip}>Add to cart</span>
-                    </div>
-                    <div
-                        className={`${boxIcon} ${isInWishlist(details?._id) ? styles.activeIcon : ''}`}
-                        onClick={handleAddToWishlist}
-                    >
-                        <img src={wishIcon} alt='' />
-                        <span className={styles.iconTooltip}>
-                            {isInWishlist(details?._id)
-                                ? 'Remove from wishlist'
-                                : 'Add to wishlist'}
-                        </span>
-                    </div>
-                    <div
-                        className={`${boxIcon} ${isInCompare(details?._id) ? styles.activeIcon : ''}`}
-                        onClick={handleAddToCompare}
-                    >
-                        <img src={rotateIcon} alt='' />
-                        <span className={styles.iconTooltip}>
-                            {isInCompare(details?._id)
-                                ? 'Remove from compare'
-                                : 'Add to compare'}
-                        </span>
-                    </div>
-                    <div
-                        className={boxIcon}
-                        onClick={handleShowDetailProductSideBar}
-                    >
-                        <img src={eyeIcon} alt='' />
-                        <span className={styles.iconTooltip}>Quick Review</span>
-                    </div>
-                </div>
-            </div>
+            <ProductImage
+                src={src}
+                prevSrc={prevSrc}
+                onAddToCart={handleAddToCart}
+                onAddToWishlist={handleAddToWishlist}
+                onAddToCompare={handleAddToCompare}
+                onQuickView={handleShowDetailProductSideBar}
+                isInWishlist={isInWishlist(details?._id)}
+                isInCompare={isInCompare(details?._id)}
+            />
+
             {!isHomepage && details && details.size && (
-                <div className={boxSize}>
-                    {details.size.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`${size} ${sizeChoose === item.name ? active : ''}`}
-                            onClick={(e) => handleChooseSize(e, item.name)}
-                        >
-                            {item.name}
-                        </div>
-                    ))}
-                </div>
+                <ProductSizeSelector
+                    sizes={details.size}
+                    selectedSize={sizeChoose}
+                    onSizeSelect={handleChooseSize}
+                />
             )}
-            <div className={priceBoard}>
-                <div className={title}>{name}</div>
-                <div className={priceTitle}>{price}$</div>
-            </div>
+
+            <ProductInfo name={name} price={price} />
+
             {!isHomepage && (
-                <div className={`${boxBtn} flex justify-center px-4 sm:px-0`}>
-                    <Button
-                        content={
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
-                                    justifyContent: 'center'
-                                }}
-                            >
-                                <img
-                                    src={bagIcon}
-                                    alt=''
-                                    style={{
-                                        width: 16,
-                                        height: 16,
-                                        filter: 'brightness(3) saturate(100%)'
-                                    }}
-                                />
-                                <span>ADD TO CART</span>
-                            </div>
-                        }
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleAddToCart(e);
-                        }}
-                        disabled={isLoading}
-                    />
-                </div>
-            )}
-            {isLoading && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 9999
+                <ProductAddToCartButton
+                    onAddToCart={(e) => {
+                        e.stopPropagation();
+                        handleAddToCart(e);
                     }}
-                >
-                    <LoadingSpinner />
-                </div>
+                    isLoading={isLoading}
+                />
             )}
+
+            {isLoading && <LoadingOverlay />}
         </div>
     );
 }

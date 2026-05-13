@@ -8,15 +8,13 @@ import { ToastContext } from '@contexts/ToastProvider';
 import { IoIosCloseCircleOutline } from 'react-icons/io';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
+import EmptyState from '@components/Shared/EmptyState';
 
 function WishList() {
     const {
         container,
         boxContent,
         buttonWrapper,
-        emptyWishlist,
-        emptyWishlistIcon,
-        emptyWishlistTitle,
         wishlistItem,
         itemImage,
         itemContent,
@@ -69,14 +67,10 @@ function WishList() {
                 />
 
                 {wishlist.length === 0 ? (
-                    <div className={emptyWishlist}>
-                        <div className={emptyWishlistIcon}>
-                            <TfiHeart />
-                        </div>
-                        <h3 className={emptyWishlistTitle}>
-                            Your wishlist is empty
-                        </h3>
-                    </div>
+                    <EmptyState
+                        icon={<TfiHeart />}
+                        title='Your wishlist is empty'
+                    />
                 ) : (
                     wishlist.map((product) => (
                         <div key={product._id} className={wishlistItem}>

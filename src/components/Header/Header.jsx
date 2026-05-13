@@ -10,6 +10,8 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import Cookies from 'js-cookie';
 import { FiMenu } from 'react-icons/fi';
+import useScroll from '@/hooks/useScroll';
+
 function MyHeader() {
     const {
         containerBoxIcon,
@@ -23,8 +25,7 @@ function MyHeader() {
         boxIconWithBadge
     } = styles;
 
-    const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+    const isVisible = useScroll();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const mobileMenuWrapRef = useRef(null);
 
@@ -44,33 +45,10 @@ function MyHeader() {
         setIsOpen(true);
         setType(type);
 
-        // Load cart data when opening cart sidebar
         if (type === 'cart' && userId) {
             handleGetListProductsCart(userId, 'cart');
         }
     };
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-
-            if (currentScrollY > lastScrollY && currentScrollY > 200) {
-                // Scrolling down and past 200px
-                setIsVisible(false);
-            } else {
-                // Scrolling up
-                setIsVisible(true);
-            }
-
-            setLastScrollY(currentScrollY);
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [lastScrollY]);
 
     useEffect(() => {
         if (!isMobileMenuOpen) return;
@@ -172,7 +150,7 @@ function MyHeader() {
                         })}
                     </div>
                     <div
-                        className={`${containerBoxIcon} !gap-2 sm:!gap-3 md:!gap-5`}
+                        className={`${containerBoxIcon} gap-2! sm:gap-3! md:gap-5!`}
                     >
                         <div className={boxIconWithBadge}>
                             <TfiReload
