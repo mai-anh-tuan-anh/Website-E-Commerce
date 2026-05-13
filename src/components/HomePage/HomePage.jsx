@@ -4,43 +4,58 @@ import styles from './styles.module.scss';
 import AdvanceHeading from '@components/AdvanceHeading/AdvanceHeading';
 import Info from '@components/Info/Info';
 
-import useProducts from '@/hooks/useProducts';
+import { useEffect, useState } from 'react';
+import { getProducts } from '@/apis/productsService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomepage from '@components/SaleHomepage/SaleHomepage';
 import MyFooter from '@components/Footer/Footer';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import CountdownBanner from '@components/CountdownBanner/CountdownBanner';
-import ErrorBoundaryTest from '@components/ErrorBoundary/ErrorBoundaryTest';
-import {
-    SORT_TYPES,
-    DEFAULT_PAGE,
-    PRODUCT_LIMITS
-} from '@/constants/appConstants';
-
 function HomePage() {
+    const [listProducts, setListProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setIsLoading(true);
+                setError(null);
+
+                // Query parameters for HomePage
+                const query = {
+                    sortType: '0', // Default sort (newest)
+                    page: 1,
+                    limit: '12' // Get 12 products for homepage
+                };
+
+                const res = await getProducts(query);
+                setListProducts(res.contents);
+            } catch (err) {
+                setError('Failed to load products. Please try again later.');
+                console.error('Error fetching products:', err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchProducts();
+    }, []);
     const { container } = styles;
-
-    const query = {
-        sortType: SORT_TYPES.NEWEST,
-        page: DEFAULT_PAGE,
-        limit: PRODUCT_LIMITS.HOMEPAGE
-    };
-
-    const { listProducts, isLoading, error } = useProducts(query);
-
     return (
         <div className={container}>
             <MyHeader />
             <Banner />
             <div className='px-4 sm:px-6 lg:px-8'>
-                <ErrorBoundaryTest />
                 <Info></Info>
                 <AdvanceHeading />
 
+                {/* Loading State */}
                 {isLoading && <LoadingSpinner />}
 
+                {/* Error State */}
                 {error && <div className={styles.errorMessage}>{error}</div>}
 
+                {/* Content - only show when not loading and no error */}
                 {!isLoading && !error && (
                     <>
                         <div className='flex justify-center my-5'>

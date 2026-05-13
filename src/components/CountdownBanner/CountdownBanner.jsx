@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function CountdownBanner() {
     const { container, containerTimer, title, boxBtn } = styles;
     const navigate = useNavigate();
-    const targetDate = '2026-06-01T09:20:00';
+    const targetDate = '2026-08-01T09:20:00';
     return (
         <div className={`${container} w-full md:w-[calc(100%/2.05)]`}>
             <div className={title}>On Special Offer</div>

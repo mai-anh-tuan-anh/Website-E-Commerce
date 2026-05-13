@@ -10,8 +10,6 @@ import { useState, useEffect, useContext, useRef } from 'react';
 import { SideBarContext } from '@/contexts/SideBarProvider';
 import Cookies from 'js-cookie';
 import { FiMenu } from 'react-icons/fi';
-import useScroll from '@/hooks/useScroll';
-
 function MyHeader() {
     const {
         containerBoxIcon,
@@ -25,14 +23,13 @@ function MyHeader() {
         boxIconWithBadge
     } = styles;
 
-    const isVisible = useScroll();
+    const [isVisible, setIsVisible] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const mobileMenuWrapRef = useRef(null);
+    const lastScrollYRef = useRef(0);
 
     const {
-        isOpen,
         setIsOpen,
-        type,
         setType,
         listProductCart,
         handleGetListProductsCart,
@@ -45,10 +42,32 @@ function MyHeader() {
         setIsOpen(true);
         setType(type);
 
+        // Load cart data when opening cart sidebar
         if (type === 'cart' && userId) {
             handleGetListProductsCart(userId, 'cart');
         }
     };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            const lastY = lastScrollYRef.current;
+
+            if (currentScrollY > lastY && currentScrollY > 200) {
+                setIsVisible(false);
+            } else {
+                setIsVisible(true);
+            }
+
+            lastScrollYRef.current = currentScrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     useEffect(() => {
         if (!isMobileMenuOpen) return;
@@ -150,7 +169,7 @@ function MyHeader() {
                         })}
                     </div>
                     <div
-                        className={`${containerBoxIcon} gap-2! sm:gap-3! md:gap-5!`}
+                        className={`${containerBoxIcon} !gap-2 sm:!gap-3 md:!gap-5`}
                     >
                         <div className={boxIconWithBadge}>
                             <TfiReload

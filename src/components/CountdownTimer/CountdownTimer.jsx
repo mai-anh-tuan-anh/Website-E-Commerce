@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './styles.module.scss';
 function CountdownTimer({ targetDate }) {
     const { box, title } = styles;
-    const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
-    function calculateTimeLeft() {
+    const calculateTimeLeft = useCallback(() => {
         const difference = +new Date(targetDate) - +new Date();
         if (difference > 0) {
             return {
@@ -20,13 +19,17 @@ function CountdownTimer({ targetDate }) {
             Mins: 0,
             Secs: 0
         };
-    }
+    }, [targetDate]);
+
+    const [timeLeft, setTimeLeft] = useState(() => calculateTimeLeft());
+
     useEffect(() => {
-        const timer = setTimeout(() => {
+        setTimeLeft(calculateTimeLeft());
+        const id = setInterval(() => {
             setTimeLeft(calculateTimeLeft());
         }, 1000);
-        return () => clearTimeout(timer);
-    });
+        return () => clearInterval(id);
+    }, [calculateTimeLeft]);
     const formatNumber = (number) => {
         return String(number).padStart(2, '0');
     };
