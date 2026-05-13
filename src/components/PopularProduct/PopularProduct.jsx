@@ -1,6 +1,8 @@
 import MainLayout from '@components/Layout/Layout';
 import styles from './styles.module.scss';
 import ProductItem from '@components/ProductItem/ProductItem';
+import { memo } from 'react';
+
 function PopularProduct({ data }) {
     const { container } = styles;
     return (
@@ -20,4 +22,4 @@ function PopularProduct({ data }) {
         </MainLayout>
     );
 }
-export default PopularProduct;
+export default memo(PopularProduct);

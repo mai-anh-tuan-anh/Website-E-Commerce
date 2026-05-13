@@ -158,9 +158,10 @@ function MyHeader() {
                     <div
                         className={`${containerMenu} ${styles.desktopMenu} hidden xl:flex`}
                     >
-                        {dataMenu.slice(3, dataMenu.length).map((item) => {
+                        {dataMenu.slice(3, dataMenu.length).map((item, idx) => {
                             return (
                                 <Menu
+                                    key={`${item.href}-${item.content}-${idx + 3}`}
                                     className={'hidden xl:inline-flex'}
                                     content={item.content}
                                     href={item.href}

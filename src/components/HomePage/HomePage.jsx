@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import AdvanceHeading from '@components/AdvanceHeading/AdvanceHeading';
 import Info from '@components/Info/Info';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getProducts } from '@/apis/productsService';
 import PopularProduct from '@components/PopularProduct/PopularProduct';
 import SaleHomepage from '@components/SaleHomepage/SaleHomepage';
@@ -41,6 +41,12 @@ function HomePage() {
         fetchProducts();
     }, []);
     const { container } = styles;
+
+    const popularProducts = useMemo(
+        () => listProducts.slice(0, 10),
+        [listProducts]
+    );
+
     return (
         <div className={container}>
             <MyHeader />
@@ -61,7 +67,7 @@ function HomePage() {
                         <div className='flex justify-center my-5'>
                             <CountdownBanner />
                         </div>
-                        <PopularProduct data={listProducts.slice(0, 10)} />
+                        <PopularProduct data={popularProducts} />
                     </>
                 )}
                 <SaleHomepage />

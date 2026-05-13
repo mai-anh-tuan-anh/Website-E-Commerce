@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 import Cookies from 'js-cookie';
 import { getInfo } from '@/apis/authService';
 export const StoreContext = createContext();
@@ -16,8 +16,12 @@ export const StoreProvider = ({ children }) => {
                 });
         }
     }, [userId]);
+    const storeValue = useMemo(
+        () => ({ userInfo, setUserInfo, setUserId }),
+        [userInfo]
+    );
     return (
-        <StoreContext.Provider value={{ userInfo, setUserInfo, setUserId }}>
+        <StoreContext.Provider value={storeValue}>
             {children}
         </StoreContext.Provider>
     );

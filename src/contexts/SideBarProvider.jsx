@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import { getCart, deleteItem } from '@/apis/cartService';
 import Cookies from 'js-cookie';
 export const SideBarContext = createContext();
@@ -33,8 +33,8 @@ export const SideBarProvider = ({ children }) => {
     const [detailProduct, setDetailProduct] = useState();
     const [wishlist, setWishlist] = useState([]);
     const [compareList, setCompareList] = useState([]);
-    const handleGetListProductsCart = (userId, type) => {
-        if (userId && type === 'cart') {
+    const handleGetListProductsCart = useCallback((userId, cartType) => {
+        if (userId && cartType === 'cart') {
             getCart(userId)
                 .then((res) => {
                     setListProductCart(res.data.data);
@@ -43,11 +43,11 @@ export const SideBarProvider = ({ children }) => {
                     console.error('Error fetching cart:', err);
                 });
         }
-    };
+    }, []);
 
     useEffect(() => {
         handleGetListProductsCart(Cookies.get('userId'), 'cart');
-    }, []);
+    }, [handleGetListProductsCart]);
 
     // Load wishlist and compare from localStorage on mount
     useEffect(() => {
@@ -64,49 +64,49 @@ export const SideBarProvider = ({ children }) => {
     }, [listProductCart.length]);
 
     // Hàm logout để xóa toàn bộ dữ liệu
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         Cookies.remove('token');
         Cookies.remove('refreshToken');
         Cookies.remove('userId');
         setListProductCart([]);
         window.location.href = '/';
-    };
+    }, []);
 
     // Hàm cập nhật số lượng sản phẩm trong giỏ hàng
-    const updateCartItemQuantity = (itemId, newQuantity) => {
+    const updateCartItemQuantity = useCallback((itemId, newQuantity) => {
         setListProductCart((prevItems) =>
             prevItems.map((item, index) =>
                 index === itemId ? { ...item, quantity: newQuantity } : item
             )
         );
-    };
+    }, []);
 
     // Hàm xóa sản phẩm khỏi giỏ hàng
-    const removeCartItem = (itemId) => {
+    const removeCartItem = useCallback((itemId) => {
         const userId = Cookies.get('userId');
-        if (userId && listProductCart[itemId]) {
-            const cartItem = listProductCart[itemId];
-            deleteItem({ userId, productId: cartItem.productId })
-                .then(() => {
-                    setListProductCart((prevItems) =>
-                        prevItems.filter((_, index) => index !== itemId)
-                    );
-                })
-                .catch((err) => {
-                    console.error('Error removing item:', err);
-                    setListProductCart((prevItems) =>
-                        prevItems.filter((_, index) => index !== itemId)
-                    );
-                });
-        } else {
-            setListProductCart((prevItems) =>
-                prevItems.filter((_, index) => index !== itemId)
-            );
-        }
-    };
+        setListProductCart((prevItems) => {
+            if (userId && prevItems[itemId]) {
+                const cartItem = prevItems[itemId];
+                deleteItem({ userId, productId: cartItem.productId })
+                    .then(() => {
+                        setListProductCart((items) =>
+                            items.filter((_, index) => index !== itemId)
+                        );
+                    })
+                    .catch((err) => {
+                        console.error('Error removing item:', err);
+                        setListProductCart((items) =>
+                            items.filter((_, index) => index !== itemId)
+                        );
+                    });
+                return prevItems;
+            }
+            return prevItems.filter((_, index) => index !== itemId);
+        });
+    }, []);
 
     // ===== WISHLIST FUNCTIONS =====
-    const addToWishlist = (product) => {
+    const addToWishlist = useCallback((product) => {
         setWishlist((prev) => {
             const exists = prev.find((item) => item._id === product._id);
             if (exists) {
@@ -116,26 +116,27 @@ export const SideBarProvider = ({ children }) => {
             saveStoredItems(WISHLIST_KEY, newWishlist);
             return newWishlist;
         });
-    };
+    }, []);
 
-    const removeFromWishlist = (productId) => {
+    const removeFromWishlist = useCallback((productId) => {
         setWishlist((prev) => {
             const newWishlist = prev.filter((item) => item._id !== productId);
             saveStoredItems(WISHLIST_KEY, newWishlist);
             return newWishlist;
         });
-    };
+    }, []);
 
-    const isInWishlist = (productId) => {
-        return wishlist.some((item) => item._id === productId);
-    };
+    const isInWishlist = useCallback(
+        (productId) => wishlist.some((item) => item._id === productId),
+        [wishlist]
+    );
 
-    const clearWishlist = () => {
+    const clearWishlist = useCallback(() => {
         setWishlist([]);
         saveStoredItems(WISHLIST_KEY, []);
-    };
+    }, []);
 
-    const addAllWishlistToCart = () => {
+    const addAllWishlistToCart = useCallback(() => {
         const userId = Cookies.get('userId');
         if (!userId) {
             return { success: false, message: 'Please login to add to cart' };
@@ -143,10 +144,10 @@ export const SideBarProvider = ({ children }) => {
         // This would need API calls to add each item
         // For now, return success to indicate functionality exists
         return { success: true, message: 'Items added to cart' };
-    };
+    }, []);
 
     // ===== COMPARE FUNCTIONS =====
-    const addToCompare = (product) => {
+    const addToCompare = useCallback((product) => {
         const currentList = getStoredItems(COMPARE_KEY);
         if (currentList.length >= 4) {
             return false; // Max 4 items for compare
@@ -159,9 +160,9 @@ export const SideBarProvider = ({ children }) => {
         setCompareList(newCompareList);
         saveStoredItems(COMPARE_KEY, newCompareList);
         return true;
-    };
+    }, []);
 
-    const removeFromCompare = (productId) => {
+    const removeFromCompare = useCallback((productId) => {
         setCompareList((prev) => {
             const newCompareList = prev.filter(
                 (item) => item._id !== productId
@@ -169,45 +170,69 @@ export const SideBarProvider = ({ children }) => {
             saveStoredItems(COMPARE_KEY, newCompareList);
             return newCompareList;
         });
-    };
+    }, []);
 
-    const isInCompare = (productId) => {
-        return compareList.some((item) => item._id === productId);
-    };
+    const isInCompare = useCallback(
+        (productId) => compareList.some((item) => item._id === productId),
+        [compareList]
+    );
 
-    const clearCompare = () => {
+    const clearCompare = useCallback(() => {
         setCompareList([]);
         saveStoredItems(COMPARE_KEY, []);
-    };
+    }, []);
+
+    const contextValue = useMemo(
+        () => ({
+            isOpen,
+            setIsOpen,
+            type,
+            setType,
+            listProductCart,
+            setListProductCart,
+            handleGetListProductsCart,
+            handleLogout,
+            updateCartItemQuantity,
+            removeCartItem,
+            detailProduct,
+            setDetailProduct,
+            wishlist,
+            compareList,
+            addToWishlist,
+            removeFromWishlist,
+            isInWishlist,
+            clearWishlist,
+            addAllWishlistToCart,
+            addToCompare,
+            removeFromCompare,
+            isInCompare,
+            clearCompare
+        }),
+        [
+            isOpen,
+            type,
+            listProductCart,
+            detailProduct,
+            wishlist,
+            compareList,
+            handleGetListProductsCart,
+            handleLogout,
+            updateCartItemQuantity,
+            removeCartItem,
+            addToWishlist,
+            removeFromWishlist,
+            isInWishlist,
+            clearWishlist,
+            addAllWishlistToCart,
+            addToCompare,
+            removeFromCompare,
+            isInCompare,
+            clearCompare
+        ]
+    );
 
     return (
-        <SideBarContext.Provider
-            value={{
-                isOpen,
-                setIsOpen,
-                type,
-                setType,
-                listProductCart,
-                setListProductCart,
-                handleGetListProductsCart,
-                handleLogout,
-                updateCartItemQuantity,
-                removeCartItem,
-                detailProduct,
-                setDetailProduct,
-                wishlist,
-                compareList,
-                addToWishlist,
-                removeFromWishlist,
-                isInWishlist,
-                clearWishlist,
-                addAllWishlistToCart,
-                addToCompare,
-                removeFromCompare,
-                isInCompare,
-                clearCompare
-            }}
-        >
+        <SideBarContext.Provider value={contextValue}>
             {children}
         </SideBarContext.Provider>
     );
